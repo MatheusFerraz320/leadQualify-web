@@ -1,30 +1,27 @@
 import { useState } from 'react'
 import { ArrowRight, Eye, EyeOff, Lock, Mail } from 'lucide-react'
 import { toast } from 'sonner'
-type User = {
-  email: string
-  password: string
-}
+import { useAuthStore } from '../stores/authStore'
 
 export default function Login() {
-  const [email, setEmail] = useState<User['email']>('')
-  const [password, setPassword] = useState<User['password']>('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [error , setError ] = useState('')
+  const { login, loading, error, clearError } = useAuthStore()
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    setLoading(true)
-    if (!email || !password ) {
-      setError('Preencha todos os campos')
+    if (!email || !password) {
       toast.error('Preencha todos os campos')
+      return
     }
-    setTimeout(() => {
-      setLoading(false)
+    clearError()
+    const loginError = await login(email, password)
+    if (loginError) {
+      toast.error(loginError)
+    } else {
       toast.success('Login efetuado com sucesso!')
-    }, 2000)
-
+    }
   }
 
   return (
@@ -130,7 +127,6 @@ export default function Login() {
               {error && (
                 <p className="text-sm font-medium text-rose-500">{error}</p>
               )}
-
               <button
                 type="submit"
                 disabled={loading}

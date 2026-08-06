@@ -27,6 +27,7 @@ type AuthState = {
   loading: boolean
   error: string | null
   login: (email: string, password: string) => Promise<string | null>
+  register: (name: string, email: string, password: string, confirm_password: string) => Promise<string | null>
   logout: () => void
   clearError: () => void
 }
@@ -94,6 +95,33 @@ export const useAuthStore = create<AuthState>()(
         } catch (err) {
           const message =
             err instanceof Error ? err.message : 'Erro ao fazer login'
+          set({ loading: false, error: message })
+          return message
+        }
+      },
+
+      register: async (name, email, password, confirm_password) => {
+        set({ loading: true, error: null })
+
+        try {
+          const response = await fetch('/auth/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, password, confirm_password }),
+          })
+
+          if (!response.ok) {
+            const body = await response.json().catch(() => null)
+            const message =
+              Array.isArray(body?.message) ? body.message[0] : body?.message
+            throw new Error(message ?? 'Erro ao cadastrar')
+          }
+
+          set({ loading: false })
+          return null
+        } catch (err) {
+          const message =
+            err instanceof Error ? err.message : 'Erro ao cadastrar'
           set({ loading: false, error: message })
           return message
         }

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router'
 import { ArrowRight, Eye, EyeOff, Lock, Mail } from 'lucide-react'
 import { toast } from 'sonner'
 import { useAuthStore } from '../stores/authStore'
@@ -7,6 +8,7 @@ export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const navigate = useNavigate()
   const { login, loading, error, clearError } = useAuthStore()
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -21,6 +23,7 @@ export default function Login() {
       toast.error(loginError)
     } else {
       toast.success('Login efetuado com sucesso!')
+      navigate('/', { replace: true })
     }
   }
 

@@ -1,12 +1,29 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
+export type UserRole = 'ADMIN' | 'COLLABORATOR'
+
+export type User = {
+  id: string
+  name: string
+  email: string
+  role: UserRole
+}
+
+type JwtPayload = {
+  sub: string
+  email: string
+  name?: string
+  role?: UserRole
+}
+
 type LoginResponse = {
   access_token: string
 }
 
 type AuthState = {
   token: string | null
+  user: User | null
   loading: boolean
   error: string | null
   login: (email: string, password: string) => Promise<string | null>
@@ -14,10 +31,37 @@ type AuthState = {
   clearError: () => void
 }
 
+function decodeJwt(token: string): JwtPayload | null {
+  try {
+    const payload = token.split('.')[1]
+    if (!payload) return null
+    const base64 = payload.replace(/-/g, '+').replace(/_/g, '/')
+    const json = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map((char) => '%' + ('00' + char.charCodeAt(0).toString(16)).slice(-2))
+        .join(''),
+    )
+    return JSON.parse(json) as JwtPayload
+  } catch {
+    return null
+  }
+}
+
+function userFromPayload(payload: JwtPayload): User {
+  return {
+    id: payload.sub,
+    name: payload.name ?? '',
+    email: payload.email,
+    role: payload.role ?? 'COLLABORATOR',
+  }
+}
+
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
       token: null,
+      user: null,
       loading: false,
       error: null,
 
@@ -39,7 +83,13 @@ export const useAuthStore = create<AuthState>()(
           }
 
           const data = (await response.json()) as LoginResponse
-          set({ token: data.access_token, loading: false })
+          const payload = decodeJwt(data.access_token)
+
+          set({
+            token: data.access_token,
+            user: payload ? userFromPayload(payload) : null,
+            loading: false,
+          })
           return null
         } catch (err) {
           const message =
@@ -49,13 +99,21 @@ export const useAuthStore = create<AuthState>()(
         }
       },
 
-      logout: () => set({ token: null, error: null }),
+      logout: () => set({ token: null, user: null, error: null }),
 
       clearError: () => set({ error: null }),
     }),
     {
       name: 'leadqualify-auth',
-      partialize: (state) => ({ token: state.token }),
+      partialize: (state) => ({ token: state.token, user: state.user }),
+      onRehydrateStorage: () => (state) => {
+        if (state?.token && !state?.user) {
+          const payload = decodeJwt(state.token)
+          if (payload) {
+            useAuthStore.setState({ user: userFromPayload(payload) })
+          }
+        }
+      },
     },
   ),
 )

@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { api, getErrorMessage } from '../lib/api'
 
 export type UserRole = 'ADMIN' | 'COLLABORATOR'
 
@@ -8,6 +9,8 @@ export type User = {
   name: string
   email: string
   role: UserRole
+  createdAt?: string
+  updatedAt?: string
 }
 
 type JwtPayload = {
@@ -27,7 +30,7 @@ type AuthState = {
   loading: boolean
   error: string | null
   login: (email: string, password: string) => Promise<string | null>
-  register: (name: string, email: string, password: string, confirm_password: string) => Promise<string | null>
+  register: (name: string, email: string, password: string, confirm_password: string, role: UserRole) => Promise<string | null>
   logout: () => void
   clearError: () => void
 }
@@ -70,17 +73,14 @@ export const useAuthStore = create<AuthState>()(
         set({ loading: true, error: null })
 
         try {
-          const response = await fetch('/auth/login', {
+          const response = await api('/auth/login', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password }),
           })
 
           if (!response.ok) {
-            const body = await response.json().catch(() => null)
-            const message =
-              Array.isArray(body?.message) ? body.message[0] : body?.message
-            throw new Error(message ?? 'Erro ao fazer login')
+            const message = await getErrorMessage(response)
+            throw new Error(message || 'Erro ao fazer login')
           }
 
           const data = (await response.json()) as LoginResponse
@@ -100,21 +100,18 @@ export const useAuthStore = create<AuthState>()(
         }
       },
 
-      register: async (name, email, password, confirm_password) => {
+      register: async (name, email, password, confirm_password, role) => {
         set({ loading: true, error: null })
 
         try {
-          const response = await fetch('/auth/signup', {
+          const response = await api('/auth/signup', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, email, password, confirm_password }),
+            body: JSON.stringify({ name, email, password, confirm_password, role }),
           })
 
           if (!response.ok) {
-            const body = await response.json().catch(() => null)
-            const message =
-              Array.isArray(body?.message) ? body.message[0] : body?.message
-            throw new Error(message ?? 'Erro ao cadastrar')
+            const message = await getErrorMessage(response)
+            throw new Error(message || 'Erro ao cadastrar')
           }
 
           set({ loading: false })

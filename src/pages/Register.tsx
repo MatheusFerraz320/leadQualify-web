@@ -2,17 +2,19 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import {
   ArrowRight,
+  ChevronDown,
   CircleCheck,
   Eye,
   EyeOff,
   Lock,
   Mail,
   User,
+  UserCog,
   UserPlus,
 } from 'lucide-react'
 import { toast } from 'sonner'
 import { cn } from '../lib/utils'
-import { useAuthStore } from '../stores/authStore'
+import { useAuthStore, type UserRole } from '../stores/authStore'
 
 export default function Register() {
   const [name, setName] = useState('')
@@ -21,6 +23,7 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
+  const [role, setRole] = useState<UserRole>('COLLABORATOR')
   const navigate = useNavigate()
   const { register, loading, error, clearError } = useAuthStore()
 
@@ -44,12 +47,13 @@ export default function Register() {
       email,
       password,
       confirmPassword,
+      role,
     )
     if (registerError) {
       toast.error(registerError)
     } else {
       toast.success('Colaborador cadastrado com sucesso!')
-      navigate('/', { replace: true })
+      navigate('/colaboradores', { replace: true })
     }
   }
 
@@ -126,6 +130,31 @@ export default function Register() {
                     onChange={(event) => setEmail(event.target.value)}
                     className={inputClass}
                   />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="role"
+                  className="mb-1.5 block text-sm font-medium text-slate-700"
+                >
+                  Função
+                </label>
+                <div className="relative">
+                  <UserCog className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70" />
+                  <select
+                    id="role"
+                    required
+                    value={role}
+                    onChange={(event) =>
+                      setRole(event.target.value as UserRole)
+                    }
+                    className={cn(inputClass, 'appearance-none pr-10')}
+                  >
+                    <option value="COLLABORATOR">Colaborador</option>
+                    <option value="ADMIN">Administrador</option>
+                  </select>
+                  <ChevronDown className="pointer-events-none absolute top-1/2 right-3.5 h-4 w-4 -translate-y-1/2 text-slate-400" />
                 </div>
               </div>
 
@@ -243,15 +272,12 @@ export default function Register() {
               </button>
             </form>
 
-            <p className="mt-6 text-center text-sm text-slate-500">
-              Já tem acesso?{' '}
-              <Link
-                to="/login"
-                className="font-semibold text-cyan-600 transition hover:text-cyan-700"
-              >
-                Entrar
-              </Link>
-            </p>
+            <Link
+              to="/colaboradores"
+              className="mt-6 block text-center text-sm text-slate-500 transition hover:text-slate-700"
+            >
+              Voltar para colaboradores
+            </Link>
           </div>
         </div>
       </div>

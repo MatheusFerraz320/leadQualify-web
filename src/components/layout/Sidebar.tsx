@@ -1,21 +1,28 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router'
+import { Link, useLocation, useNavigate } from 'react-router'
 import {
   ChevronLeft,
   ChevronRight,
+  CircleUser,
   Home,
-  ListFilter,
   LogOut,
-  Settings,
+  UserPlus,
 } from 'lucide-react'
 import { toast } from 'sonner'
-import { cn } from '../../lib/utils'
+import { cn, initials } from '../../lib/utils'
 import { useAuthStore } from '../../stores/authStore'
 
-const navItems = [
-  { label: 'Início', icon: Home },
-  { label: 'Leads', icon: ListFilter },
-  { label: 'Configurações', icon: Settings },
+type NavItem = {
+  label: string
+  path: string
+  icon: typeof Home
+  adminOnly?: boolean
+}
+
+const navItems: NavItem[] = [
+  { label: 'Início', path: '/', icon: Home },
+  { label: 'Colaboradores', path: '/colaboradores', icon: UserPlus, adminOnly: true },
+  { label: 'Minha conta', path: '/minha-conta', icon: CircleUser },
 ]
 
 const roleLabels: Record<string, string> = {
@@ -26,16 +33,8 @@ const roleLabels: Record<string, string> = {
 export function Sidebar() {
   const [collapsed, setCollapsed] = useState(false)
   const navigate = useNavigate()
+  const location = useLocation()
   const { user, logout } = useAuthStore()
-
-  function initials(name: string) {
-    return name
-      .split(' ')
-      .filter(Boolean)
-      .slice(0, 2)
-      .map((part) => part[0]?.toUpperCase())
-      .join('')
-  }
 
   function handleLogout() {
     logout()
@@ -45,6 +44,9 @@ export function Sidebar() {
 
   const displayName = user?.name || user?.email
   const initialsText = initials(user?.name ?? '') || '?'
+
+  const isActive = (path: string) =>
+    path === '/' ? location.pathname === '/' : location.pathname.startsWith(path)
 
   return (
     <aside
@@ -114,33 +116,35 @@ export function Sidebar() {
             Menu
           </p>
         )}
-        {navItems.map((item, index) => (
-          <a
-            key={item.label}
-            href="#"
-            title={item.label}
-            aria-label={item.label}
-            className={cn(
-              'group flex items-center rounded-2xl text-sm transition-all duration-200',
-              collapsed ? 'h-11 w-11 justify-center' : 'gap-3 px-4 py-2.5',
-              index === 0
-                ? 'bg-indigo-50 font-semibold text-indigo-700 shadow-sm shadow-indigo-500/5 ring-1 ring-indigo-100'
-                : 'font-medium text-slate-600 hover:translate-x-0.5 hover:bg-slate-100/80 hover:text-slate-900',
-            )}
-          >
-            <item.icon
+        {navItems
+          .filter((item) => !item.adminOnly || user?.role === 'ADMIN')
+          .map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              title={item.label}
+              aria-label={item.label}
               className={cn(
-                'shrink-0 transition-transform duration-200',
-                collapsed ? 'h-5 w-5' : 'h-4.5 w-4.5 group-hover:scale-105',
+                'group flex items-center rounded-2xl text-sm transition-all duration-200',
+                collapsed ? 'h-11 w-11 justify-center' : 'gap-3 px-4 py-2.5',
+                isActive(item.path)
+                  ? 'bg-indigo-50 font-semibold text-indigo-700 shadow-sm shadow-indigo-500/5 ring-1 ring-indigo-100'
+                  : 'font-medium text-slate-600 hover:translate-x-0.5 hover:bg-slate-100/80 hover:text-slate-900',
               )}
-              strokeWidth={1.75}
-            />
-            {!collapsed && <span className="truncate">{item.label}</span>}
-            {index === 0 && !collapsed && (
-              <span className="ml-auto h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-500" />
-            )}
-          </a>
-        ))}
+            >
+              <item.icon
+                className={cn(
+                  'shrink-0 transition-transform duration-200',
+                  collapsed ? 'h-5 w-5' : 'h-4.5 w-4.5 group-hover:scale-105',
+                )}
+                strokeWidth={1.75}
+              />
+              {!collapsed && <span className="truncate">{item.label}</span>}
+              {isActive(item.path) && !collapsed && (
+                <span className="ml-auto h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-500" />
+              )}
+            </Link>
+          ))}
       </nav>
 
       <div className="space-y-1 border-t border-slate-100 p-3">

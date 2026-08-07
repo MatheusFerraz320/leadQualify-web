@@ -1,7 +1,6 @@
 import { Link, useLocation } from 'react-router'
 import {
   Bell,
-  CircleUser,
   LayoutDashboard,
   LifeBuoy,
   UserPlus,
@@ -36,12 +35,6 @@ const navModules: NavModule[] = [
     subtitle: 'Alertas e novidades',
     path: '/notificacoes',
     icon: Bell,
-  },
-  {
-    label: 'Minha conta',
-    subtitle: 'Suas informações pessoais',
-    path: '/minha-conta',
-    icon: CircleUser,
   },
   {
     label: 'Ajuda',

@@ -22,7 +22,7 @@ type NavItem = {
 const navItems: NavItem[] = [
   { label: 'Início', path: '/', icon: Home },
   { label: 'Colaboradores', path: '/colaboradores', icon: UserPlus, adminOnly: true },
-  { label: 'Minha conta', path: '/minha-conta', icon: CircleUser },
+  { label: 'Meu perfil', path: '/minha-conta', icon: CircleUser },
 ]
 
 const roleLabels: Record<string, string> = {

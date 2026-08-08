@@ -11,6 +11,20 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <script>
+      try {
+        var raw = localStorage.getItem('leadqualify-theme')
+        var saved = raw ? JSON.parse(raw) : null
+        var theme = saved && saved.state ? saved.state.theme : null
+        if (
+          theme === 'dark' ||
+          (!theme &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches)
+        ) {
+          document.documentElement.classList.add('dark')
+        }
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -21,7 +21,7 @@ type Props = {
 }
 
 const inputClass =
-  'h-11 w-full rounded-xl border border-slate-200 bg-slate-50/60 pl-11 pr-4 text-sm text-slate-900 placeholder:text-slate-400 transition outline-none focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/15'
+  'h-11 w-full rounded-xl border border-slate-200 bg-slate-50/60 pl-11 pr-4 text-sm text-slate-900 placeholder:text-slate-400 transition outline-none focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/15 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-cyan-400 dark:focus:bg-slate-900'
 
 export function EditCollaboratorModal({ user, onClose }: Props) {
   const [name, setName] = useState(user.name)
@@ -74,26 +74,26 @@ export function EditCollaboratorModal({ user, onClose }: Props) {
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
     >
       <div
-        className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
+        className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm dark:bg-black/60"
         onClick={onClose}
       />
-      <div className="relative w-full max-w-md overflow-hidden rounded-[2rem] border border-slate-200/70 bg-white shadow-2xl">
+      <div className="relative w-full max-w-md overflow-hidden rounded-[2rem] border border-slate-200/70 bg-white shadow-2xl dark:border-slate-800 dark:bg-slate-900 dark:shadow-black/50">
         <div className="h-1.5 w-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500" />
 
         <div className="p-7 sm:p-8">
           <div className="mb-6 flex items-start justify-between">
             <div>
-              <h2 className="font-display text-xl font-semibold tracking-tight text-slate-900">
+              <h2 className="font-display text-xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
                 Editar colaborador
               </h2>
-              <p className="mt-0.5 text-sm text-slate-500">
+              <p className="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
                 Atualize os dados de {user.name}
               </p>
             </div>
             <button
               onClick={onClose}
               aria-label="Fechar"
-              className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
+              className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 dark:text-slate-500 dark:hover:bg-slate-800 dark:hover:text-slate-300"
             >
               <X className="h-4.5 w-4.5" />
             </button>
@@ -103,12 +103,12 @@ export function EditCollaboratorModal({ user, onClose }: Props) {
             <div>
               <label
                 htmlFor="edit-name"
-                className="mb-1.5 block text-sm font-medium text-slate-700"
+                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 Nome
               </label>
               <div className="relative">
-                <UserIcon className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70" />
+                <UserIcon className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
                 <input
                   id="edit-name"
                   type="text"
@@ -123,12 +123,12 @@ export function EditCollaboratorModal({ user, onClose }: Props) {
             <div>
               <label
                 htmlFor="edit-email"
-                className="mb-1.5 block text-sm font-medium text-slate-700"
+                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 E-mail
               </label>
               <div className="relative">
-                <Mail className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70" />
+                <Mail className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
                 <input
                   id="edit-email"
                   type="email"
@@ -143,12 +143,12 @@ export function EditCollaboratorModal({ user, onClose }: Props) {
             <div>
               <label
                 htmlFor="edit-role"
-                className="mb-1.5 block text-sm font-medium text-slate-700"
+                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 Função
               </label>
               <div className="relative">
-                <UserCog className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70" />
+                <UserCog className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
                 <select
                   id="edit-role"
                   value={role}
@@ -160,18 +160,18 @@ export function EditCollaboratorModal({ user, onClose }: Props) {
                   <option value="COLLABORATOR">Colaborador</option>
                   <option value="ADMIN">Administrador</option>
                 </select>
-                <ChevronDown className="pointer-events-none absolute top-1/2 right-3.5 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                <ChevronDown className="pointer-events-none absolute top-1/2 right-3.5 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
               </div>
             </div>
 
-            <div className="border-t border-slate-100 pt-4">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-400">
+            <div className="border-t border-slate-100 pt-4 dark:border-slate-800">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
                 Nova senha (opcional)
               </p>
 
               <div className="space-y-4">
                 <div className="relative">
-                  <Lock className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70" />
+                  <Lock className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
                   <input
                     type={showPassword ? 'text' : 'password'}
                     placeholder="Deixe em branco para manter"
@@ -183,7 +183,7 @@ export function EditCollaboratorModal({ user, onClose }: Props) {
                     type="button"
                     onClick={() => setShowPassword((value) => !value)}
                     aria-label="Mostrar ou ocultar senha"
-                    className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600"
+                    className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
                   >
                     {showPassword ? (
                       <EyeOff className="h-4 w-4" />
@@ -195,7 +195,7 @@ export function EditCollaboratorModal({ user, onClose }: Props) {
 
                 {password && (
                   <div className="relative">
-                    <Lock className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70" />
+                    <Lock className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
                     <input
                       type={showConfirm ? 'text' : 'password'}
                       placeholder="Confirme a nova senha"
@@ -207,7 +207,7 @@ export function EditCollaboratorModal({ user, onClose }: Props) {
                       type="button"
                       onClick={() => setShowConfirm((value) => !value)}
                       aria-label="Mostrar ou ocultar confirmação"
-                      className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600"
+                      className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
                     >
                       {showConfirm ? (
                         <EyeOff className="h-4 w-4" />

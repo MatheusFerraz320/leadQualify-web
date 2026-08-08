@@ -34,28 +34,28 @@ export function DeleteCollaboratorDialog({ user, onClose }: Props) {
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
     >
       <div
-        className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
+        className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm dark:bg-black/60"
         onClick={onClose}
       />
-      <div className="relative w-full max-w-sm overflow-hidden rounded-[2rem] border border-slate-200/70 bg-white p-7 shadow-2xl">
+      <div className="relative w-full max-w-sm overflow-hidden rounded-[2rem] border border-slate-200/70 bg-white p-7 shadow-2xl dark:border-slate-800 dark:bg-slate-900 dark:shadow-black/50">
         <button
           onClick={onClose}
           aria-label="Fechar"
-          className="absolute top-5 right-5 rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
+          className="absolute top-5 right-5 rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 dark:text-slate-500 dark:hover:bg-slate-800 dark:hover:text-slate-300"
         >
           <X className="h-4.5 w-4.5" />
         </button>
 
-        <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-50 text-rose-600">
+        <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-50 text-rose-600 dark:bg-rose-500/10 dark:text-rose-400">
           <Trash2 className="h-5.5 w-5.5" strokeWidth={1.75} />
         </span>
 
-        <h2 className="mt-4 font-display text-lg font-semibold tracking-tight text-slate-900">
+        <h2 className="mt-4 font-display text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100">
           Excluir colaborador?
         </h2>
-        <p className="mt-1.5 text-sm text-slate-500">
+        <p className="mt-1.5 text-sm text-slate-500 dark:text-slate-400">
           Essa ação é permanente e não pode ser desfeita. O acesso de{' '}
-          <span className="font-semibold text-slate-700">{user.name}</span>{' '}
+          <span className="font-semibold text-slate-700 dark:text-slate-200">{user.name}</span>{' '}
           será removido da plataforma.
         </p>
 
@@ -63,7 +63,7 @@ export function DeleteCollaboratorDialog({ user, onClose }: Props) {
           <button
             onClick={onClose}
             disabled={deleting}
-            className="rounded-xl px-5 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100"
+            className="rounded-xl px-5 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
           >
             Cancelar
           </button>

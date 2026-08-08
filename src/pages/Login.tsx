@@ -28,14 +28,14 @@ export default function Login() {
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-50 via-white to-indigo-50 font-sans">
+    <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-50 via-white to-indigo-50 font-sans dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-32 -right-24 h-96 w-96 rounded-full bg-indigo-200/50 blur-3xl"
+        className="pointer-events-none absolute -top-32 -right-24 h-96 w-96 rounded-full bg-indigo-200/50 blur-3xl dark:bg-indigo-500/10"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -bottom-40 -left-24 h-[28rem] w-[28rem] rounded-full bg-sky-200/40 blur-3xl"
+        className="pointer-events-none absolute -bottom-40 -left-24 h-[28rem] w-[28rem] rounded-full bg-sky-200/40 blur-3xl dark:bg-sky-500/10"
       />
 
       <div className="relative flex min-h-screen items-center justify-center px-4 py-12">
@@ -47,16 +47,16 @@ export default function Login() {
             <h1 className="bg-gradient-to-r from-blue-600 to-cyan-300 bg-clip-text font-display text-4xl font-semibold tracking-tight text-transparent">
               LeadQualify
             </h1>
-            <p className="mt-2 text-sm font-medium text-slate-500">
+            <p className="mt-2 text-sm font-medium text-slate-500 dark:text-slate-400">
               Qualifique seus leads com inteligência
             </p>
           </div>
 
-          <div className="rounded-[2rem] border border-slate-200/70 bg-white/80 p-8 shadow-xl shadow-slate-200/60 backdrop-blur sm:p-12">
-            <h2 className="text-xl font-semibold text-slate-900">
+          <div className="rounded-[2rem] border border-slate-200/70 bg-white/80 p-8 shadow-xl shadow-slate-200/60 backdrop-blur sm:p-12 dark:border-slate-800 dark:bg-white/[0.04] dark:shadow-black/40">
+            <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
               Bem-vindo de volta
             </h2>
-            <p className="mt-1.5 text-sm text-slate-500">
+            <p className="mt-1.5 text-sm text-slate-500 dark:text-slate-400">
               Acesse sua conta para continuar.
             </p>
 
@@ -64,12 +64,12 @@ export default function Login() {
               <div>
                 <label
                   htmlFor="email"
-                  className="mb-1.5 block text-sm font-medium text-slate-700"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
                 >
                   E-mail
                 </label>
                 <div className="relative">
-                  <Mail className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-slate-400" />
+                  <Mail className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
                   <input
                     id="email"
                     type="email"
@@ -78,7 +78,7 @@ export default function Login() {
                     placeholder="voce@empresa.com"
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
-                    className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50/60 pl-10 pr-4 text-base text-slate-900 placeholder:text-slate-400 transition outline-none focus:border-indigo-400 focus:bg-white focus:ring-4 focus:ring-indigo-500/10"
+                    className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50/60 pl-10 pr-4 text-base text-slate-900 placeholder:text-slate-400 transition outline-none focus:border-indigo-400 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-indigo-500 dark:focus:bg-slate-900"
                   />
                 </div>
               </div>
@@ -87,19 +87,19 @@ export default function Login() {
                 <div className="mb-1.5 flex items-center justify-between">
                   <label
                     htmlFor="password"
-                    className="block text-sm font-medium text-slate-700"
+                    className="block text-sm font-medium text-slate-700 dark:text-slate-300"
                   >
                     Senha
                   </label>
                   <a
                     href="#"
-                    className="text-xs font-medium text-indigo-600 transition hover:text-indigo-700 hover:underline"
+                    className="text-xs font-medium text-indigo-600 transition hover:text-indigo-700 hover:underline dark:text-indigo-400 dark:hover:text-indigo-300"
                   >
                     Esqueci minha senha
                   </a>
                 </div>
                 <div className="relative">
-                  <Lock className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-slate-400" />
+                  <Lock className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
                   <input
                     id="password"
                     type={showPassword ? 'text' : 'password'}
@@ -108,7 +108,7 @@ export default function Login() {
                     placeholder="••••••••"
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
-                    className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50/60 pl-10 pr-11 text-base text-slate-900 placeholder:text-slate-400 transition outline-none focus:border-indigo-400 focus:bg-white focus:ring-4 focus:ring-indigo-500/10"
+                    className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50/60 pl-10 pr-11 text-base text-slate-900 placeholder:text-slate-400 transition outline-none focus:border-indigo-400 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-indigo-500 dark:focus:bg-slate-900"
                   />
                   <button
                     type="button"
@@ -116,7 +116,7 @@ export default function Login() {
                     aria-label={
                       showPassword ? 'Ocultar senha' : 'Mostrar senha'
                     }
-                    className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600"
+                    className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
                   >
                     {showPassword ? (
                       <EyeOff className="h-4.5 w-4.5" />
@@ -141,7 +141,7 @@ export default function Login() {
             </form>
           </div>
 
-          <p className="mt-6 text-center text-xs text-slate-400">
+          <p className="mt-6 text-center text-xs text-slate-400 dark:text-slate-500">
             Não tem acesso? Fale com o administrador da sua empresa.
           </p>
         </div>

@@ -53,7 +53,7 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        'flex h-full shrink-0 flex-col overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-sm transition-all duration-300',
+        'flex h-full shrink-0 flex-col overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-sm transition-all duration-300 dark:border-slate-800 dark:bg-slate-900 dark:shadow-black/20',
         collapsed ? 'w-20' : 'w-72',
       )}
     >
@@ -61,7 +61,7 @@ export function Sidebar() {
         {user ? (
           <div
             className={cn(
-              'group relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-50 via-white to-violet-50 ring-1 ring-slate-200/60',
+              'group relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-50 via-white to-violet-50 ring-1 ring-slate-200/60 dark:from-slate-800/80 dark:via-slate-900 dark:to-slate-800/80 dark:ring-slate-700/50',
               collapsed ? 'flex justify-center p-2' : 'flex items-center gap-3 p-3',
             )}
           >
@@ -79,10 +79,10 @@ export function Sidebar() {
             </div>
             {!collapsed && (
               <div className="min-w-0">
-                <p className="truncate text-sm font-semibold tracking-tight text-slate-900">
+                <p className="truncate text-sm font-semibold tracking-tight text-slate-900 dark:text-slate-100">
                   {displayName}
                 </p>
-                <span className="mt-1 inline-flex rounded-full bg-white/80 px-2 py-0.5 text-[11px] font-medium tracking-wide text-indigo-700 ring-1 ring-indigo-100">
+                <span className="mt-1 inline-flex rounded-full bg-white/80 px-2 py-0.5 text-[11px] font-medium tracking-wide text-indigo-700 ring-1 ring-indigo-100 dark:bg-slate-800 dark:text-indigo-300 dark:ring-indigo-500/30">
                   {roleLabels[user.role] ?? user.role}
                 </span>
               </div>
@@ -104,7 +104,7 @@ export function Sidebar() {
               )}
             />
             {!collapsed && (
-              <span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text font-display text-lg font-semibold tracking-tight text-transparent">
+              <span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text font-display text-lg font-semibold tracking-tight text-transparent dark:from-indigo-300 dark:to-violet-300">
                 LeadQualify
               </span>
             )}
@@ -114,7 +114,7 @@ export function Sidebar() {
 
       <nav className="flex-1 space-y-1.5 overflow-y-auto px-3 py-2">
         {!collapsed && (
-          <p className="px-3.5 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">
+          <p className="px-3.5 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400 dark:text-slate-500">
             Menu
           </p>
         )}
@@ -130,8 +130,8 @@ export function Sidebar() {
                 'group flex items-center rounded-2xl text-sm transition-all duration-200',
                 collapsed ? 'h-11 w-11 justify-center' : 'gap-3 px-4 py-2.5',
                 isActive(item.path)
-                  ? 'bg-indigo-50 font-semibold text-indigo-700 shadow-sm shadow-indigo-500/5 ring-1 ring-indigo-100'
-                  : 'font-medium text-slate-600 hover:translate-x-0.5 hover:bg-slate-100/80 hover:text-slate-900',
+                  ? 'bg-indigo-50 font-semibold text-indigo-700 shadow-sm shadow-indigo-500/5 ring-1 ring-indigo-100 dark:bg-slate-800 dark:text-indigo-300 dark:ring-indigo-500/20 dark:shadow-indigo-500/10'
+                  : 'font-medium text-slate-600 hover:translate-x-0.5 hover:bg-slate-100/80 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/60 dark:hover:text-slate-200',
               )}
             >
               <item.icon
@@ -143,18 +143,18 @@ export function Sidebar() {
               />
               {!collapsed && <span className="truncate">{item.label}</span>}
               {isActive(item.path) && !collapsed && (
-                <span className="ml-auto h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-500" />
+                <span className="ml-auto h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-500 dark:bg-indigo-400" />
               )}
             </Link>
           ))}
       </nav>
 
-      <div className="space-y-1 border-t border-slate-100 p-3">
+      <div className="space-y-1 border-t border-slate-100 p-3 dark:border-slate-800">
         <button
           onClick={handleLogout}
           title="Sair"
           className={cn(
-            'group flex items-center rounded-2xl p-2.5 text-sm font-medium text-slate-600 transition-all duration-200 hover:bg-rose-50 hover:text-rose-600',
+            'group flex items-center rounded-2xl p-2.5 text-sm font-medium text-slate-600 transition-all duration-200 hover:bg-rose-50 hover:text-rose-600 dark:text-slate-400 dark:hover:bg-rose-500/10 dark:hover:text-rose-400',
             collapsed ? 'h-11 w-11 justify-center' : 'w-full gap-3 px-4',
           )}
         >
@@ -172,7 +172,7 @@ export function Sidebar() {
           onClick={() => setCollapsed((value) => !value)}
           title={collapsed ? 'Expandir menu' : 'Recolher menu'}
           className={cn(
-            'group flex items-center rounded-2xl p-2.5 text-sm font-medium text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700',
+            'group flex items-center rounded-2xl p-2.5 text-sm font-medium text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700 dark:text-slate-500 dark:hover:bg-slate-800 dark:hover:text-slate-300',
             collapsed ? 'h-11 w-11 justify-center' : 'w-full gap-3 px-4',
           )}
         >

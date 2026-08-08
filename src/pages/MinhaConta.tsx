@@ -15,7 +15,7 @@ import { useAuthStore } from '../stores/authStore'
 import { useUsersStore } from '../stores/usersStore'
 
 const inputClass =
-  'h-12 w-full rounded-xl border border-slate-200 bg-slate-50/60 pl-11 pr-4 text-base text-slate-900 placeholder:text-slate-400 transition outline-none focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/15'
+  'h-12 w-full rounded-xl border border-slate-200 bg-slate-50/60 pl-11 pr-4 text-base text-slate-900 placeholder:text-slate-400 transition outline-none focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/15 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-cyan-400 dark:focus:bg-slate-900'
 
 export default function MinhaConta() {
   const user = useAuthStore((state) => state.user)
@@ -70,28 +70,28 @@ export default function MinhaConta() {
           <ShieldCheck className="h-5 w-5 text-white" strokeWidth={2} />
         </span>
         <div>
-          <h1 className="font-display text-2xl font-semibold tracking-tight text-slate-900">
+          <h1 className="font-display text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
             Minha conta
           </h1>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-slate-500 dark:text-slate-400">
             Atualize suas informações pessoais e de acesso
           </p>
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-[2rem] border border-slate-200/70 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-[2rem] border border-slate-200/70 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
         <div className="h-1.5 w-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500" />
 
         <div className="p-7 sm:p-8">
-          <div className="mb-6 flex items-center gap-3 rounded-2xl bg-slate-50 px-4 py-3 ring-1 ring-slate-100">
+          <div className="mb-6 flex items-center gap-3 rounded-2xl bg-slate-50 px-4 py-3 ring-1 ring-slate-100 dark:bg-slate-800/60 dark:ring-slate-700/50">
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 text-sm font-semibold text-white">
               {name.slice(0, 2).toUpperCase() || '?'}
             </span>
             <div className="min-w-0">
-              <p className="truncate text-sm font-semibold text-slate-900">
+              <p className="truncate text-sm font-semibold text-slate-900 dark:text-slate-100">
                 {name}
               </p>
-              <span className="text-xs font-medium text-slate-500">
+              <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
                 {roleLabel}
               </span>
             </div>
@@ -101,12 +101,12 @@ export default function MinhaConta() {
             <div>
               <label
                 htmlFor="me-name"
-                className="mb-1.5 block text-sm font-medium text-slate-700"
+                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 Nome
               </label>
               <div className="relative">
-                <User className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70" />
+                <User className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
                 <input
                   id="me-name"
                   type="text"
@@ -121,12 +121,12 @@ export default function MinhaConta() {
             <div>
               <label
                 htmlFor="me-email"
-                className="mb-1.5 block text-sm font-medium text-slate-700"
+                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
               >
                 E-mail
               </label>
               <div className="relative">
-                <Mail className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70" />
+                <Mail className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
                 <input
                   id="me-email"
                   type="email"
@@ -138,17 +138,17 @@ export default function MinhaConta() {
               </div>
             </div>
 
-            <div className="border-t border-slate-100 pt-5">
-              <p className="mb-1 text-sm font-medium text-slate-700">
+            <div className="border-t border-slate-100 pt-5 dark:border-slate-800">
+              <p className="mb-1 text-sm font-medium text-slate-700 dark:text-slate-300">
                 Alterar senha
               </p>
-              <p className="mb-4 text-xs text-slate-400">
+              <p className="mb-4 text-xs text-slate-400 dark:text-slate-500">
                 Deixe em branco para manter a senha atual
               </p>
 
               <div className="space-y-4">
                 <div className="relative">
-                  <Lock className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70" />
+                  <Lock className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
                   <input
                     type={showPassword ? 'text' : 'password'}
                     placeholder="Nova senha"
@@ -160,7 +160,7 @@ export default function MinhaConta() {
                     type="button"
                     onClick={() => setShowPassword((value) => !value)}
                     aria-label="Mostrar ou ocultar senha"
-                    className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600"
+                    className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
                   >
                     {showPassword ? (
                       <EyeOff className="h-4.5 w-4.5" />
@@ -172,7 +172,7 @@ export default function MinhaConta() {
 
                 {password && (
                   <div className="relative">
-                    <Lock className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70" />
+                    <Lock className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
                     <input
                       type={showConfirm ? 'text' : 'password'}
                       placeholder="Confirme a nova senha"
@@ -184,7 +184,7 @@ export default function MinhaConta() {
                       type="button"
                       onClick={() => setShowConfirm((value) => !value)}
                       aria-label="Mostrar ou ocultar confirmação"
-                      className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600"
+                      className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
                     >
                       {showConfirm ? (
                         <EyeOff className="h-4.5 w-4.5" />

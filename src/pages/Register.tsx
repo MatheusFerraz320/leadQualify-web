@@ -58,21 +58,21 @@ export default function Register() {
   }
 
   const inputClass =
-    'h-12 w-full rounded-xl border border-slate-200 bg-slate-50/60 pl-11 pr-4 text-base text-slate-900 placeholder:text-slate-400 transition outline-none focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/15 focus:shadow-[0_0_0_1px_rgba(6,182,212,0.35),0_0_24px_rgba(6,182,212,0.12)]'
+    'h-12 w-full rounded-xl border border-slate-200 bg-slate-50/60 pl-11 pr-4 text-base text-slate-900 placeholder:text-slate-400 transition outline-none focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/15 focus:shadow-[0_0_0_1px_rgba(6,182,212,0.35),0_0_24px_rgba(6,182,212,0.12)] dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-cyan-400 dark:focus:bg-slate-900'
 
   return (
     <div className="relative flex min-h-full items-center justify-center px-6 py-10">
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-24 right-12 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl"
+        className="pointer-events-none absolute -top-24 right-12 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl dark:bg-cyan-500/10"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -bottom-24 left-12 h-72 w-72 rounded-full bg-blue-500/15 blur-3xl"
+        className="pointer-events-none absolute -bottom-24 left-12 h-72 w-72 rounded-full bg-blue-500/15 blur-3xl dark:bg-blue-500/10"
       />
 
       <div className="relative w-full max-w-md">
-        <div className="overflow-hidden rounded-[2rem] border border-slate-200/70 bg-white shadow-xl shadow-slate-200/60">
+        <div className="overflow-hidden rounded-[2rem] border border-slate-200/70 bg-white shadow-xl shadow-slate-200/60 dark:border-slate-800 dark:bg-slate-900 dark:shadow-black/40">
           <div className="h-1.5 w-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500" />
 
           <div className="p-8 sm:p-10">
@@ -80,10 +80,10 @@ export default function Register() {
               <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/30">
                 <UserPlus className="h-7 w-7 text-white" strokeWidth={1.75} />
               </div>
-              <h1 className="font-display text-2xl font-semibold tracking-tight text-slate-900">
+              <h1 className="font-display text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
                 Cadastrar colaborador
               </h1>
-              <p className="mt-1.5 text-sm text-slate-500">
+              <p className="mt-1.5 text-sm text-slate-500 dark:text-slate-400">
                 Crie o acesso de um novo membro da equipe.
               </p>
             </div>
@@ -92,12 +92,12 @@ export default function Register() {
               <div>
                 <label
                   htmlFor="name"
-                  className="mb-1.5 block text-sm font-medium text-slate-700"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
                 >
                   Nome
                 </label>
                 <div className="relative">
-                  <User className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70" />
+                  <User className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
                   <input
                     id="name"
                     type="text"
@@ -114,12 +114,12 @@ export default function Register() {
               <div>
                 <label
                   htmlFor="email"
-                  className="mb-1.5 block text-sm font-medium text-slate-700"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
                 >
                   E-mail
                 </label>
                 <div className="relative">
-                  <Mail className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70" />
+                  <Mail className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
                   <input
                     id="email"
                     type="email"
@@ -136,12 +136,12 @@ export default function Register() {
               <div>
                 <label
                   htmlFor="role"
-                  className="mb-1.5 block text-sm font-medium text-slate-700"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
                 >
                   Função
                 </label>
                 <div className="relative">
-                  <UserCog className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70" />
+                  <UserCog className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
                   <select
                     id="role"
                     required
@@ -154,19 +154,19 @@ export default function Register() {
                     <option value="COLLABORATOR">Colaborador</option>
                     <option value="ADMIN">Administrador</option>
                   </select>
-                  <ChevronDown className="pointer-events-none absolute top-1/2 right-3.5 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                  <ChevronDown className="pointer-events-none absolute top-1/2 right-3.5 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
                 </div>
               </div>
 
               <div>
                 <label
                   htmlFor="password"
-                  className="mb-1.5 block text-sm font-medium text-slate-700"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
                 >
                   Senha
                 </label>
                 <div className="relative">
-                  <Lock className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70" />
+                  <Lock className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
                   <input
                     id="password"
                     type={showPassword ? 'text' : 'password'}
@@ -183,7 +183,7 @@ export default function Register() {
                     aria-label={
                       showPassword ? 'Ocultar senha' : 'Mostrar senha'
                     }
-                    className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600"
+                    className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
                   >
                     {showPassword ? (
                       <EyeOff className="h-4.5 w-4.5" />
@@ -196,7 +196,7 @@ export default function Register() {
                   <p
                     className={cn(
                       'mt-1.5 flex items-center gap-1.5 text-xs font-medium transition-colors',
-                      password.length >= 8 ? 'text-cyan-600' : 'text-slate-400',
+                      password.length >= 8 ? 'text-cyan-600 dark:text-cyan-400' : 'text-slate-400 dark:text-slate-500',
                     )}
                   >
                     <CircleCheck className="h-3.5 w-3.5" />
@@ -210,12 +210,12 @@ export default function Register() {
               <div>
                 <label
                   htmlFor="confirm-password"
-                  className="mb-1.5 block text-sm font-medium text-slate-700"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
                 >
                   Confirmar senha
                 </label>
                 <div className="relative">
-                  <Lock className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70" />
+                  <Lock className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
                   <input
                     id="confirm-password"
                     type={showConfirm ? 'text' : 'password'}
@@ -232,7 +232,7 @@ export default function Register() {
                     aria-label={
                       showConfirm ? 'Ocultar senha' : 'Mostrar senha'
                     }
-                    className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600"
+                    className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
                   >
                     {showConfirm ? (
                       <EyeOff className="h-4.5 w-4.5" />
@@ -274,7 +274,7 @@ export default function Register() {
 
             <Link
               to="/collaborator"
-              className="mt-6 block text-center text-sm text-slate-500 transition hover:text-slate-700"
+              className="mt-6 block text-center text-sm text-slate-500 transition hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
             >
               Voltar para colaboradores
             </Link>

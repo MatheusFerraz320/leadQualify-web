@@ -73,10 +73,10 @@ export default function Leads() {
           <Inbox className="h-5 w-5 text-white" strokeWidth={2} />
         </span>
         <div>
-          <h1 className="font-display text-2xl font-semibold tracking-tight text-slate-900">
+          <h1 className="font-display text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
             Leads
           </h1>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-slate-500 dark:text-slate-400">
             Acompanhe e qualifique os leads capturados
           </p>
         </div>
@@ -85,10 +85,10 @@ export default function Leads() {
       <div className="flex flex-col gap-6 lg:flex-row">
         {isAdmin && (
           <aside className="w-full shrink-0 lg:w-72">
-            <div className="rounded-3xl border border-slate-200/80 bg-white p-4 shadow-sm">
+            <div className="rounded-3xl border border-slate-200/80 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
               <div className="mb-3 flex items-center gap-2 px-1">
-                <Building2 className="h-4 w-4 text-slate-400" strokeWidth={1.75} />
-                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">
+                <Building2 className="h-4 w-4 text-slate-400 dark:text-slate-500" strokeWidth={1.75} />
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400 dark:text-slate-500">
                   Clientes
                 </p>
               </div>
@@ -97,13 +97,13 @@ export default function Leads() {
                 {clientsLoading && clients === null ? (
                   <div className="flex items-center justify-center gap-2 py-6">
                     <Loader2 className="h-4 w-4 animate-spin text-indigo-500" />
-                    <span className="text-xs text-slate-500">
+                    <span className="text-xs text-slate-500 dark:text-slate-400">
                       Carregando clientes...
                     </span>
                   </div>
                 ) : clientsError && clients === null ? (
                   <div className="flex flex-col items-center gap-3 py-6 text-center">
-                    <p className="text-xs text-slate-500">{clientsError}</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">{clientsError}</p>
                     <button
                       onClick={() => fetchClients()}
                       className="flex items-center gap-1.5 rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-indigo-500"
@@ -119,8 +119,8 @@ export default function Leads() {
                       className={cn(
                         'flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-left text-sm transition',
                         selectedClientId === null
-                          ? 'bg-indigo-50 font-semibold text-indigo-700 ring-1 ring-indigo-100'
-                          : 'text-slate-600 hover:bg-slate-50',
+                          ? 'bg-indigo-50 font-semibold text-indigo-700 ring-1 ring-indigo-100 dark:bg-slate-800 dark:text-indigo-300 dark:ring-indigo-500/20'
+                          : 'text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-800/60',
                       )}
                     >
                       <span
@@ -128,7 +128,7 @@ export default function Leads() {
                           'flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-semibold',
                           selectedClientId === null
                             ? 'bg-indigo-500 text-white'
-                            : 'bg-slate-100 text-slate-500',
+                            : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-300',
                         )}
                       >
                         <Users className="h-4 w-4" strokeWidth={1.75} />
@@ -145,8 +145,8 @@ export default function Leads() {
                         className={cn(
                           'flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-left text-sm transition',
                           selectedClientId === client.userId
-                            ? 'bg-indigo-50 font-semibold text-indigo-700 ring-1 ring-indigo-100'
-                            : 'text-slate-600 hover:bg-slate-50',
+                            ? 'bg-indigo-50 font-semibold text-indigo-700 ring-1 ring-indigo-100 dark:bg-slate-800 dark:text-indigo-300 dark:ring-indigo-500/20'
+                            : 'text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-800/60',
                         )}
                       >
                         <span
@@ -154,7 +154,7 @@ export default function Leads() {
                             'flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-semibold',
                             selectedClientId === client.userId
                               ? 'bg-gradient-to-br from-indigo-500 to-violet-600 text-white'
-                              : 'bg-slate-100 text-slate-500',
+                              : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-300',
                           )}
                         >
                           {initials(client.user?.name ?? '')}
@@ -163,7 +163,7 @@ export default function Leads() {
                           <span className="block truncate font-medium">
                             {client.user?.name ?? 'Cliente'}
                           </span>
-                          <span className="block truncate text-xs text-slate-400">
+                          <span className="block truncate text-xs text-slate-400 dark:text-slate-500">
                             {client.total}{' '}
                             {client.total === 1 ? 'lead' : 'leads'}
                           </span>
@@ -186,11 +186,11 @@ export default function Leads() {
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Buscar por nome ou e-mail"
-                className="h-11 w-full rounded-xl border border-slate-200 bg-white pl-10 pr-4 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-500/10"
+                className="h-11 w-full rounded-xl border border-slate-200 bg-white pl-10 pr-4 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-indigo-500"
               />
             </div>
 
-            <div className="flex items-center gap-1.5 rounded-xl bg-slate-100 p-1">
+            <div className="flex items-center gap-1.5 rounded-xl bg-slate-100 p-1 dark:bg-slate-800/70">
               {statusOptions.map((option) => (
                 <button
                   key={option.value}
@@ -198,8 +198,8 @@ export default function Leads() {
                   className={cn(
                     'rounded-lg px-3 py-1.5 text-xs font-semibold transition',
                     status === option.value
-                      ? 'bg-white text-slate-900 shadow-sm'
-                      : 'text-slate-500 hover:text-slate-800',
+                      ? 'bg-white text-slate-900 shadow-sm dark:bg-slate-700 dark:text-slate-100'
+                      : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200',
                   )}
                 >
                   {option.label}
@@ -209,15 +209,15 @@ export default function Leads() {
           </div>
 
           {selectedClient && (
-            <div className="mb-4 flex items-center gap-3 rounded-2xl border border-indigo-100 bg-indigo-50/60 px-4 py-3">
+            <div className="mb-4 flex items-center gap-3 rounded-2xl border border-indigo-100 bg-indigo-50/60 px-4 py-3 dark:border-indigo-500/20 dark:bg-indigo-500/10">
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 text-xs font-semibold text-white">
                 {initials(selectedClient.user?.name ?? '')}
               </span>
               <div className="min-w-0">
-                <p className="truncate text-sm font-semibold text-slate-900">
+                <p className="truncate text-sm font-semibold text-slate-900 dark:text-slate-100">
                   {selectedClient.user?.name}
                 </p>
-                <p className="truncate text-xs text-slate-500">
+                <p className="truncate text-xs text-slate-500 dark:text-slate-400">
                   {selectedClient.user?.email}
                 </p>
               </div>
@@ -227,13 +227,13 @@ export default function Leads() {
           {loading && leads === null ? (
             <div className="flex items-center justify-center gap-3 py-24">
               <Loader2 className="h-5 w-5 animate-spin text-indigo-500" />
-              <span className="text-sm text-slate-500">
+              <span className="text-sm text-slate-500 dark:text-slate-400">
                 Carregando leads...
               </span>
             </div>
           ) : error && leads === null ? (
             <div className="flex flex-col items-center gap-4 py-24">
-              <p className="text-sm text-slate-500">{error}</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400">{error}</p>
               <button
                 onClick={() => fetchLeads(isAdmin ? (selectedClientId ?? undefined) : undefined)}
                 className="flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500"
@@ -244,10 +244,10 @@ export default function Leads() {
             </div>
           ) : filteredLeads.length === 0 ? (
             <div className="flex flex-col items-center gap-3 py-24 text-center">
-              <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100">
-                <Inbox className="h-6 w-6 text-slate-400" strokeWidth={1.75} />
+              <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100 dark:bg-slate-800/60">
+                <Inbox className="h-6 w-6 text-slate-400 dark:text-slate-500" strokeWidth={1.75} />
               </span>
-              <p className="text-sm font-medium text-slate-600">
+              <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
                 {query || status
                   ? 'Nenhum lead encontrado'
                   : 'Nenhum lead capturado ainda'}
@@ -256,7 +256,7 @@ export default function Leads() {
           ) : (
             <>
               {leads && filteredLeads.length !== leads.length && (
-                <p className="mb-3 text-xs text-slate-400">
+                <p className="mb-3 text-xs text-slate-400 dark:text-slate-500">
                   Mostrando {filteredLeads.length} de {leads.length} leads
                 </p>
               )}

@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
 import { Toaster } from 'sonner'
+import { useThemeStore } from './stores/themeStore'
 import Login from './pages/Login'
 import Home from './pages/Home'
 import Register from './pages/Register'
@@ -11,9 +12,11 @@ import { RequireAuth } from './components/layout/RequireAuth'
 import { RequireAdmin } from './components/layout/RequireAdmin'
 
 function App() {
+  const theme = useThemeStore((state) => state.theme)
+
   return (
     <BrowserRouter>
-      <Toaster richColors position="top-right" />
+      <Toaster richColors position="top-right" theme={theme} />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route element={<RequireAuth />}>

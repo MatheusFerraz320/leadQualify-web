@@ -37,11 +37,6 @@ const navModules: NavModule[] = [
     adminOnly: true,
   },
   {
-    label: 'Notificações',
-    path: '/notificacoes',
-    icon: Bell,
-  },
-  {
     label: 'Ajuda',
     path: '/ajuda',
     icon: LifeBuoy,
@@ -70,8 +65,8 @@ export function Navbar() {
     cn(
       'flex items-center gap-2 rounded-full px-4 py-2.5 text-base font-medium transition-all duration-200',
       isPathActive(path)
-        ? 'bg-white font-semibold text-b2-600 shadow-md shadow-b2-950/25 ring-1 ring-white/30 dark:bg-white/10 dark:text-b2-200 dark:shadow-b2-400/10 dark:ring-b2-400/30 dark:backdrop-blur'
-        : 'text-white/85 hover:bg-white/10 hover:text-white dark:text-white/80 dark:hover:bg-white/10 dark:hover:text-white',
+        ? 'bg-white font-semibold text-b2-600 shadow-md shadow-b2-950/25 ring-1 ring-white/30 dark:bg-b2-950/50 dark:bg-gradient-to-r dark:from-b2-400/30 dark:via-b2-500/20 dark:to-b2-600/30 dark:text-white dark:shadow-[0_0_24px_-4px_rgba(0,212,255,0.55)] dark:ring-b2-300/50 dark:backdrop-blur-md'
+        : 'text-white/85 hover:bg-white/10 hover:text-white dark:text-white/75 dark:hover:bg-white/15 dark:hover:text-white dark:hover:shadow-[0_0_16px_-6px_rgba(0,212,255,0.45)] dark:hover:ring-white/20',
     )
 
   return (
@@ -91,20 +86,37 @@ export function Navbar() {
         )}
       </nav>
 
-      <button
-        onClick={toggleTheme}
-        title={theme === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'}
-        aria-label={
-          theme === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'
-        }
-        className="absolute top-1/2 right-6 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white/90 ring-1 ring-white/20 transition hover:bg-white/20 hover:text-white active:scale-95 dark:bg-white/5 dark:text-b2-200 dark:ring-b2-400/30 dark:hover:bg-white/10 dark:hover:text-white"
-      >
-        {theme === 'dark' ? (
-          <Sun className="h-5 w-5" strokeWidth={1.75} />
-        ) : (
-          <Moon className="h-5 w-5" strokeWidth={1.75} />
-        )}
-      </button>
+      <div className="absolute top-1/2 right-6 flex -translate-y-1/2 items-center gap-1.5">
+        <Link
+          to="/notificacoes"
+          title="Notificações"
+          aria-label="Notificações"
+          aria-current={isPathActive('/notificacoes') ? 'page' : undefined}
+          className={cn(
+            'flex h-10 w-10 items-center justify-center rounded-full transition active:scale-95',
+            isPathActive('/notificacoes')
+              ? 'bg-white/25 text-white ring-1 ring-white/40 dark:bg-white/10 dark:text-white dark:ring-b2-400/40'
+              : 'bg-white/10 text-white/90 ring-1 ring-white/20 hover:bg-white/20 hover:text-white dark:bg-white/5 dark:text-b2-200 dark:ring-b2-400/30 dark:hover:bg-white/10 dark:hover:text-white',
+          )}
+        >
+          <Bell className="h-5 w-5" strokeWidth={1.75} />
+        </Link>
+
+        <button
+          onClick={toggleTheme}
+          title={theme === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'}
+          aria-label={
+            theme === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'
+          }
+          className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white/90 ring-1 ring-white/20 transition hover:bg-white/20 hover:text-white active:scale-95 dark:bg-white/5 dark:text-b2-200 dark:ring-b2-400/30 dark:hover:bg-white/10 dark:hover:text-white"
+        >
+          {theme === 'dark' ? (
+            <Sun className="h-5 w-5" strokeWidth={1.75} />
+          ) : (
+            <Moon className="h-5 w-5" strokeWidth={1.75} />
+          )}
+        </button>
+      </div>
     </header>
   )
 }

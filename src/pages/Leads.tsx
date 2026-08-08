@@ -1,16 +1,17 @@
 import { useEffect, useMemo, useState } from 'react'
 import {
-  Building2,
+  CalendarDays,
+  ChevronDown,
   Inbox,
   Loader2,
   RefreshCw,
   Search,
-  Users,
 } from 'lucide-react'
-import { cn, initials } from '../lib/utils'
+import { cn, groupByMonth } from '../lib/utils'
 import { useAuthStore } from '../stores/authStore'
 import { useLeadsStore, type LeadStatus } from '../stores/leadsStore'
 import { LeadCard } from '../components/leads/LeadCard'
+import { ClientSelect } from '../components/leads/ClientSelect'
 
 const statusOptions: Array<{ value: LeadStatus | ''; label: string }> = [
   { value: '', label: 'Todos' },
@@ -38,6 +39,20 @@ export default function Leads() {
 
   const [query, setQuery] = useState('')
   const [status, setStatus] = useState<LeadStatus | ''>('')
+  const [collapsedMonths, setCollapsedMonths] = useState<Set<string>>(
+    () => new Set(),
+  )
+
+  const toggleMonth = (key: string) =>
+    setCollapsedMonths((previous) => {
+      const next = new Set(previous)
+      if (next.has(key)) {
+        next.delete(key)
+      } else {
+        next.add(key)
+      }
+      return next
+    })
 
   useEffect(() => {
     if (isAdmin && clients === null) {
@@ -62,8 +77,9 @@ export default function Leads() {
     })
   }, [leads, query, status])
 
-  const selectedClient = clients?.find(
-    (client) => client.userId === selectedClientId,
+  const monthGroups = useMemo(
+    () => groupByMonth(filteredLeads),
+    [filteredLeads],
   )
 
   return (
@@ -82,148 +98,49 @@ export default function Leads() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-6 lg:flex-row">
-        {isAdmin && (
-          <aside className="w-full shrink-0 lg:w-72">
-            <div className="rounded-3xl border border-slate-200/80 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-              <div className="mb-3 flex items-center gap-2 px-1">
-                <Building2 className="h-4 w-4 text-slate-400 dark:text-slate-500" strokeWidth={1.75} />
-                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400 dark:text-slate-500">
-                  Clientes
-                </p>
-              </div>
-
-              <div className="space-y-1.5">
-                {clientsLoading && clients === null ? (
-                  <div className="flex items-center justify-center gap-2 py-6">
-                    <Loader2 className="h-4 w-4 animate-spin text-indigo-500" />
-                    <span className="text-xs text-slate-500 dark:text-slate-400">
-                      Carregando clientes...
-                    </span>
-                  </div>
-                ) : clientsError && clients === null ? (
-                  <div className="flex flex-col items-center gap-3 py-6 text-center">
-                    <p className="text-xs text-slate-500 dark:text-slate-400">{clientsError}</p>
-                    <button
-                      onClick={() => fetchClients()}
-                      className="flex items-center gap-1.5 rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-indigo-500"
-                    >
-                      <RefreshCw className="h-3.5 w-3.5" />
-                      Tentar novamente
-                    </button>
-                  </div>
-                ) : (
-                  <>
-                    <button
-                      onClick={() => selectClient(null)}
-                      className={cn(
-                        'flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-left text-sm transition',
-                        selectedClientId === null
-                          ? 'bg-indigo-50 font-semibold text-indigo-700 ring-1 ring-indigo-100 dark:bg-slate-800 dark:text-indigo-300 dark:ring-indigo-500/20'
-                          : 'text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-800/60',
-                      )}
-                    >
-                      <span
-                        className={cn(
-                          'flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-semibold',
-                          selectedClientId === null
-                            ? 'bg-indigo-500 text-white'
-                            : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-300',
-                        )}
-                      >
-                        <Users className="h-4 w-4" strokeWidth={1.75} />
-                      </span>
-                      <span className="min-w-0 flex-1 truncate font-medium">
-                        Todos os clientes
-                      </span>
-                    </button>
-
-                    {clients?.map((client) => (
-                      <button
-                        key={client.userId}
-                        onClick={() => selectClient(client.userId)}
-                        className={cn(
-                          'flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-left text-sm transition',
-                          selectedClientId === client.userId
-                            ? 'bg-indigo-50 font-semibold text-indigo-700 ring-1 ring-indigo-100 dark:bg-slate-800 dark:text-indigo-300 dark:ring-indigo-500/20'
-                            : 'text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-800/60',
-                        )}
-                      >
-                        <span
-                          className={cn(
-                            'flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-semibold',
-                            selectedClientId === client.userId
-                              ? 'bg-gradient-to-br from-indigo-500 to-violet-600 text-white'
-                              : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-300',
-                          )}
-                        >
-                          {initials(client.user?.name ?? '')}
-                        </span>
-                        <span className="min-w-0 flex-1">
-                          <span className="block truncate font-medium">
-                            {client.user?.name ?? 'Cliente'}
-                          </span>
-                          <span className="block truncate text-xs text-slate-400 dark:text-slate-500">
-                            {client.total}{' '}
-                            {client.total === 1 ? 'lead' : 'leads'}
-                          </span>
-                        </span>
-                      </button>
-                    ))}
-                  </>
-                )}
-              </div>
-            </div>
-          </aside>
-        )}
-
-        <section className="min-w-0 flex-1">
-          <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-            <div className="relative w-full max-w-sm">
-              <Search className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-slate-400" />
-              <input
-                type="search"
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="Buscar por nome ou e-mail"
-                className="h-11 w-full rounded-xl border border-slate-200 bg-white pl-10 pr-4 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-indigo-500"
-              />
-            </div>
-
-            <div className="flex items-center gap-1.5 rounded-xl bg-slate-100 p-1 dark:bg-slate-800/70">
-              {statusOptions.map((option) => (
-                <button
-                  key={option.value}
-                  onClick={() => setStatus(option.value)}
-                  className={cn(
-                    'rounded-lg px-3 py-1.5 text-xs font-semibold transition',
-                    status === option.value
-                      ? 'bg-white text-slate-900 shadow-sm dark:bg-slate-700 dark:text-slate-100'
-                      : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200',
-                  )}
-                >
-                  {option.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {selectedClient && (
-            <div className="mb-4 flex items-center gap-3 rounded-2xl border border-indigo-100 bg-indigo-50/60 px-4 py-3 dark:border-indigo-500/20 dark:bg-indigo-500/10">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 text-xs font-semibold text-white">
-                {initials(selectedClient.user?.name ?? '')}
-              </span>
-              <div className="min-w-0">
-                <p className="truncate text-sm font-semibold text-slate-900 dark:text-slate-100">
-                  {selectedClient.user?.name}
-                </p>
-                <p className="truncate text-xs text-slate-500 dark:text-slate-400">
-                  {selectedClient.user?.email}
-                </p>
-              </div>
-            </div>
+      <section className="min-w-0">
+        <div className="mb-4 flex flex-wrap items-center gap-3">
+          {isAdmin && (
+            <ClientSelect
+              clients={clients}
+              selectedClientId={selectedClientId}
+              loading={clientsLoading}
+              error={clientsError}
+              onSelect={selectClient}
+              onRetry={fetchClients}
+            />
           )}
 
+          <div className="relative w-full max-w-sm min-w-52 flex-1">
+            <Search className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
+            <input
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Buscar por nome ou e-mail"
+              className="h-11 w-full rounded-xl border border-slate-200 bg-white pl-10 pr-4 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-indigo-500"
+            />
+          </div>
+
+          <div className="ml-auto flex items-center gap-1.5 rounded-xl bg-slate-100 p-1 dark:bg-slate-800/70">
+            {statusOptions.map((option) => (
+              <button
+                key={option.value}
+                onClick={() => setStatus(option.value)}
+                className={cn(
+                  'rounded-lg px-3 py-1.5 text-xs font-semibold transition',
+                  status === option.value
+                    ? 'bg-white text-slate-900 shadow-sm dark:bg-slate-700 dark:text-slate-100'
+                    : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200',
+                )}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="min-w-0">
           {loading && leads === null ? (
             <div className="flex items-center justify-center gap-3 py-24">
               <Loader2 className="h-5 w-5 animate-spin text-indigo-500" />
@@ -254,21 +171,60 @@ export default function Leads() {
               </p>
             </div>
           ) : (
-            <>
-              {leads && filteredLeads.length !== leads.length && (
-                <p className="mb-3 text-xs text-slate-400 dark:text-slate-500">
-                  Mostrando {filteredLeads.length} de {leads.length} leads
-                </p>
-              )}
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-                {filteredLeads.map((lead) => (
-                  <LeadCard key={lead.id} lead={lead} />
-                ))}
+            <div className="space-y-8">
+              {monthGroups.map((group) => {
+                const collapsed = collapsedMonths.has(group.key)
+                return (
+                  <section key={group.key} className="min-w-0">
+                    <button
+                      onClick={() => toggleMonth(group.key)}
+                      aria-expanded={!collapsed}
+                      className="group mb-3 flex w-full items-center gap-2.5 rounded-xl px-1 py-1 text-left"
+                    >
+                      <CalendarDays
+                        className="h-4.5 w-4.5 shrink-0 text-indigo-500 dark:text-indigo-400"
+                        strokeWidth={1.75}
+                      />
+                      <h2 className="font-display text-lg font-semibold tracking-tight text-slate-900 capitalize dark:text-slate-100">
+                        {group.label}
+                      </h2>
+                      <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-500 dark:bg-slate-800 dark:text-slate-400">
+                        {group.items.length}{' '}
+                        {group.items.length === 1 ? 'lead' : 'leads'}
+                      </span>
+                      <span className="h-px min-w-4 flex-1 bg-slate-200 dark:bg-slate-800" />
+                      <ChevronDown
+                        className={cn(
+                          'h-5 w-5 shrink-0 text-slate-400 transition-transform duration-200 dark:text-slate-500',
+                          collapsed ? '-rotate-90' : 'rotate-0',
+                        )}
+                        strokeWidth={1.75}
+                      />
+                    </button>
+
+                    <div
+                      className={cn(
+                        'grid transition-all duration-300 ease-in-out',
+                        collapsed
+                          ? 'grid-rows-[0fr] opacity-0'
+                          : 'grid-rows-[1fr] opacity-100',
+                      )}
+                    >
+                      <div className="min-h-0 overflow-hidden">
+                        <div className="grid grid-cols-1 gap-4 pt-1 pb-2 md:grid-cols-2 xl:grid-cols-3">
+                          {group.items.map((lead) => (
+                            <LeadCard key={lead.id} lead={lead} />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                )
+              })}
               </div>
-            </>
           )}
-        </section>
-      </div>
+        </div>
+      </section>
     </div>
   )
 }

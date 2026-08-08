@@ -28,6 +28,15 @@ export type ClientSummary = {
   total: number
 }
 
+export type UpdateLeadPayload = {
+  name?: string
+  email?: string
+  phone?: string
+  product?: string
+  finality?: string
+  status?: LeadStatus
+}
+
 type UsersByLeadCount = Array<{ userId: string; total: number }>
 
 type LeadsState = {
@@ -42,6 +51,8 @@ type LeadsState = {
   fetchLeads: (userId?: string) => Promise<string | null>
   selectClient: (userId: string | null) => void
   setStatus: (id: string, status: LeadStatus) => Promise<string | null>
+  updateLead: (id: string, payload: UpdateLeadPayload) => Promise<string | null>
+  deleteLead: (id: string) => Promise<string | null>
 }
 
 export const useLeadsStore = create<LeadsState>()((set, get) => ({
@@ -138,6 +149,61 @@ export const useLeadsStore = create<LeadsState>()((set, get) => ({
     } catch (err) {
       const message =
         err instanceof Error ? err.message : 'Erro ao atualizar lead'
+      set({ error: message })
+      return message
+    }
+  },
+
+  updateLead: async (id, payload) => {
+    set({ error: null })
+    try {
+      const response = await api(`/leads/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(payload),
+      })
+      if (!response.ok) {
+        const message = await getErrorMessage(response)
+        throw new Error(message || 'Erro ao atualizar lead')
+      }
+      const updated = (await response.json()) as Lead
+      set({
+        leads:
+          get().leads?.map((lead) => (lead.id === id ? { ...lead, ...updated } : lead)) ??
+          null,
+      })
+      return null
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : 'Erro ao atualizar lead'
+      set({ error: message })
+      return message
+    }
+  },
+
+  deleteLead: async (id) => {
+    set({ error: null })
+    try {
+      const response = await api(`/leads/${id}`, { method: 'DELETE' })
+      if (!response.ok) {
+        const message = await getErrorMessage(response)
+        throw new Error(message || 'Erro ao excluir lead')
+      }
+      const current = get()
+      const removed = current.leads?.find((lead) => lead.id === id)
+      set({
+        leads: current.leads?.filter((lead) => lead.id !== id) ?? null,
+        clients: removed
+          ? current.clients?.map((client) =>
+              client.userId === removed.userId
+                ? { ...client, total: Math.max(0, client.total - 1) }
+                : client,
+            ) ?? null
+          : current.clients,
+      })
+      return null
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : 'Erro ao excluir lead'
       set({ error: message })
       return message
     }

@@ -3,8 +3,9 @@ import { Toaster } from 'sonner'
 import Login from './pages/Login'
 import Home from './pages/Home'
 import Register from './pages/Register'
-import Colaboradores from './pages/Colaboradores'
+import Collaborator from './pages/Collaborator'
 import MinhaConta from './pages/MinhaConta'
+import Leads from './pages/Leads'
 import { Layout } from './components/layout/Layout'
 import { RequireAuth } from './components/layout/RequireAuth'
 import { RequireAdmin } from './components/layout/RequireAdmin'
@@ -18,9 +19,10 @@ function App() {
         <Route element={<RequireAuth />}>
           <Route element={<Layout />}>
             <Route index element={<Home />} />
+            <Route path="leads" element={<Leads />} />
             <Route path="minha-conta" element={<MinhaConta />} />
             <Route element={<RequireAdmin />}>
-              <Route path="colaboradores" element={<Colaboradores />} />
+              <Route path="collaborator" element={<Collaborator />} />
               <Route path="register" element={<Register />} />
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />

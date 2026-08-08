@@ -53,7 +53,7 @@ export default function Register() {
       toast.error(registerError)
     } else {
       toast.success('Colaborador cadastrado com sucesso!')
-      navigate('/colaboradores', { replace: true })
+      navigate('/collaborator', { replace: true })
     }
   }
 
@@ -273,7 +273,7 @@ export default function Register() {
             </form>
 
             <Link
-              to="/colaboradores"
+              to="/collaborator"
               className="mt-6 block text-center text-sm text-slate-500 transition hover:text-slate-700"
             >
               Voltar para colaboradores

@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router'
 import {
   Bell,
+  Inbox,
   LayoutDashboard,
   LifeBuoy,
   UserPlus,
@@ -24,9 +25,15 @@ const navModules: NavModule[] = [
     icon: LayoutDashboard,
   },
   {
+    label: 'Leads',
+    subtitle: 'Acompanhe e qualifique seus leads',
+    path: '/leads',
+    icon: Inbox,
+  },
+  {
     label: 'Colaboradores',
     subtitle: 'Gerencie os acessos da equipe',
-    path: '/colaboradores',
+    path: '/collaborator',
     icon: UserPlus,
     adminOnly: true,
   },
@@ -50,9 +57,9 @@ export function Navbar() {
 
   const isPathActive = (path: string) => {
     if (path === '/') return location.pathname === '/'
-    if (path === '/colaboradores') {
+    if (path === '/collaborator') {
       return (
-        location.pathname.startsWith('/colaboradores') ||
+        location.pathname.startsWith('/collaborator') ||
         location.pathname === '/register'
       )
     }

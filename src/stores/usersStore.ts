@@ -23,6 +23,8 @@ type UsersState = {
   updateUser: (id: string, payload: UpdateUserPayload) => Promise<string | null>
   deleteUser: (id: string) => Promise<string | null>
   updateMe: (payload: UpdateProfilePayload) => Promise<string | null>
+  fetchWebhookToken: (id: string) => Promise<string | null>
+  rotateWebhookToken: (id: string) => Promise<string | null>
 }
 
 export const useUsersStore = create<UsersState>()((set, get) => ({
@@ -122,6 +124,44 @@ export const useUsersStore = create<UsersState>()((set, get) => ({
         err instanceof Error ? err.message : 'Erro ao atualizar perfil'
       set({ error: message })
       return message
+    }
+  },
+
+  fetchWebhookToken: async (id) => {
+    set({ error: null })
+    try {
+      const response = await api(`/users/${id}/rdstation-token`)
+      if (!response.ok) {
+        const message = await getErrorMessage(response)
+        throw new Error(message || 'Erro ao carregar token de webhook')
+      }
+      const data = (await response.json()) as { rdWebhookToken: string | null }
+      return data.rdWebhookToken
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : 'Erro ao carregar token de webhook'
+      set({ error: message })
+      return null
+    }
+  },
+
+  rotateWebhookToken: async (id) => {
+    set({ error: null })
+    try {
+      const response = await api(`/users/${id}/rdstation-token`, {
+        method: 'POST',
+      })
+      if (!response.ok) {
+        const message = await getErrorMessage(response)
+        throw new Error(message || 'Erro ao regenerar token')
+      }
+      const data = (await response.json()) as { rdWebhookToken: string | null }
+      return data.rdWebhookToken
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : 'Erro ao regenerar token'
+      set({ error: message })
+      return null
     }
   },
 }))

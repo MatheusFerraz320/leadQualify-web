@@ -5,6 +5,7 @@ import {
   ChevronRight,
   CircleUser,
   Home,
+  Inbox,
   LogOut,
   UserPlus,
 } from 'lucide-react'
@@ -21,7 +22,8 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   { label: 'Início', path: '/', icon: Home },
-  { label: 'Colaboradores', path: '/colaboradores', icon: UserPlus, adminOnly: true },
+  { label: 'Leads', path: '/leads', icon: Inbox },
+  { label: 'Colaboradores', path: '/collaborator', icon: UserPlus, adminOnly: true },
   { label: 'Meu perfil', path: '/minha-conta', icon: CircleUser },
 ]
 

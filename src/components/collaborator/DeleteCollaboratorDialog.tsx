@@ -9,7 +9,7 @@ type Props = {
   onClose: () => void
 }
 
-export function DeleteColaboradorDialog({ user, onClose }: Props) {
+export function DeleteCollaboratorDialog({ user, onClose }: Props) {
   const [deleting, setDeleting] = useState(false)
   const { deleteUser } = useUsersStore()
 

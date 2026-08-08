@@ -8,13 +8,15 @@ import {
   Trash2,
   UserPlus,
   Users,
+  Webhook,
 } from 'lucide-react'
 import { toast } from 'sonner'
 import { cn, formatDate, initials } from '../lib/utils'
 import { useUsersStore } from '../stores/usersStore'
 import { useAuthStore, type User } from '../stores/authStore'
-import { EditColaboradorModal } from '../components/colaboradores/EditColaboradorModal'
-import { DeleteColaboradorDialog } from '../components/colaboradores/DeleteColaboradorDialog'
+import { EditCollaboratorModal } from '../components/collaborator/EditCollaboratorModal'
+import { DeleteCollaboratorDialog } from '../components/collaborator/DeleteCollaboratorDialog'
+import { WebhookModal } from '../components/collaborator/WebhookModal'
 
 const roleBadge: Record<User['role'], string> = {
   ADMIN: 'bg-indigo-50 text-indigo-700 ring-indigo-200',
@@ -26,10 +28,11 @@ const roleLabel: Record<User['role'], string> = {
   COLLABORATOR: 'Colaborador',
 }
 
-export default function Colaboradores() {
+export default function Collaborator() {
   const [query, setQuery] = useState('')
   const [editingUser, setEditingUser] = useState<User | null>(null)
   const [deletingUser, setDeletingUser] = useState<User | null>(null)
+  const [webhookUser, setWebhookUser] = useState<User | null>(null)
 
   const { users, loading, error, fetchUsers } = useUsersStore()
   const currentUserId = useAuthStore((state) => state.user?.id)
@@ -194,6 +197,14 @@ export default function Colaboradores() {
                   <td className="px-6 py-4">
                     <div className="flex items-center justify-end gap-1">
                       <button
+                        onClick={() => setWebhookUser(user)}
+                        title="Integração RD Station"
+                        aria-label={`Webhook de ${user.name}`}
+                        className="rounded-lg p-2 text-slate-400 transition hover:bg-cyan-50 hover:text-cyan-600"
+                      >
+                        <Webhook className="h-4 w-4" strokeWidth={1.75} />
+                      </button>
+                      <button
                         onClick={() => setEditingUser(user)}
                         title="Editar"
                         aria-label={`Editar ${user.name}`}
@@ -219,16 +230,23 @@ export default function Colaboradores() {
       </div>
 
       {editingUser && (
-        <EditColaboradorModal
+        <EditCollaboratorModal
           user={editingUser}
           onClose={() => setEditingUser(null)}
         />
       )}
 
       {deletingUser && (
-        <DeleteColaboradorDialog
+        <DeleteCollaboratorDialog
           user={deletingUser}
           onClose={() => setDeletingUser(null)}
+        />
+      )}
+
+      {webhookUser && (
+        <WebhookModal
+          user={webhookUser}
+          onClose={() => setWebhookUser(null)}
         />
       )}
     </div>

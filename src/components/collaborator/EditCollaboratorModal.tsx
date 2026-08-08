@@ -23,7 +23,7 @@ type Props = {
 const inputClass =
   'h-11 w-full rounded-xl border border-slate-200 bg-slate-50/60 pl-11 pr-4 text-sm text-slate-900 placeholder:text-slate-400 transition outline-none focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/15'
 
-export function EditColaboradorModal({ user, onClose }: Props) {
+export function EditCollaboratorModal({ user, onClose }: Props) {
   const [name, setName] = useState(user.name)
   const [email, setEmail] = useState(user.email)
   const [role, setRole] = useState<UserRole>(user.role)

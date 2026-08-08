@@ -11,7 +11,7 @@ export function RequireAuth() {
     if (!token) {
       toast.error('Você precisa estar logado para acessar essa rota');
     }
-  }, [token]); 
+  }, []); 
 
  
   if (!token) {

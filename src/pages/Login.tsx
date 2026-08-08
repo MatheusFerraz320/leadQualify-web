@@ -42,10 +42,11 @@ export default function Login() {
         <div className="w-full max-w-lg">
           <div className="mb-1 flex flex-col items-center text-center">
             <div className="mb-1 flex items-center justify-center rounded-2xl">
-              <img src="/b2LightLogo.png" className="h-50 w-50 object-contain" alt="Logo" />
+              <img src="/b2LightLogo.png" className="h-50 w-50 object-contain dark:hidden" alt="Logo" />
+              <img src="/b2DarkLogo.png" className="h-50 w-50 object-contain hidden dark:block mb-6" alt="Logo" />
             </div>
             <h1 className="bg-gradient-to-r from-blue-600 to-cyan-300 bg-clip-text font-display text-4xl font-semibold tracking-tight text-transparent">
-              LeadQualify
+              ILM
             </h1>
             <p className="mt-2 text-sm font-medium text-slate-500 dark:text-slate-400">
               Qualifique seus leads com inteligência

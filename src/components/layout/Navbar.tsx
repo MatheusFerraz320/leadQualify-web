@@ -63,10 +63,10 @@ export function Navbar() {
 
   const linkClass = (path: string) =>
     cn(
-      'flex items-center gap-2 rounded-full px-4 py-2.5 text-base font-medium transition-all duration-200',
+      'flex items-center gap-2 rounded-full px-4 py-2.5 text-base font-medium drop-shadow-[0_1px_2px_rgba(0,61,82,0.45)] transition-all duration-200',
       isPathActive(path)
-        ? 'bg-white font-semibold text-b2-600 shadow-md shadow-b2-950/25 ring-1 ring-white/30 dark:bg-b2-950/50 dark:bg-gradient-to-r dark:from-b2-400/30 dark:via-b2-500/20 dark:to-b2-600/30 dark:text-white dark:shadow-[0_0_24px_-4px_rgba(0,212,255,0.55)] dark:ring-b2-300/50 dark:backdrop-blur-md'
-        : 'text-white/85 hover:bg-white/10 hover:text-white dark:text-white/75 dark:hover:bg-white/15 dark:hover:text-white dark:hover:shadow-[0_0_16px_-6px_rgba(0,212,255,0.45)] dark:hover:ring-white/20',
+        ? 'bg-white font-semibold text-b2-700 shadow-md shadow-b2-950/25 ring-1 ring-white/40 dark:bg-b2-950/50 dark:bg-gradient-to-r dark:from-b2-400/30 dark:via-b2-500/20 dark:to-b2-600/30 dark:font-semibold dark:text-white dark:shadow-[0_0_24px_-4px_rgba(0,212,255,0.55)] dark:ring-b2-300/50 dark:backdrop-blur-md dark:drop-shadow-none'
+        : 'text-white/95 hover:bg-white/15 hover:text-white dark:text-white/90 dark:hover:bg-white/15 dark:hover:text-white dark:hover:shadow-[0_0_16px_-6px_rgba(0,212,255,0.45)] dark:hover:ring-white/20',
     )
 
   return (

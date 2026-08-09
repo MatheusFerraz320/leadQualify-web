@@ -65,12 +65,12 @@ export function Navbar() {
     cn(
       'flex items-center gap-2 rounded-full px-4 py-2.5 text-base font-medium drop-shadow-[0_1px_2px_rgba(0,61,82,0.45)] transition-all duration-200',
       isPathActive(path)
-        ? 'bg-white font-semibold text-b2-700 shadow-md shadow-b2-950/25 ring-1 ring-white/40 dark:bg-b2-950/50 dark:bg-gradient-to-r dark:from-b2-400/30 dark:via-b2-500/20 dark:to-b2-600/30 dark:font-semibold dark:text-white dark:shadow-[0_0_24px_-4px_rgba(0,212,255,0.55)] dark:ring-b2-300/50 dark:backdrop-blur-md dark:drop-shadow-none'
-        : 'text-white/95 hover:bg-white/15 hover:text-white dark:text-white/90 dark:hover:bg-white/15 dark:hover:text-white dark:hover:shadow-[0_0_16px_-6px_rgba(0,212,255,0.45)] dark:hover:ring-white/20',
+        ? 'bg-white font-semibold text-b2-700 shadow-md shadow-b2-950/25 ring-1 ring-white/40 dark:bg-b2-950/50 dark:bg-gradient-to-r dark:from-b2-900/30 dark:via-b2-600/20 dark:to-b2-700/30 dark:font-semibold dark:text-white dark:shadow-[0_0_24px_-4px_rgba(0,212,255,0.55)] dark:ring-b2-300/50 dark:backdrop-blur-md dark:drop-shadow-none'
+        : 'text-white/95 hover:bg-white/15 hover:text-white dark:text-white dark:hover:bg-white/15 dark:hover:text-white dark:hover:shadow-[0_0_16px_-6px_rgba(0,212,255,0.45)] dark:hover:ring-white/20',
     )
 
   return (
-    <header className="relative flex h-20 shrink-0 items-center justify-center border-b border-white/10 bg-gradient-to-r from-b2-500 via-b2-600 to-b2-700 px-7 shadow-lg shadow-b2-700/25 dark:from-b2-500 dark:via-b2-600 dark:to-slate-950 dark:shadow-[0_0_45px_-6px_rgba(0,212,255,0.6)]">
+    <header className="relative flex h-20 shrink-0 items-center justify-center border-b border-white/10 bg-gradient-to-r from-b2-500 via-b2-600 to-b2-700 px-7 shadow-lg shadow-b2-700/25 dark:from-b2-500 dark:via-b2-700 dark:to-slate-900 dark:shadow-[0_0_45px_-6px_rgba(0,212,255,0.6)]">
       <nav className="flex items-center gap-1.5">
         {navModules.map((module) =>
           module.adminOnly && user?.role !== 'ADMIN' ? null : (

@@ -53,11 +53,12 @@ export default function Login() {
             </p>
           </div>
 
-          <div className="rounded-[2rem] border border-slate-200/70 bg-white/80 p-8 shadow-xl shadow-slate-200/60 backdrop-blur sm:p-12 dark:border-slate-800 dark:bg-white/[0.04] dark:shadow-black/40">
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
+          <div className="rounded-[2rem] border border-slate-200/70 bg-white/80 p-8 shadow-xl 
+          shadow-slate-200/60 backdrop-blur sm:p-12 dark:border-slate-800 dark:bg-white/[0.04] dark:shadow-black/40">
+            <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100 text-center">
               Bem-vindo de volta
             </h2>
-            <p className="mt-1.5 text-sm text-slate-500 dark:text-slate-400">
+            <p className="mt-1.5 text-sm text-slate-500 dark:text-slate-400 text-center">
               Acesse sua conta para continuar.
             </p>
 
@@ -134,7 +135,9 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 text-base font-semibold text-white shadow-lg shadow-indigo-500/25 transition hover:from-indigo-500 hover:to-violet-500 focus:outline-none focus-visible:ring-4 focus-visible:ring-indigo-500/30 disabled:cursor-not-allowed disabled:opacity-70"
+                className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-cyan-500 text-base font-semibold text-white 
+                shadow-lg shadow-indigo-500/25 transition focus:outline-none focus-visible:ring-4 focus-visible:ring-indigo-500/30 disabled:cursor-not-allowed 
+                disabled:opacity-70"
               >
                 {loading ? 'Entrando...' : 'Entrar'}
                 {!loading && <ArrowRight className="h-4 w-4" />}
@@ -142,8 +145,8 @@ export default function Login() {
             </form>
           </div>
 
-          <p className="mt-6 text-center text-xs text-slate-400 dark:text-slate-500">
-            Não tem acesso? Fale com o administrador da sua empresa.
+          <p className="mt-6 text-center text-sm text-slate-400 dark:text-slate-500">
+            Algum problema com seu acesso? entre em contato com a B2
           </p>
         </div>
       </div>

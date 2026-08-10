@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router'
 import {
   CalendarDays,
   ChevronDown,
@@ -20,7 +21,10 @@ const statusOptions: Array<{ value: LeadStatus | ''; label: string }> = [
   { value: 'REJECTED', label: 'Reprovados' },
 ]
 
+const leadStatusValues: LeadStatus[] = ['PENDING', 'APPROVED', 'REJECTED']
+
 export default function Leads() {
+  const [searchParams] = useSearchParams()
   const user = useAuthStore((state) => state.user)
   const isAdmin = user?.role === 'ADMIN'
 
@@ -38,10 +42,24 @@ export default function Leads() {
   } = useLeadsStore()
 
   const [query, setQuery] = useState('')
-  const [status, setStatus] = useState<LeadStatus | ''>('')
+  const [status, setStatus] = useState<LeadStatus | ''>(
+    () =>
+      (leadStatusValues as string[]).includes(searchParams.get('status') ?? '')
+        ? (searchParams.get('status') as LeadStatus)
+        : '',
+  )
   const [collapsedMonths, setCollapsedMonths] = useState<Set<string>>(
     () => new Set(),
   )
+
+  useEffect(() => {
+    const param = searchParams.get('status')
+    setStatus(
+      (leadStatusValues as string[]).includes(param ?? '')
+        ? (param as LeadStatus)
+        : '',
+    )
+  }, [searchParams])
 
   const toggleMonth = (key: string) =>
     setCollapsedMonths((previous) => {

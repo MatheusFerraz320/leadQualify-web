@@ -73,7 +73,7 @@ export default function Register() {
         className="pointer-events-none absolute -bottom-24 left-12 h-72 w-72 rounded-full bg-blue-500/15 blur-3xl dark:bg-blue-500/10"
       />
 
-      <div className="relative w-full max-w-md">
+      <div className="relative w-full max-w-3xl">
         <div className="overflow-hidden rounded-[2rem] border border-slate-200/70 bg-white shadow-xl shadow-slate-200/60 dark:border-slate-800 dark:bg-slate-900 dark:shadow-black/40">
           <div className="h-1.5 w-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500" />
 
@@ -91,47 +91,49 @@ export default function Register() {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-5">
-              <div>
-                <label
-                  htmlFor="name"
-                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
-                >
-                  Nome
-                </label>
-                <div className="relative">
-                  <User className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
-                  <input
-                    id="name"
-                    type="text"
-                    required
-                    autoComplete="name"
-                    placeholder="Nome do colaborador"
-                    value={name}
-                    onChange={(event) => setName(event.target.value)}
-                    className={inputClass}
-                  />
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                  >
+                    Nome
+                  </label>
+                  <div className="relative">
+                    <User className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
+                    <input
+                      id="name"
+                      type="text"
+                      required
+                      autoComplete="name"
+                      placeholder="Nome do colaborador"
+                      value={name}
+                      onChange={(event) => setName(event.target.value)}
+                      className={inputClass}
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div>
-                <label
-                  htmlFor="email"
-                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
-                >
-                  E-mail
-                </label>
-                <div className="relative">
-                  <Mail className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
-                  <input
-                    id="email"
-                    type="email"
-                    required
-                    autoComplete="email"
-                    placeholder="voce@empresa.com"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
-                    className={inputClass}
-                  />
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                  >
+                    E-mail
+                  </label>
+                  <div className="relative">
+                    <Mail className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
+                    <input
+                      id="email"
+                      type="email"
+                      required
+                      autoComplete="email"
+                      placeholder="voce@empresa.com"
+                      value={email}
+                      onChange={(event) => setEmail(event.target.value)}
+                      className={inputClass}
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -160,104 +162,106 @@ export default function Register() {
                 </div>
               </div>
 
-              <div>
-                <label
-                  htmlFor="password"
-                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
-                >
-                  Senha
-                </label>
-                <div className="relative">
-                  <Lock className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
-                  <input
-                    id="password"
-                    type={showPassword ? 'text' : 'password'}
-                    required
-                    autoComplete="new-password"
-                    placeholder="Mínimo de 8 caracteres"
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
-                    className={cn(inputClass, 'pr-11')}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword((value) => !value)}
-                    aria-label={
-                      showPassword ? 'Ocultar senha' : 'Mostrar senha'
-                    }
-                    className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label
+                    htmlFor="password"
+                    className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
                   >
-                    {showPassword ? (
-                      <EyeOff className="h-4.5 w-4.5" />
-                    ) : (
-                      <Eye className="h-4.5 w-4.5" />
-                    )}
-                  </button>
+                    Senha
+                  </label>
+                  <div className="relative">
+                    <Lock className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
+                    <input
+                      id="password"
+                      type={showPassword ? 'text' : 'password'}
+                      required
+                      autoComplete="new-password"
+                      placeholder="Mínimo de 8 caracteres"
+                      value={password}
+                      onChange={(event) => setPassword(event.target.value)}
+                      className={cn(inputClass, 'pr-11')}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword((value) => !value)}
+                      aria-label={
+                        showPassword ? 'Ocultar senha' : 'Mostrar senha'
+                      }
+                      className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-4.5 w-4.5" />
+                      ) : (
+                        <Eye className="h-4.5 w-4.5" />
+                      )}
+                    </button>
+                  </div>
+                  {password && (
+                    <p
+                      className={cn(
+                        'mt-1.5 flex items-center gap-1.5 text-xs font-medium transition-colors',
+                        password.length >= 8 ? 'text-cyan-600 dark:text-cyan-400' : 'text-slate-400 dark:text-slate-500',
+                      )}
+                    >
+                      <CircleCheck className="h-3.5 w-3.5" />
+                      {password.length >= 8
+                        ? 'Senha válida'
+                        : `Mínimo de 8 caracteres (${password.length}/8)`}
+                    </p>
+                  )}
                 </div>
-                {password && (
-                  <p
-                    className={cn(
-                      'mt-1.5 flex items-center gap-1.5 text-xs font-medium transition-colors',
-                      password.length >= 8 ? 'text-cyan-600 dark:text-cyan-400' : 'text-slate-400 dark:text-slate-500',
-                    )}
-                  >
-                    <CircleCheck className="h-3.5 w-3.5" />
-                    {password.length >= 8
-                      ? 'Senha válida'
-                      : `Mínimo de 8 caracteres (${password.length}/8)`}
-                  </p>
-                )}
-              </div>
 
-              <div>
-                <label
-                  htmlFor="confirm-password"
-                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
-                >
-                  Confirmar senha
-                </label>
-                <div className="relative">
-                  <Lock className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
-                  <input
-                    id="confirm-password"
-                    type={showConfirm ? 'text' : 'password'}
-                    required
-                    autoComplete="new-password"
-                    placeholder="Repita a senha"
-                    value={confirmPassword}
-                    onChange={(event) => setConfirmPassword(event.target.value)}
-                    className={cn(inputClass, 'pr-11')}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirm((value) => !value)}
-                    aria-label={
-                      showConfirm ? 'Ocultar senha' : 'Mostrar senha'
-                    }
-                    className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
+                <div>
+                  <label
+                    htmlFor="confirm-password"
+                    className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
                   >
-                    {showConfirm ? (
-                      <EyeOff className="h-4.5 w-4.5" />
-                    ) : (
-                      <Eye className="h-4.5 w-4.5" />
-                    )}
-                  </button>
+                    Confirmar senha
+                  </label>
+                  <div className="relative">
+                    <Lock className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
+                    <input
+                      id="confirm-password"
+                      type={showConfirm ? 'text' : 'password'}
+                      required
+                      autoComplete="new-password"
+                      placeholder="Repita a senha"
+                      value={confirmPassword}
+                      onChange={(event) => setConfirmPassword(event.target.value)}
+                      className={cn(inputClass, 'pr-11')}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirm((value) => !value)}
+                      aria-label={
+                        showConfirm ? 'Ocultar senha' : 'Mostrar senha'
+                      }
+                      className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
+                    >
+                      {showConfirm ? (
+                        <EyeOff className="h-4.5 w-4.5" />
+                      ) : (
+                        <Eye className="h-4.5 w-4.5" />
+                      )}
+                    </button>
+                  </div>
+                  {confirmPassword && (
+                    <p
+                      className={cn(
+                        'mt-1.5 flex items-center gap-1.5 text-xs font-medium transition-colors',
+                        password === confirmPassword
+                          ? 'text-cyan-600'
+                          : 'text-rose-500',
+                      )}
+                    >
+                      <CircleCheck className="h-3.5 w-3.5" />
+                      {password === confirmPassword
+                        ? 'Senhas conferem'
+                        : 'As senhas não conferem'}
+                    </p>
+                  )}
                 </div>
-                {confirmPassword && (
-                  <p
-                    className={cn(
-                      'mt-1.5 flex items-center gap-1.5 text-xs font-medium transition-colors',
-                      password === confirmPassword
-                        ? 'text-cyan-600'
-                        : 'text-rose-500',
-                    )}
-                  >
-                    <CircleCheck className="h-3.5 w-3.5" />
-                    {password === confirmPassword
-                      ? 'Senhas conferem'
-                      : 'As senhas não conferem'}
-                  </p>
-                )}
               </div>
 
               {error && (

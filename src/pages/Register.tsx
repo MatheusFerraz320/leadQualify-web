@@ -15,7 +15,7 @@ import {
 import { toast } from 'sonner'
 import { cn } from '../lib/utils'
 import { useAuthStore, type UserRole } from '../stores/authStore'
-
+import { useUsersStore } from '../stores/usersStore'
 export default function Register() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -26,6 +26,7 @@ export default function Register() {
   const [role, setRole] = useState<UserRole>('COLLABORATOR')
   const navigate = useNavigate()
   const { register, loading, error, clearError } = useAuthStore()
+  const { fetchUsers } = useUsersStore()
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -53,6 +54,7 @@ export default function Register() {
       toast.error(registerError)
     } else {
       toast.success('Colaborador cadastrado com sucesso!')
+      await fetchUsers()
       navigate('/collaborator', { replace: true })
     }
   }

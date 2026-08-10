@@ -1,31 +1,14 @@
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router'
-import {
-  ChevronLeft,
-  ChevronRight,
-  CircleUser,
-  Home,
-  Inbox,
-  LogOut,
-  UserPlus,
-} from 'lucide-react'
+import { ChevronLeft, ChevronRight, LogOut } from 'lucide-react'
 import { toast } from 'sonner'
 import { cn, initials } from '../../lib/utils'
 import { useAuthStore } from '../../stores/authStore'
-
-type NavItem = {
-  label: string
-  path: string
-  icon: typeof Home
-  adminOnly?: boolean
-}
-
-const navItems: NavItem[] = [
-  { label: 'Início', path: '/', icon: Home },
-  { label: 'Leads', path: '/leads', icon: Inbox },
-  { label: 'Colaboradores', path: '/collaborator', icon: UserPlus, adminOnly: true },
-  { label: 'Meu perfil', path: '/minha-conta', icon: CircleUser },
-]
+import {
+  getModuleId,
+  getSectionsForModule,
+  type SidebarItem,
+} from '../../lib/navigation'
 
 const roleLabels: Record<string, string> = {
   ADMIN: 'Admin',
@@ -34,21 +17,30 @@ const roleLabels: Record<string, string> = {
 
 export function Sidebar() {
   const [collapsed, setCollapsed] = useState(false)
-  const navigate = useNavigate()
   const location = useLocation()
+  const navigate = useNavigate()
   const { user, logout } = useAuthStore()
+
+  const displayName = user?.name || user?.email
+  const initialsText = initials(user?.name ?? '') || '?'
+  const moduleId = getModuleId(location.pathname)
+  const sections = getSectionsForModule(moduleId)
+
+  const isItemActive = (item: SidebarItem) => {
+    if (!item.to) return false
+    const pathMatches =
+      item.to === '/'
+        ? location.pathname === '/'
+        : location.pathname.startsWith(item.to)
+    if (!pathMatches) return false
+    return !item.query || location.search === `?${item.query}`
+  }
 
   function handleLogout() {
     logout()
     navigate('/login')
     toast.success('Logout realizado com sucesso!')
   }
-
-  const displayName = user?.name || user?.email
-  const initialsText = initials(user?.name ?? '') || '?'
-
-  const isActive = (path: string) =>
-    path === '/' ? location.pathname === '/' : location.pathname.startsWith(path)
 
   return (
     <aside
@@ -112,41 +104,74 @@ export function Sidebar() {
         )}
       </div>
 
-      <nav className="flex-1 space-y-1.5 overflow-y-auto px-3 py-2">
+      <nav className="flex-1 space-y-5 overflow-y-auto px-3 py-2">
         {!collapsed && (
-          <p className="px-3.5 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400 dark:text-slate-500">
+          <p className="px-3.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400 dark:text-slate-500">
             Menu
           </p>
         )}
-        {navItems
-          .filter((item) => !item.adminOnly || user?.role === 'ADMIN')
-          .map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              title={item.label}
-              aria-label={item.label}
-              className={cn(
-                'group flex items-center rounded-2xl text-sm transition-all duration-200',
-                collapsed ? 'h-11 w-11 justify-center' : 'gap-3 px-4 py-2.5',
-                isActive(item.path)
-                  ? 'bg-indigo-50 font-semibold text-indigo-700 shadow-sm shadow-indigo-500/5 ring-1 ring-indigo-100 dark:bg-slate-800 dark:text-indigo-300 dark:ring-indigo-500/20 dark:shadow-indigo-500/10'
-                  : 'font-medium text-slate-600 hover:translate-x-0.5 hover:bg-slate-100/80 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/60 dark:hover:text-slate-200',
-              )}
-            >
-              <item.icon
-                className={cn(
-                  'shrink-0 transition-transform duration-200',
-                  collapsed ? 'h-5 w-5' : 'h-4.5 w-4.5 group-hover:scale-105',
-                )}
-                strokeWidth={1.75}
-              />
-              {!collapsed && <span className="truncate">{item.label}</span>}
-              {isActive(item.path) && !collapsed && (
-                <span className="ml-auto h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-500 dark:bg-indigo-400" />
-              )}
-            </Link>
-          ))}
+
+        {sections.map((section) => (
+          <div key={section.title} className="space-y-1.5">
+            {!collapsed && (
+              <p className="px-3.5 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400 dark:text-slate-500">
+                {section.title}
+              </p>
+            )}
+            {section.items.map((item) =>
+              item.placeholder ? (
+                <span
+                  key={item.label}
+                  title="Em breve"
+                  className={cn(
+                    'group flex cursor-not-allowed items-center rounded-2xl text-sm text-slate-300 opacity-70 transition-all duration-200 dark:text-slate-600',
+                    collapsed ? 'h-11 w-11 justify-center' : 'gap-3 px-4 py-2.5',
+                  )}
+                >
+                  <item.icon
+                    className={cn(
+                      'shrink-0',
+                      collapsed ? 'h-5 w-5' : 'h-4.5 w-4.5',
+                    )}
+                    strokeWidth={1.75}
+                  />
+                  {!collapsed && <span className="truncate">{item.label}</span>}
+                  {!collapsed && (
+                    <span className="ml-auto rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-400 dark:bg-slate-800 dark:text-slate-500">
+                      Em breve
+                    </span>
+                  )}
+                </span>
+              ) : (
+                <Link
+                  key={item.label}
+                  to={{ pathname: item.to, search: item.query ? `?${item.query}` : '' }}
+                  title={item.label}
+                  aria-label={item.label}
+                  className={cn(
+                    'group flex items-center rounded-2xl text-sm transition-all duration-200',
+                    collapsed ? 'h-11 w-11 justify-center' : 'gap-3 px-4 py-2.5',
+                    isItemActive(item)
+                      ? 'bg-indigo-50 font-semibold text-indigo-700 shadow-sm shadow-indigo-500/5 ring-1 ring-indigo-100 dark:bg-slate-800 dark:text-indigo-300 dark:ring-indigo-500/20 dark:shadow-indigo-500/10'
+                      : 'font-medium text-slate-600 hover:translate-x-0.5 hover:bg-slate-100/80 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/60 dark:hover:text-slate-200',
+                  )}
+                >
+                  <item.icon
+                    className={cn(
+                      'shrink-0 transition-transform duration-200',
+                      collapsed ? 'h-5 w-5' : 'h-4.5 w-4.5 group-hover:scale-105',
+                    )}
+                    strokeWidth={1.75}
+                  />
+                  {!collapsed && <span className="truncate">{item.label}</span>}
+                  {isItemActive(item) && !collapsed && (
+                    <span className="ml-auto h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-500 dark:bg-indigo-400" />
+                  )}
+                </Link>
+              ),
+            )}
+          </div>
+        ))}
       </nav>
 
       <div className="space-y-1 border-t border-slate-100 p-3 dark:border-slate-800">

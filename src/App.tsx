@@ -1,6 +1,8 @@
+import { useEffect } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
 import { Toaster } from 'sonner'
 import { useThemeStore } from './stores/themeStore'
+import { useAuthStore } from './stores/authStore'
 import Login from './pages/Login'
 import Home from './pages/Home'
 import Register from './pages/Register'
@@ -13,6 +15,14 @@ import { RequireAdmin } from './components/layout/RequireAdmin'
 
 function App() {
   const theme = useThemeStore((state) => state.theme)
+  const authStatus = useAuthStore((state) => state.status)
+  const bootstrap = useAuthStore((state) => state.bootstrap)
+
+  useEffect(() => {
+    if (authStatus === 'idle') {
+      bootstrap()
+    }
+  }, [authStatus, bootstrap])
 
   return (
     <BrowserRouter>

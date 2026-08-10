@@ -6,17 +6,22 @@ export async function api(
   path: string,
   options: RequestInit = {},
 ): Promise<Response> {
-  const token = useAuthStore.getState().token
-
   const headers = new Headers(options.headers)
   if (!headers.has('Content-Type') && options.body) {
     headers.set('Content-Type', 'application/json')
   }
-  if (token) {
-    headers.set('Authorization', `Bearer ${token}`)
+
+  const response = await fetch(`${API_URL}${path}`, {
+    ...options,
+    headers,
+    credentials: 'include',
+  })
+
+  if (response.status === 401 && !path.startsWith('/auth/')) {
+    useAuthStore.getState().handleUnauthorized()
   }
 
-  return fetch(`${API_URL}${path}`, { ...options, headers })
+  return response
 }
 
 type ErrorBody = { message?: string | string[] }

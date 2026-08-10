@@ -55,9 +55,9 @@ export function Navbar() {
         : 'text-white/95 hover:bg-white/15 hover:text-white dark:text-white dark:hover:bg-white/15 dark:hover:text-white dark:hover:shadow-[0_0_16px_-6px_rgba(0,212,255,0.45)] dark:hover:ring-white/20',
     )
 
-  function handleLogout() {
+  async function handleLogout() {
     setMenuOpen(false)
-    logout()
+    await logout()
     navigate('/login')
     toast.success('Logout realizado com sucesso!')
   }

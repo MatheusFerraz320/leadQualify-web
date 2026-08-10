@@ -36,8 +36,8 @@ export function Sidebar() {
     return !item.query || location.search === `?${item.query}`
   }
 
-  function handleLogout() {
-    logout()
+  async function handleLogout() {
+    await logout()
     navigate('/login')
     toast.success('Logout realizado com sucesso!')
   }

@@ -50,7 +50,7 @@ export default function MinhaConta() {
     const updateError = await updateMe({
       name: name.trim(),
       email,
-      ...(password ? { password } : {}),
+      ...(password ? { password, confirm_password: confirmPassword } : {}),
     })
     setSaving(false)
 
@@ -64,7 +64,7 @@ export default function MinhaConta() {
   }
 
   return (
-    <div className="mx-auto max-w-xl px-6 py-10">
+    <div className="mx-auto max-w-3xl px-6 py-10">
       <div className="mb-8 flex items-center gap-3">
         <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/25">
           <ShieldCheck className="h-5 w-5 text-white" strokeWidth={2} />
@@ -82,7 +82,7 @@ export default function MinhaConta() {
       <div className="overflow-hidden rounded-[2rem] border border-slate-200/70 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
         <div className="h-1.5 w-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500" />
 
-        <div className="p-7 sm:p-8">
+        <div className="p-8 sm:p-10">
           <div className="mb-6 flex items-center gap-3 rounded-2xl bg-slate-50 px-4 py-3 ring-1 ring-slate-100 dark:bg-slate-800/60 dark:ring-slate-700/50">
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 text-sm font-semibold text-white">
               {name.slice(0, 2).toUpperCase() || '?'}
@@ -98,43 +98,45 @@ export default function MinhaConta() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            <div>
-              <label
-                htmlFor="me-name"
-                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
-              >
-                Nome
-              </label>
-              <div className="relative">
-                <User className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
-                <input
-                  id="me-name"
-                  type="text"
-                  required
-                  value={name}
-                  onChange={(event) => setName(event.target.value)}
-                  className={inputClass}
-                />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label
+                  htmlFor="me-name"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                >
+                  Nome
+                </label>
+                <div className="relative">
+                  <User className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
+                  <input
+                    id="me-name"
+                    type="text"
+                    required
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
+                    className={inputClass}
+                  />
+                </div>
               </div>
-            </div>
 
-            <div>
-              <label
-                htmlFor="me-email"
-                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
-              >
-                E-mail
-              </label>
-              <div className="relative">
-                <Mail className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
-                <input
-                  id="me-email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  className={inputClass}
-                />
+              <div>
+                <label
+                  htmlFor="me-email"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                >
+                  E-mail
+                </label>
+                <div className="relative">
+                  <Mail className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
+                  <input
+                    id="me-email"
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    className={inputClass}
+                  />
+                </div>
               </div>
             </div>
 
@@ -146,7 +148,7 @@ export default function MinhaConta() {
                 Deixe em branco para manter a senha atual
               </p>
 
-              <div className="space-y-4">
+              <div className="grid gap-4 sm:grid-cols-2">
                 <div className="relative">
                   <Lock className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
                   <input

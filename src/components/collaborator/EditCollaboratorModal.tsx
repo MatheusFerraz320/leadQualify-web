@@ -77,7 +77,7 @@ export function EditCollaboratorModal({ user, onClose }: Props) {
         className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm dark:bg-black/60"
         onClick={onClose}
       />
-      <div className="relative w-full max-w-md overflow-hidden rounded-[2rem] border border-slate-200/70 bg-white shadow-2xl dark:border-slate-800 dark:bg-slate-900 dark:shadow-black/50">
+      <div className="relative max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-[2rem] border border-slate-200/70 bg-white shadow-2xl dark:border-slate-800 dark:bg-slate-900 dark:shadow-black/50">
         <div className="h-1.5 w-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500" />
 
         <div className="p-7 sm:p-8">
@@ -100,43 +100,45 @@ export function EditCollaboratorModal({ user, onClose }: Props) {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label
-                htmlFor="edit-name"
-                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
-              >
-                Nome
-              </label>
-              <div className="relative">
-                <UserIcon className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
-                <input
-                  id="edit-name"
-                  type="text"
-                  required
-                  value={name}
-                  onChange={(event) => setName(event.target.value)}
-                  className={inputClass}
-                />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label
+                  htmlFor="edit-name"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                >
+                  Nome
+                </label>
+                <div className="relative">
+                  <UserIcon className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
+                  <input
+                    id="edit-name"
+                    type="text"
+                    required
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
+                    className={inputClass}
+                  />
+                </div>
               </div>
-            </div>
 
-            <div>
-              <label
-                htmlFor="edit-email"
-                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
-              >
-                E-mail
-              </label>
-              <div className="relative">
-                <Mail className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
-                <input
-                  id="edit-email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  className={inputClass}
-                />
+              <div>
+                <label
+                  htmlFor="edit-email"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                >
+                  E-mail
+                </label>
+                <div className="relative">
+                  <Mail className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
+                  <input
+                    id="edit-email"
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    className={inputClass}
+                  />
+                </div>
               </div>
             </div>
 
@@ -169,7 +171,7 @@ export function EditCollaboratorModal({ user, onClose }: Props) {
                 Nova senha (opcional)
               </p>
 
-              <div className="space-y-4">
+              <div className="grid gap-4 sm:grid-cols-2">
                 <div className="relative">
                   <Lock className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
                   <input

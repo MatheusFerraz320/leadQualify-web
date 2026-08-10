@@ -43,7 +43,7 @@ export default function Login() {
       />
 
       <div className="relative flex min-h-screen items-center justify-center px-4 py-12">
-        <div className="w-full max-w-lg">
+        <div className="w-full max-w-xl">
           <div className="mb-1 flex flex-col items-center text-center">
             <div className="mb-1 flex items-center justify-center rounded-2xl">
               <img src="/b2LightLogo.png" className="h-50 w-50 object-contain dark:hidden" alt="Logo" />

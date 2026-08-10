@@ -76,7 +76,7 @@ export function EditLeadModal({ lead, onClose }: Props) {
         className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm dark:bg-black/60"
         onClick={onClose}
       />
-      <div className="relative max-h-[90vh] w-full max-w-md overflow-y-auto rounded-[2rem] border border-slate-200/70 bg-white shadow-2xl dark:border-slate-800 dark:bg-slate-900 dark:shadow-black/50">
+      <div className="relative max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-[2rem] border border-slate-200/70 bg-white shadow-2xl dark:border-slate-800 dark:bg-slate-900 dark:shadow-black/50">
         <div className="h-1.5 w-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500" />
 
         <div className="p-7 sm:p-8">
@@ -99,126 +99,132 @@ export function EditLeadModal({ lead, onClose }: Props) {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label
-                htmlFor="lead-name"
-                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
-              >
-                Nome
-              </label>
-              <div className="relative">
-                <UserIcon className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
-                <input
-                  id="lead-name"
-                  type="text"
-                  required
-                  value={name}
-                  onChange={(event) => setName(event.target.value)}
-                  className={inputClass}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label
-                htmlFor="lead-email"
-                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
-              >
-                E-mail
-              </label>
-              <div className="relative">
-                <Mail className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
-                <input
-                  id="lead-email"
-                  type="email"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  className={inputClass}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label
-                htmlFor="lead-phone"
-                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
-              >
-                Telefone
-              </label>
-              <div className="relative">
-                <Phone className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
-                <input
-                  id="lead-phone"
-                  type="text"
-                  value={phone}
-                  onChange={(event) => setPhone(event.target.value)}
-                  className={inputClass}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label
-                htmlFor="lead-product"
-                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
-              >
-                Produto / Serviço
-              </label>
-              <div className="relative">
-                <Package className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
-                <input
-                  id="lead-product"
-                  type="text"
-                  value={product}
-                  onChange={(event) => setProduct(event.target.value)}
-                  className={inputClass}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label
-                htmlFor="lead-finality"
-                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
-              >
-                Finalidade
-              </label>
-              <div className="relative">
-                <Building2 className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
-                <input
-                  id="lead-finality"
-                  type="text"
-                  value={finality}
-                  onChange={(event) => setFinality(event.target.value)}
-                  className={inputClass}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label
-                htmlFor="lead-status"
-                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
-              >
-                Status
-              </label>
-              <div className="relative">
-                <Tag className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
-                <select
-                  id="lead-status"
-                  value={status}
-                  onChange={(event) =>
-                    setStatus(event.target.value as Lead['status'])
-                  }
-                  className={cn(inputClass, 'appearance-none pr-10')}
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label
+                  htmlFor="lead-name"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
                 >
-                  {statusOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown className="pointer-events-none absolute top-1/2 right-3.5 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
+                  Nome
+                </label>
+                <div className="relative">
+                  <UserIcon className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
+                  <input
+                    id="lead-name"
+                    type="text"
+                    required
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
+                    className={inputClass}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="lead-email"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                >
+                  E-mail
+                </label>
+                <div className="relative">
+                  <Mail className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
+                  <input
+                    id="lead-email"
+                    type="email"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    className={inputClass}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label
+                  htmlFor="lead-phone"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                >
+                  Telefone
+                </label>
+                <div className="relative">
+                  <Phone className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
+                  <input
+                    id="lead-phone"
+                    type="text"
+                    value={phone}
+                    onChange={(event) => setPhone(event.target.value)}
+                    className={inputClass}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="lead-product"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                >
+                  Produto / Serviço
+                </label>
+                <div className="relative">
+                  <Package className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
+                  <input
+                    id="lead-product"
+                    type="text"
+                    value={product}
+                    onChange={(event) => setProduct(event.target.value)}
+                    className={inputClass}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label
+                  htmlFor="lead-finality"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                >
+                  Finalidade
+                </label>
+                <div className="relative">
+                  <Building2 className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
+                  <input
+                    id="lead-finality"
+                    type="text"
+                    value={finality}
+                    onChange={(event) => setFinality(event.target.value)}
+                    className={inputClass}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="lead-status"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                >
+                  Status
+                </label>
+                <div className="relative">
+                  <Tag className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
+                  <select
+                    id="lead-status"
+                    value={status}
+                    onChange={(event) =>
+                      setStatus(event.target.value as Lead['status'])
+                    }
+                    className={cn(inputClass, 'appearance-none pr-10')}
+                  >
+                    {statusOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="pointer-events-none absolute top-1/2 right-3.5 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
+                </div>
               </div>
             </div>
 

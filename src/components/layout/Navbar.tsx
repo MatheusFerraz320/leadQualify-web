@@ -65,8 +65,8 @@ export function Navbar() {
   const initialsText = initials(user?.name ?? '') || '?'
 
   return (
-    <header className="relative flex h-25  mx-3 mt-3 rounded-2xl overflow-hidden
-    shrink-0 items-center justify-center border-b border-white/10 bg-gradient-to-r from-b2-500 via-b2-600 to-b2-700 px-7 shadow-lg shadow-b2-700/25 
+    <header className="relative z-50 flex h-25  mx-3 mt-3 rounded-2xl
+    shrink-0 items-center justify-center border-b border-white/10 bg-[#1A3F62] px-7 shadow-lg shadow-b2-700/80 
     dark:from-b2-500 dark:via-b2-700 dark:to-slate-900 dark:shadow-[0_0_45px_-6px_rgba(0,212,255,0.6)]">
       <Link
         to="/"
@@ -127,6 +127,15 @@ export function Navbar() {
           ) : (
             <Moon className="h-5 w-5" strokeWidth={1.75} />
           )}
+        </button>
+
+        <button
+          onClick={handleLogout}
+          title="Sair"
+          aria-label="Sair"
+          className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white/90 ring-1 ring-white/20 transition hover:bg-rose-600/90 hover:text-white active:scale-95 dark:bg-white/5 dark:text-b2-200 dark:ring-b2-400/30 dark:hover:bg-rose-600/90 dark:hover:text-white"
+        >
+          <LogOut className="h-5 w-5" strokeWidth={1.75} />
         </button>
 
         <div className="relative" ref={menuRef}>

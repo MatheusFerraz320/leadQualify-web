@@ -101,7 +101,7 @@ export default function Leads() {
   )
 
   return (
-    <div className="mx-auto max-w-7xl px-6 py-8">
+    <div className="mx-auto px-6 py-8">
       <div className="mb-8 flex items-center gap-3">
         <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 shadow-lg shadow-indigo-500/25">
           <Inbox className="h-5 w-5 text-white" strokeWidth={2} />
@@ -229,7 +229,7 @@ export default function Leads() {
                       )}
                     >
                       <div className="min-h-0 overflow-hidden">
-                        <div className="grid grid-cols-1 gap-4 pt-1 pb-2 md:grid-cols-2 xl:grid-cols-3">
+                        <div className="grid grid-cols-1 gap-5 pt-1 pb-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
                           {group.items.map((lead) => (
                             <LeadCard key={lead.id} lead={lead} />
                           ))}

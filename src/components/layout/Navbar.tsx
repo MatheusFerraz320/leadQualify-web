@@ -65,7 +65,7 @@ export function Navbar() {
   const initialsText = initials(user?.name ?? '') || '?'
 
   return (
-    <header className="relative flex h-25 
+    <header className="relative flex h-25  mx-3 mt-3 rounded-2xl overflow-hidden
     shrink-0 items-center justify-center border-b border-white/10 bg-gradient-to-r from-b2-500 via-b2-600 to-b2-700 px-7 shadow-lg shadow-b2-700/25 
     dark:from-b2-500 dark:via-b2-700 dark:to-slate-900 dark:shadow-[0_0_45px_-6px_rgba(0,212,255,0.6)]">
       <Link
@@ -73,18 +73,13 @@ export function Navbar() {
         className="absolute top-1/2 left-7 flex -translate-y-1/2 items-center gap-2.5"
         aria-label="LeadQualify"
       >
-        <img
-          src="/b2LightLogo.png"
-          alt=""
-          className="h-9 w-9 object-contain drop-shadow dark:hidden"
-        />
         <img 
           src="/b2DarkLogo.png"
-          alt=""
-          className="hidden h-13 w-13 object-contain drop-shadow dark:block"
+          alt="logo da b2"
+          className="h-15 w-15 object-contain drop-shadow"
         />
         <span className="hidden font-display text-lg font-semibold tracking-tight text-white lg:block">
-          LeadQualify
+          Qualificador de leads
         </span>
       </Link>
 

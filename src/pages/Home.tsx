@@ -72,6 +72,10 @@ function formatPercent(value: number) {
   return `${(value * 100).toFixed(1)}%`
 }
 
+function truncateLabel(label: string, max = 20) {
+  return label.length > max ? `${label.slice(0, max - 1)}…` : label
+}
+
 type KpiCardProps = {
   label: string
   value: string
@@ -382,6 +386,7 @@ export default function Home() {
                       dataKey="label"
                       tickLine={false}
                       axisLine={false}
+                      tickMargin={6}
                       tick={{ fontSize: 11, fill: '#94a3b8' }}
                     />
                     <YAxis
@@ -413,24 +418,31 @@ export default function Home() {
               {summary?.byProduct.length === 0 || emptyLabel(summary?.byProduct ?? []) ? (
                 <EmptyChart />
               ) : (
-                <ResponsiveContainer width="100%" height={220}>
+                <ResponsiveContainer
+                  width="100%"
+                  height={Math.max(280, (summary?.byProduct.length ?? 0) * 46)}
+                >
                   <BarChart
                     layout="vertical"
                     data={summary?.byProduct ?? []}
-                    margin={{ top: 0, right: 8, left: 8, bottom: 0 }}
+                    margin={{ top: 0, right: 8, left: 0, bottom: 0 }}
+                    barCategoryGap="35%"
                   >
                     <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="currentColor" className="text-slate-200 dark:text-slate-800" />
                     <XAxis type="number" allowDecimals={false} tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: '#94a3b8' }} />
                     <YAxis
                       type="category"
                       dataKey="label"
-                      width={96}
+                      width={150}
                       tickLine={false}
                       axisLine={false}
+                      interval={0}
+                      tickMargin={10}
+                      tickFormatter={(value: string) => truncateLabel(value)}
                       tick={{ fontSize: 11, fill: '#64748b' }}
                     />
                     <Tooltip />
-                    <Bar dataKey="count" fill="#6366f1" radius={[0, 8, 8, 0]} barSize={14} name="Leads" />
+                    <Bar dataKey="count" fill="#6366f1" radius={[0, 8, 8, 0]} barSize={16} name="Leads" />
                   </BarChart>
                 </ResponsiveContainer>
               )}
@@ -444,24 +456,31 @@ export default function Home() {
               {summary?.byCampaign.length === 0 || emptyLabel(summary?.byCampaign ?? []) ? (
                 <EmptyChart />
               ) : (
-                <ResponsiveContainer width="100%" height={220}>
+                <ResponsiveContainer
+                  width="100%"
+                  height={Math.max(280, (summary?.byCampaign.length ?? 0) * 46)}
+                >
                   <BarChart
                     layout="vertical"
                     data={summary?.byCampaign ?? []}
-                    margin={{ top: 0, right: 8, left: 8, bottom: 0 }}
+                    margin={{ top: 0, right: 8, left: 0, bottom: 0 }}
+                    barCategoryGap="35%"
                   >
                     <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="currentColor" className="text-slate-200 dark:text-slate-800" />
                     <XAxis type="number" allowDecimals={false} tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: '#94a3b8' }} />
                     <YAxis
                       type="category"
                       dataKey="label"
-                      width={96}
+                      width={150}
                       tickLine={false}
                       axisLine={false}
+                      interval={0}
+                      tickMargin={10}
+                      tickFormatter={(value: string) => truncateLabel(value)}
                       tick={{ fontSize: 11, fill: '#64748b' }}
                     />
                     <Tooltip />
-                    <Bar dataKey="count" fill="#a855f7" radius={[0, 8, 8, 0]} barSize={14} name="Leads" />
+                    <Bar dataKey="count" fill="#a855f7" radius={[0, 8, 8, 0]} barSize={16} name="Leads" />
                   </BarChart>
                 </ResponsiveContainer>
               )}

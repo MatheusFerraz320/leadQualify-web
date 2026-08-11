@@ -7,6 +7,7 @@ export type UpdateUserPayload = {
   email?: string
   role?: UserRole
   password?: string
+  confirm_password?: string
 }
 
 export type UpdateProfilePayload = {

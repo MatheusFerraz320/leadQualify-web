@@ -54,7 +54,7 @@ export function EditCollaboratorModal({ user, onClose }: Props) {
       name: name.trim(),
       email,
       role,
-      ...(password ? { password } : {}),
+      ...(password ? { password, confirm_password: confirmPassword } : {}),
     })
     setSaving(false)
 

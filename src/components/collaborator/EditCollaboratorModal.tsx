@@ -176,7 +176,7 @@ export function EditCollaboratorModal({ user, onClose }: Props) {
                   <Lock className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-cyan-600/70 dark:text-cyan-400/70" />
                   <input
                     type={showPassword ? 'text' : 'password'}
-                    placeholder="Deixe em branco para manter"
+                    placeholder="Nova senha"
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
                     className={cn(inputClass, 'pr-11')}

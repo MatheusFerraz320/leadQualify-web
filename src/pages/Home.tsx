@@ -35,6 +35,7 @@ import {
 } from '../stores/dashboardStore'
 import { useLeadsStore, type LeadStatus } from '../stores/leadsStore'
 import { ClientSelect } from '../components/leads/ClientSelect'
+import { MonthSelect } from '../components/dashboard/MonthSelect'
 
 const statusMeta: Record<LeadStatus, { label: string; color: string; bg: string; icon: typeof CheckCircle2 }> = {
   APPROVED: {
@@ -191,6 +192,7 @@ export default function Home() {
   } = useLeadsStore()
 
   const [selectedClientId, setSelectedClientId] = useState<string | null>(null)
+  const [selectedMonth, setSelectedMonth] = useState<string | null>(null)
 
   useEffect(() => {
     if (isAdmin && clients === null) {
@@ -199,10 +201,17 @@ export default function Home() {
   }, [isAdmin, clients, fetchClients])
 
   useEffect(() => {
-    fetchSummary(isAdmin ? (selectedClientId ?? undefined) : undefined)
-  }, [isAdmin, selectedClientId, fetchSummary])
+    fetchSummary(isAdmin ? (selectedClientId ?? undefined) : undefined, selectedMonth ?? undefined)
+  }, [isAdmin, selectedClientId, selectedMonth, fetchSummary])
 
   const totals = summary?.totals
+
+  const monthOptions = useMemo(() => {
+    if (!summary?.monthly.length) return []
+    return [...new Set(summary.monthly.map((point) => point.month))].sort(
+      (a, b) => b.localeCompare(a),
+    )
+  }, [summary?.monthly])
 
   const monthlyAsc = useMemo<Array<MonthlyPoint & { label: string }>>(() => {
     if (!summary?.monthly.length) return []
@@ -249,6 +258,12 @@ export default function Home() {
             onRetry={fetchClients}
           />
         )}
+
+        <MonthSelect
+          months={monthOptions}
+          selectedMonth={selectedMonth}
+          onSelect={setSelectedMonth}
+        />
       </div>
 
       {loading && summary === null ? (
@@ -263,7 +278,10 @@ export default function Home() {
           <p className="text-sm text-slate-500 dark:text-white">{error}</p>
           <button
             onClick={() =>
-              fetchSummary(isAdmin ? (selectedClientId ?? undefined) : undefined)
+              fetchSummary(
+                isAdmin ? (selectedClientId ?? undefined) : undefined,
+                selectedMonth ?? undefined,
+              )
             }
             className="flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500"
           >

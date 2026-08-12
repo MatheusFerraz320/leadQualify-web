@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router'
 import {
-  Bell,
   LogOut,
   Moon,
   Settings,
@@ -99,20 +98,6 @@ export function Navbar() {
       </nav>
 
       <div className="absolute top-1/2 right-6 flex -translate-y-1/2 items-center gap-1.5">
-        <Link
-          to="/notificacoes"
-          title="Notificações"
-          aria-label="Notificações"
-          aria-current={isPathActive('/notificacoes') ? 'page' : undefined}
-          className={cn(
-            'flex h-10 w-10 items-center justify-center rounded-full transition active:scale-95',
-            isPathActive('/notificacoes')
-              ? 'bg-white/25 text-white ring-1 ring-white/40 dark:bg-white/10 dark:text-white dark:ring-b2-400/40'
-              : 'bg-white/10 text-white/90 ring-1 ring-white/20 hover:bg-white/20 hover:text-white dark:bg-white/5 dark:text-b2-200 dark:ring-b2-400/30 dark:hover:bg-white/10 dark:hover:text-white',
-          )}
-        >
-          <Bell className="h-5 w-5" strokeWidth={1.75} />
-        </Link>
 
         <button
           onClick={toggleTheme}

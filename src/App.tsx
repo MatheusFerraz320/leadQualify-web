@@ -9,6 +9,7 @@ import Register from './pages/Register'
 import Collaborator from './pages/Collaborator'
 import MinhaConta from './pages/MinhaConta'
 import Leads from './pages/Leads'
+import LeadsMonth from './pages/LeadsMonth'
 import { Layout } from './components/layout/Layout'
 import { RequireAuth } from './components/layout/RequireAuth'
 import { RequireAdmin } from './components/layout/RequireAdmin'
@@ -33,6 +34,7 @@ function App() {
           <Route element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="leads" element={<Leads />} />
+            <Route path="leads/:mes" element={<LeadsMonth />} />
             <Route path="minha-conta" element={<MinhaConta />} />
             <Route element={<RequireAdmin />}>
               <Route path="collaborator" element={<Collaborator />} />

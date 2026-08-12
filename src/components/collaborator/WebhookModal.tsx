@@ -92,10 +92,10 @@ export function WebhookModal({ user, onClose }: Props) {
                 <Webhook className="h-5 w-5 text-white" strokeWidth={2} />
               </span>
               <div>
-                <h2 className="font-display text-xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+                <h2 className="font-display text-xl font-semibold tracking-tight text-slate-900 dark:text-white">
                   Integração RD Station
                 </h2>
-                <p className="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
+                <p className="mt-0.5 text-sm text-slate-500 dark:text-white">
                   Webhook de leads de {user.name}
                 </p>
               </div>
@@ -103,7 +103,7 @@ export function WebhookModal({ user, onClose }: Props) {
             <button
               onClick={onClose}
               aria-label="Fechar"
-              className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 dark:text-slate-500 dark:hover:bg-slate-800 dark:hover:text-slate-300"
+              className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 dark:text-white dark:hover:bg-slate-800 dark:hover:text-white"
             >
               <X className="h-4.5 w-4.5" />
             </button>
@@ -112,13 +112,13 @@ export function WebhookModal({ user, onClose }: Props) {
           {loading ? (
             <div className="flex items-center justify-center gap-3 py-16">
               <Loader2 className="h-5 w-5 animate-spin text-cyan-500" />
-              <span className="text-sm text-slate-500 dark:text-slate-400">
+              <span className="text-sm text-slate-500 dark:text-white">
                 Carregando token...
               </span>
             </div>
           ) : !token ? (
             <div className="flex flex-col items-center gap-4 py-10 text-center">
-              <p className="text-sm text-slate-500 dark:text-slate-400">
+              <p className="text-sm text-slate-500 dark:text-white">
                 Não foi possível carregar o token de webhook.
               </p>
               <button
@@ -130,7 +130,7 @@ export function WebhookModal({ user, onClose }: Props) {
             </div>
           ) : (
             <>
-              <p className="mb-3 text-sm text-slate-600 dark:text-slate-400">
+              <p className="mb-3 text-sm text-slate-600 dark:text-white">
                 Cole esta URL no webhook do RD Station Marketing para receber
                 os leads de {user.name}:
               </p>
@@ -140,7 +140,7 @@ export function WebhookModal({ user, onClose }: Props) {
                   readOnly
                   value={webhookUrl}
                   onFocus={(event) => event.target.select()}
-                  className="h-12 min-w-0 flex-1 rounded-xl border border-slate-200 bg-slate-50/60 px-4 font-mono text-xs text-slate-700 outline-none transition focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/15 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-300 dark:focus:border-cyan-400 dark:focus:bg-slate-900"
+                  className="h-12 min-w-0 flex-1 rounded-xl border border-slate-200 bg-slate-50/60 px-4 font-mono text-xs text-slate-700 outline-none transition focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/15 dark:border-slate-700 dark:bg-slate-900/60 dark:text-white dark:focus:border-cyan-400 dark:focus:bg-slate-900"
                 />
                 <button
                   onClick={handleCopy}
@@ -165,7 +165,7 @@ export function WebhookModal({ user, onClose }: Props) {
 
               <div className="mt-6 rounded-2xl border border-slate-100 bg-slate-50/60 p-4 dark:border-slate-800 dark:bg-slate-800/50">
                 <div className="mb-2 flex items-center justify-between gap-3">
-                  <p className="text-sm font-semibold text-slate-700 dark:text-slate-200">
+                  <p className="text-sm font-semibold text-slate-700 dark:text-white">
                     Token de webhook
                   </p>
                   <button
@@ -186,7 +186,7 @@ export function WebhookModal({ user, onClose }: Props) {
                     {confirming ? 'Confirmar?' : 'Regenerar'}
                   </button>
                 </div>
-                <p className="text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                <p className="text-xs leading-relaxed text-slate-500 dark:text-white">
                   Regenerar invalida a URL atual. Atualize o webhook no RD
                   Station após regenerar.
                 </p>

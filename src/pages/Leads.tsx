@@ -107,10 +107,10 @@ export default function Leads() {
           <Inbox className="h-5 w-5 text-white" strokeWidth={2} />
         </span>
         <div>
-          <h1 className="font-display text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+          <h1 className="font-display text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">
             Leads
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400">
+          <p className="text-sm text-slate-500 dark:text-white">
             Acompanhe e qualifique os leads capturados
           </p>
         </div>
@@ -130,13 +130,13 @@ export default function Leads() {
           )}
 
           <div className="relative w-full max-w-sm min-w-52 flex-1">
-            <Search className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
+            <Search className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-white" />
             <input
               type="search"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Buscar por nome ou e-mail"
-              className="h-11 w-full rounded-xl border border-slate-200 bg-white pl-10 pr-4 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-indigo-500"
+              className="h-11 w-full rounded-xl border border-slate-200 bg-white pl-10 pr-4 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:placeholder:text-white dark:focus:border-indigo-500"
             />
           </div>
 
@@ -148,8 +148,8 @@ export default function Leads() {
                 className={cn(
                   'rounded-lg px-3 py-1.5 text-xs font-semibold transition',
                   status === option.value
-                    ? 'bg-white text-slate-900 shadow-sm dark:bg-slate-700 dark:text-slate-100'
-                    : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200',
+                    ? 'bg-white text-slate-900 shadow-sm dark:bg-slate-700 dark:text-white'
+                    : 'text-slate-500 hover:text-slate-800 dark:text-white dark:hover:text-white',
                 )}
               >
                 {option.label}
@@ -162,13 +162,13 @@ export default function Leads() {
           {loading && leads === null ? (
             <div className="flex items-center justify-center gap-3 py-24">
               <Loader2 className="h-5 w-5 animate-spin text-indigo-500" />
-              <span className="text-sm text-slate-500 dark:text-slate-400">
+              <span className="text-sm text-slate-500 dark:text-white">
                 Carregando leads...
               </span>
             </div>
           ) : error && leads === null ? (
             <div className="flex flex-col items-center gap-4 py-24">
-              <p className="text-sm text-slate-500 dark:text-slate-400">{error}</p>
+              <p className="text-sm text-slate-500 dark:text-white">{error}</p>
               <button
                 onClick={() => fetchLeads(isAdmin ? (selectedClientId ?? undefined) : undefined)}
                 className="flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500"
@@ -180,9 +180,9 @@ export default function Leads() {
           ) : filteredLeads.length === 0 ? (
             <div className="flex flex-col items-center gap-3 py-24 text-center">
               <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100 dark:bg-slate-800/60">
-                <Inbox className="h-6 w-6 text-slate-400 dark:text-slate-500" strokeWidth={1.75} />
+                <Inbox className="h-6 w-6 text-slate-400 dark:text-white" strokeWidth={1.75} />
               </span>
-              <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
+              <p className="text-sm font-medium text-slate-600 dark:text-white">
                 {query || status
                   ? 'Nenhum lead encontrado'
                   : 'Nenhum lead capturado ainda'}
@@ -203,17 +203,17 @@ export default function Leads() {
                         className="h-4.5 w-4.5 shrink-0 text-indigo-500 dark:text-indigo-400"
                         strokeWidth={1.75}
                       />
-                      <h2 className="font-display text-lg font-semibold tracking-tight text-slate-900 capitalize dark:text-slate-100">
+                      <h2 className="font-display text-lg font-semibold tracking-tight text-slate-900 capitalize dark:text-white">
                         {group.label}
                       </h2>
-                      <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-500 dark:bg-slate-800 dark:text-slate-400">
+                      <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-500 dark:bg-slate-800 dark:text-white">
                         {group.items.length}{' '}
                         {group.items.length === 1 ? 'lead' : 'leads'}
                       </span>
                       <span className="h-px min-w-4 flex-1 bg-slate-200 dark:bg-slate-800" />
                       <ChevronDown
                         className={cn(
-                          'h-5 w-5 shrink-0 text-slate-400 transition-transform duration-200 dark:text-slate-500',
+                          'h-5 w-5 shrink-0 text-slate-400 transition-transform duration-200 dark:text-white',
                           collapsed ? '-rotate-90' : 'rotate-0',
                         )}
                         strokeWidth={1.75}

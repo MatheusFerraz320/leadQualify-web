@@ -96,10 +96,10 @@ function KpiCard({ label, value, icon: Icon, accent, delta, deltaLabel }: KpiCar
       />
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
+          <p className="text-sm font-medium text-slate-500 dark:text-white">
             {label}
           </p>
-          <p className="mt-1.5 font-display text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+          <p className="mt-1.5 font-display text-3xl font-semibold tracking-tight text-slate-900 dark:text-white">
             {value}
           </p>
         </div>
@@ -121,7 +121,7 @@ function KpiCard({ label, value, icon: Icon, accent, delta, deltaLabel }: KpiCar
                 ? 'text-emerald-600 dark:text-emerald-400'
                 : delta < 0
                   ? 'text-rose-600 dark:text-rose-400'
-                  : 'text-slate-500 dark:text-slate-400',
+                  : 'text-slate-500 dark:text-white',
             )}
           >
             {delta > 0 ? (
@@ -132,7 +132,7 @@ function KpiCard({ label, value, icon: Icon, accent, delta, deltaLabel }: KpiCar
             {delta > 0 ? '+' : ''}
             {delta}%
           </span>
-          <span className="text-slate-400 dark:text-slate-500">
+          <span className="text-slate-400 dark:text-white">
             {deltaLabel ?? 'vs mês anterior'}
           </span>
         </div>
@@ -157,11 +157,11 @@ function Panel({ title, subtitle, className, children }: PanelProps) {
       )}
     >
       <div className="mb-4">
-        <h2 className="font-display text-base font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+        <h2 className="font-display text-base font-semibold tracking-tight text-slate-900 dark:text-white">
           {title}
         </h2>
         {subtitle && (
-          <p className="text-xs text-slate-400 dark:text-slate-500">{subtitle}</p>
+          <p className="text-xs text-slate-400 dark:text-white">{subtitle}</p>
         )}
       </div>
       {children}
@@ -172,8 +172,8 @@ function Panel({ title, subtitle, className, children }: PanelProps) {
 function EmptyChart() {
   return (
     <div className="flex h-56 flex-col items-center justify-center gap-2 text-center">
-      <Inbox className="h-6 w-6 text-slate-300 dark:text-slate-600" strokeWidth={1.75} />
-      <p className="text-xs text-slate-400 dark:text-slate-500">Sem dados ainda</p>
+      <Inbox className="h-6 w-6 text-slate-300 dark:text-white" strokeWidth={1.75} />
+      <p className="text-xs text-slate-400 dark:text-white">Sem dados ainda</p>
     </div>
   )
 }
@@ -231,10 +231,10 @@ export default function Home() {
           <LayoutDashboard className="h-5 w-5 text-white" strokeWidth={2} />
         </span>
         <div className="mr-auto">
-          <h1 className="font-display text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+          <h1 className="font-display text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">
             Dashboard
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400">
+          <p className="text-sm text-slate-500 dark:text-white">
             {isAdmin ? 'Métricas gerais de todos colaboradores' : 'Visão geral'}
           </p>
         </div>
@@ -254,13 +254,13 @@ export default function Home() {
       {loading && summary === null ? (
         <div className="flex items-center justify-center gap-3 py-24">
           <Loader2 className="h-5 w-5 animate-spin text-indigo-500" />
-          <span className="text-sm text-slate-500 dark:text-slate-400">
+          <span className="text-sm text-slate-500 dark:text-white">
             Carregando métricas...
           </span>
         </div>
       ) : error && summary === null ? (
         <div className="flex flex-col items-center gap-4 py-24">
-          <p className="text-sm text-slate-500 dark:text-slate-400">{error}</p>
+          <p className="text-sm text-slate-500 dark:text-white">{error}</p>
           <button
             onClick={() =>
               fetchSummary(isAdmin ? (selectedClientId ?? undefined) : undefined)
@@ -274,9 +274,9 @@ export default function Home() {
       ) : !totals ? (
         <div className="flex flex-col items-center gap-3 py-24 text-center">
           <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100 dark:bg-slate-800/60">
-            <Inbox className="h-6 w-6 text-slate-400 dark:text-slate-500" strokeWidth={1.75} />
+            <Inbox className="h-6 w-6 text-slate-400 dark:text-white" strokeWidth={1.75} />
           </span>
-          <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
+          <p className="text-sm font-medium text-slate-600 dark:text-white">
             Nenhuma métrica disponível ainda
           </p>
         </div>
@@ -356,10 +356,10 @@ export default function Home() {
                           className="h-2.5 w-2.5 shrink-0 rounded-full"
                           style={{ backgroundColor: entry.color }}
                         />
-                        <span className="text-slate-600 dark:text-slate-300">
+                        <span className="text-slate-600 dark:text-white">
                           {entry.name}
                         </span>
-                        <span className="ml-auto font-semibold text-slate-900 dark:text-slate-100">
+                        <span className="ml-auto font-semibold text-slate-900 dark:text-white">
                           {entry.value}
                         </span>
                       </li>
@@ -495,7 +495,7 @@ export default function Home() {
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[600px] text-sm">
                   <thead>
-                    <tr className="border-b border-slate-100 text-left text-xs uppercase tracking-wide text-slate-400 dark:border-slate-800 dark:text-slate-500">
+                    <tr className="border-b border-slate-100 text-left text-xs uppercase tracking-wide text-slate-400 dark:border-slate-800 dark:text-white">
                       <th className="pb-2.5 pr-4 font-semibold">Cliente</th>
                       <th className="pb-2.5 pr-4 font-semibold">Total</th>
                       <th className="pb-2.5 pr-4 font-semibold">Pendentes</th>
@@ -516,19 +516,19 @@ export default function Home() {
                               {initials(row.user?.name ?? '')}
                             </span>
                             <div className="min-w-0">
-                              <p className="truncate font-medium text-slate-800 dark:text-slate-200">
+                              <p className="truncate font-medium text-slate-800 dark:text-white">
                                 {row.user?.name ?? 'Cliente'}
                               </p>
-                              <p className="truncate text-xs text-slate-400 dark:text-slate-500">
+                              <p className="truncate text-xs text-slate-400 dark:text-white">
                                 {row.user?.email}
                               </p>
                             </div>
                           </div>
                         </td>
-                        <td className="py-3 pr-4 font-semibold text-slate-900 dark:text-slate-100">
+                        <td className="py-3 pr-4 font-semibold text-slate-900 dark:text-white">
                           {row.total}
                         </td>
-                        <td className="py-3 pr-4 text-slate-600 dark:text-slate-400">
+                        <td className="py-3 pr-4 text-slate-600 dark:text-white">
                           {row.pending}
                         </td>
                         <td className="py-3 pr-4 text-emerald-600 dark:text-emerald-400">
@@ -537,7 +537,7 @@ export default function Home() {
                         <td className="py-3 pr-4 text-rose-600 dark:text-rose-400">
                           {row.rejected}
                         </td>
-                        <td className="py-3 font-medium text-slate-700 dark:text-slate-300">
+                        <td className="py-3 font-medium text-slate-700 dark:text-white">
                           {formatPercent(row.conversionRate)}
                         </td>
                       </tr>

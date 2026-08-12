@@ -21,7 +21,7 @@ type Props = {
 }
 
 const inputClass =
-  'h-11 w-full rounded-xl border border-slate-200 bg-slate-50/60 pl-11 pr-4 text-sm text-slate-900 placeholder:text-slate-400 transition outline-none focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/15 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-cyan-400 dark:focus:bg-slate-900'
+  'h-11 w-full rounded-xl border border-slate-200 bg-slate-50/60 pl-11 pr-4 text-sm text-slate-900 placeholder:text-slate-400 transition outline-none focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/15 dark:border-slate-700 dark:bg-slate-900/60 dark:text-white dark:placeholder:text-white dark:focus:border-cyan-400 dark:focus:bg-slate-900'
 
 const statusOptions: Array<{ value: Lead['status']; label: string }> = [
   { value: 'PENDING', label: 'Pendente' },
@@ -82,17 +82,17 @@ export function EditLeadModal({ lead, onClose }: Props) {
         <div className="p-7 sm:p-8">
           <div className="mb-6 flex items-start justify-between">
             <div>
-              <h2 className="font-display text-xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+              <h2 className="font-display text-xl font-semibold tracking-tight text-slate-900 dark:text-white">
                 Editar lead
               </h2>
-              <p className="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
+              <p className="mt-0.5 text-sm text-slate-500 dark:text-white">
                 Atualize os dados de {lead.name}
               </p>
             </div>
             <button
               onClick={onClose}
               aria-label="Fechar"
-              className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 dark:text-slate-500 dark:hover:bg-slate-800 dark:hover:text-slate-300"
+              className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 dark:text-white dark:hover:bg-slate-800 dark:hover:text-white"
             >
               <X className="h-4.5 w-4.5" />
             </button>
@@ -103,7 +103,7 @@ export function EditLeadModal({ lead, onClose }: Props) {
               <div>
                 <label
                   htmlFor="lead-name"
-                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-white"
                 >
                   Nome
                 </label>
@@ -123,7 +123,7 @@ export function EditLeadModal({ lead, onClose }: Props) {
               <div>
                 <label
                   htmlFor="lead-email"
-                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-white"
                 >
                   E-mail
                 </label>
@@ -144,7 +144,7 @@ export function EditLeadModal({ lead, onClose }: Props) {
               <div>
                 <label
                   htmlFor="lead-phone"
-                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-white"
                 >
                   Telefone
                 </label>
@@ -163,7 +163,7 @@ export function EditLeadModal({ lead, onClose }: Props) {
               <div>
                 <label
                   htmlFor="lead-product"
-                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-white"
                 >
                   Produto / Serviço
                 </label>
@@ -184,7 +184,7 @@ export function EditLeadModal({ lead, onClose }: Props) {
               <div>
                 <label
                   htmlFor="lead-finality"
-                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-white"
                 >
                   Finalidade
                 </label>
@@ -203,7 +203,7 @@ export function EditLeadModal({ lead, onClose }: Props) {
               <div>
                 <label
                   htmlFor="lead-status"
-                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-white"
                 >
                   Status
                 </label>
@@ -223,7 +223,7 @@ export function EditLeadModal({ lead, onClose }: Props) {
                       </option>
                     ))}
                   </select>
-                  <ChevronDown className="pointer-events-none absolute top-1/2 right-3.5 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
+                  <ChevronDown className="pointer-events-none absolute top-1/2 right-3.5 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-white" />
                 </div>
               </div>
             </div>

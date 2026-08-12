@@ -21,7 +21,7 @@ type Props = {
 }
 
 const inputClass =
-  'h-11 w-full rounded-xl border border-slate-200 bg-slate-50/60 pl-11 pr-4 text-sm text-slate-900 placeholder:text-slate-400 transition outline-none focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/15 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-cyan-400 dark:focus:bg-slate-900'
+  'h-11 w-full rounded-xl border border-slate-200 bg-slate-50/60 pl-11 pr-4 text-sm text-slate-900 placeholder:text-slate-400 transition outline-none focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/15 dark:border-slate-700 dark:bg-slate-900/60 dark:text-white dark:placeholder:text-white dark:focus:border-cyan-400 dark:focus:bg-slate-900'
 
 export function EditCollaboratorModal({ user, onClose }: Props) {
   const [name, setName] = useState(user.name)
@@ -83,17 +83,17 @@ export function EditCollaboratorModal({ user, onClose }: Props) {
         <div className="p-7 sm:p-8">
           <div className="mb-6 flex items-start justify-between">
             <div>
-              <h2 className="font-display text-xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+              <h2 className="font-display text-xl font-semibold tracking-tight text-slate-900 dark:text-white">
                 Editar colaborador
               </h2>
-              <p className="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
+              <p className="mt-0.5 text-sm text-slate-500 dark:text-white">
                 Atualize os dados de {user.name}
               </p>
             </div>
             <button
               onClick={onClose}
               aria-label="Fechar"
-              className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 dark:text-slate-500 dark:hover:bg-slate-800 dark:hover:text-slate-300"
+              className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 dark:text-white dark:hover:bg-slate-800 dark:hover:text-white"
             >
               <X className="h-4.5 w-4.5" />
             </button>
@@ -104,7 +104,7 @@ export function EditCollaboratorModal({ user, onClose }: Props) {
               <div>
                 <label
                   htmlFor="edit-name"
-                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-white"
                 >
                   Nome
                 </label>
@@ -124,7 +124,7 @@ export function EditCollaboratorModal({ user, onClose }: Props) {
               <div>
                 <label
                   htmlFor="edit-email"
-                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-white"
                 >
                   E-mail
                 </label>
@@ -145,7 +145,7 @@ export function EditCollaboratorModal({ user, onClose }: Props) {
             <div>
               <label
                 htmlFor="edit-role"
-                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-white"
               >
                 Função
               </label>
@@ -162,12 +162,12 @@ export function EditCollaboratorModal({ user, onClose }: Props) {
                   <option value="COLLABORATOR">Colaborador</option>
                   <option value="ADMIN">Administrador</option>
                 </select>
-                <ChevronDown className="pointer-events-none absolute top-1/2 right-3.5 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
+                <ChevronDown className="pointer-events-none absolute top-1/2 right-3.5 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-white" />
               </div>
             </div>
 
             <div className="border-t border-slate-100 pt-4 dark:border-slate-800">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-white">
                 Nova senha (opcional)
               </p>
 
@@ -185,7 +185,7 @@ export function EditCollaboratorModal({ user, onClose }: Props) {
                     type="button"
                     onClick={() => setShowPassword((value) => !value)}
                     aria-label="Mostrar ou ocultar senha"
-                    className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
+                    className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600 dark:text-white dark:hover:text-white"
                   >
                     {showPassword ? (
                       <EyeOff className="h-4 w-4" />
@@ -209,7 +209,7 @@ export function EditCollaboratorModal({ user, onClose }: Props) {
                       type="button"
                       onClick={() => setShowConfirm((value) => !value)}
                       aria-label="Mostrar ou ocultar confirmação"
-                      className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
+                      className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600 dark:text-white dark:hover:text-white"
                     >
                       {showConfirm ? (
                         <EyeOff className="h-4 w-4" />

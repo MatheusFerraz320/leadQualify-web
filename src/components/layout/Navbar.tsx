@@ -154,17 +154,17 @@ export function Navbar() {
           {menuOpen && (
             <div className="absolute top-full right-0 z-20 mt-2 w-56 overflow-hidden rounded-2xl border border-slate-200 bg-white p-1.5 shadow-xl shadow-slate-900/10 dark:border-slate-700 dark:bg-slate-800 dark:shadow-black/40">
               <div className="border-b border-slate-100 px-3 py-2.5 dark:border-slate-700">
-                <p className="truncate text-sm font-semibold text-slate-900 dark:text-slate-100">
+                <p className="truncate text-sm font-semibold text-slate-900 dark:text-white">
                   {user?.name || user?.email}
                 </p>
-                <p className="truncate text-xs text-slate-400 dark:text-slate-500">
+                <p className="truncate text-xs text-slate-400 dark:text-white">
                   {user?.email}
                 </p>
               </div>
               <Link
                 to="/minha-conta"
                 onClick={() => setMenuOpen(false)}
-                className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-700/60 dark:hover:text-white"
+                className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-50 hover:text-slate-900 dark:text-white dark:hover:bg-slate-700/60 dark:hover:text-white"
               >
                 <Settings className="h-4 w-4" strokeWidth={1.75} />
                 Configurações

@@ -90,7 +90,9 @@ export default function Leads() {
       if (!term) return true
       return (
         lead.name.toLowerCase().includes(term) ||
-        (lead.email ?? '').toLowerCase().includes(term)
+        (lead.email ?? '').toLowerCase().includes(term) ||
+        (lead.utmPalavraChave ?? '').toLowerCase().includes(term) ||
+        (lead.utmCampanha ?? '').toLowerCase().includes(term)
       )
     })
   }, [leads, query, status])
@@ -135,7 +137,7 @@ export default function Leads() {
               type="search"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Buscar por nome ou e-mail"
+              placeholder="Buscar por nome , e-mail . campanha ou palara-chave"
               className="h-11 w-full rounded-xl border border-slate-200 bg-white pl-10 pr-4 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:placeholder:text-white dark:focus:border-indigo-500"
             />
           </div>

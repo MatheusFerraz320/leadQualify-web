@@ -42,7 +42,7 @@ type DashboardState = {
   summary: DashboardSummary | null
   loading: boolean
   error: string | null
-  fetchSummary: (userId?: string) => Promise<string | null>
+  fetchSummary: (userId?: string, month?: string) => Promise<string | null>
 }
 
 export const useDashboardStore = create<DashboardState>()((set) => ({
@@ -50,11 +50,14 @@ export const useDashboardStore = create<DashboardState>()((set) => ({
   loading: false,
   error: null,
 
-  fetchSummary: async (userId) => {
+  fetchSummary: async (userId, month) => {
     set({ loading: true, error: null })
     try {
-      const query = userId ? `?userId=${encodeURIComponent(userId)}` : ''
-      const response = await api(`/dashboard/summary${query}`)
+      const params = new URLSearchParams()
+      if (userId) params.set('userId', userId)
+      if (month) params.set('month', month)
+      const query = params.toString()
+      const response = await api(`/dashboard/summary${query ? `?${query}` : ''}`)
       if (!response.ok) {
         const message = await getErrorMessage(response)
         throw new Error(message || 'Erro ao carregar métricas')

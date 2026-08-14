@@ -80,7 +80,7 @@ export default function Leads() {
           <h1 className="font-display text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
             Leads
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400">
+          <p className="text-sm text-slate-500 dark:text-white">
             Acompanhe e qualifique os leads capturados
           </p>
         </div>

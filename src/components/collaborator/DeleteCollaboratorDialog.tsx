@@ -41,7 +41,7 @@ export function DeleteCollaboratorDialog({ user, onClose }: Props) {
         <button
           onClick={onClose}
           aria-label="Fechar"
-          className="absolute top-5 right-5 rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 dark:text-slate-500 dark:hover:bg-slate-800 dark:hover:text-slate-300"
+          className="absolute top-5 right-5 rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 dark:text-white dark:hover:bg-slate-800 dark:hover:text-white"
         >
           <X className="h-4.5 w-4.5" />
         </button>
@@ -50,12 +50,12 @@ export function DeleteCollaboratorDialog({ user, onClose }: Props) {
           <Trash2 className="h-5.5 w-5.5" strokeWidth={1.75} />
         </span>
 
-        <h2 className="mt-4 font-display text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+        <h2 className="mt-4 font-display text-lg font-semibold tracking-tight text-slate-900 dark:text-white">
           Excluir colaborador?
         </h2>
-        <p className="mt-1.5 text-sm text-slate-500 dark:text-slate-400">
+        <p className="mt-1.5 text-sm text-slate-500 dark:text-white">
           Essa ação é permanente e não pode ser desfeita. O acesso de{' '}
-          <span className="font-semibold text-slate-700 dark:text-slate-200">{user.name}</span>{' '}
+          <span className="font-semibold text-slate-700 dark:text-white">{user.name}</span>{' '}
           será removido da plataforma.
         </p>
 
@@ -63,7 +63,7 @@ export function DeleteCollaboratorDialog({ user, onClose }: Props) {
           <button
             onClick={onClose}
             disabled={deleting}
-            className="rounded-xl px-5 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+            className="rounded-xl px-5 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 dark:text-white dark:hover:bg-slate-800 dark:hover:text-white"
           >
             Cancelar
           </button>

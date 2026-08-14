@@ -35,6 +35,7 @@ import {
 } from '../stores/dashboardStore'
 import { useLeadsStore, type LeadStatus } from '../stores/leadsStore'
 import { ClientSelect } from '../components/leads/ClientSelect'
+import { MonthSelect } from '../components/dashboard/MonthSelect'
 
 const statusMeta: Record<LeadStatus, { label: string; color: string; bg: string; icon: typeof CheckCircle2 }> = {
   APPROVED: {
@@ -72,6 +73,10 @@ function formatPercent(value: number) {
   return `${(value * 100).toFixed(1)}%`
 }
 
+function truncateLabel(label: string, max = 20) {
+  return label.length > max ? `${label.slice(0, max - 1)}…` : label
+}
+
 type KpiCardProps = {
   label: string
   value: string
@@ -92,10 +97,10 @@ function KpiCard({ label, value, icon: Icon, accent, delta, deltaLabel }: KpiCar
       />
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
+          <p className="text-sm font-medium text-slate-500 dark:text-white">
             {label}
           </p>
-          <p className="mt-1.5 font-display text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+          <p className="mt-1.5 font-display text-3xl font-semibold tracking-tight text-slate-900 dark:text-white">
             {value}
           </p>
         </div>
@@ -117,7 +122,7 @@ function KpiCard({ label, value, icon: Icon, accent, delta, deltaLabel }: KpiCar
                 ? 'text-emerald-600 dark:text-emerald-400'
                 : delta < 0
                   ? 'text-rose-600 dark:text-rose-400'
-                  : 'text-slate-500 dark:text-slate-400',
+                  : 'text-slate-500 dark:text-white',
             )}
           >
             {delta > 0 ? (
@@ -128,7 +133,7 @@ function KpiCard({ label, value, icon: Icon, accent, delta, deltaLabel }: KpiCar
             {delta > 0 ? '+' : ''}
             {delta}%
           </span>
-          <span className="text-slate-400 dark:text-slate-500">
+          <span className="text-slate-400 dark:text-white">
             {deltaLabel ?? 'vs mês anterior'}
           </span>
         </div>
@@ -153,11 +158,11 @@ function Panel({ title, subtitle, className, children }: PanelProps) {
       )}
     >
       <div className="mb-4">
-        <h2 className="font-display text-base font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+        <h2 className="font-display text-base font-semibold tracking-tight text-slate-900 dark:text-white">
           {title}
         </h2>
         {subtitle && (
-          <p className="text-xs text-slate-400 dark:text-slate-500">{subtitle}</p>
+          <p className="text-xs text-slate-400 dark:text-white">{subtitle}</p>
         )}
       </div>
       {children}
@@ -168,8 +173,8 @@ function Panel({ title, subtitle, className, children }: PanelProps) {
 function EmptyChart() {
   return (
     <div className="flex h-56 flex-col items-center justify-center gap-2 text-center">
-      <Inbox className="h-6 w-6 text-slate-300 dark:text-slate-600" strokeWidth={1.75} />
-      <p className="text-xs text-slate-400 dark:text-slate-500">Sem dados ainda</p>
+      <Inbox className="h-6 w-6 text-slate-300 dark:text-white" strokeWidth={1.75} />
+      <p className="text-xs text-slate-400 dark:text-white">Sem dados ainda</p>
     </div>
   )
 }
@@ -187,6 +192,7 @@ export default function Home() {
   } = useLeadsStore()
 
   const [selectedClientId, setSelectedClientId] = useState<string | null>(null)
+  const [selectedMonth, setSelectedMonth] = useState<string | null>(null)
 
   useEffect(() => {
     if (isAdmin && clients === null) {
@@ -195,10 +201,17 @@ export default function Home() {
   }, [isAdmin, clients, fetchClients])
 
   useEffect(() => {
-    fetchSummary(isAdmin ? (selectedClientId ?? undefined) : undefined)
-  }, [isAdmin, selectedClientId, fetchSummary])
+    fetchSummary(isAdmin ? (selectedClientId ?? undefined) : undefined, selectedMonth ?? undefined)
+  }, [isAdmin, selectedClientId, selectedMonth, fetchSummary])
 
   const totals = summary?.totals
+
+  const monthOptions = useMemo(() => {
+    if (!summary?.monthly.length) return []
+    return [...new Set(summary.monthly.map((point) => point.month))].sort(
+      (a, b) => b.localeCompare(a),
+    )
+  }, [summary?.monthly])
 
   const monthlyAsc = useMemo<Array<MonthlyPoint & { label: string }>>(() => {
     if (!summary?.monthly.length) return []
@@ -227,10 +240,10 @@ export default function Home() {
           <LayoutDashboard className="h-5 w-5 text-white" strokeWidth={2} />
         </span>
         <div className="mr-auto">
-          <h1 className="font-display text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+          <h1 className="font-display text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">
             Dashboard
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400">
+          <p className="text-sm text-slate-500 dark:text-white">
             {isAdmin ? 'Métricas gerais de todos colaboradores' : 'Visão geral'}
           </p>
         </div>
@@ -245,21 +258,30 @@ export default function Home() {
             onRetry={fetchClients}
           />
         )}
+
+        <MonthSelect
+          months={monthOptions}
+          selectedMonth={selectedMonth}
+          onSelect={setSelectedMonth}
+        />
       </div>
 
       {loading && summary === null ? (
         <div className="flex items-center justify-center gap-3 py-24">
           <Loader2 className="h-5 w-5 animate-spin text-indigo-500" />
-          <span className="text-sm text-slate-500 dark:text-slate-400">
+          <span className="text-sm text-slate-500 dark:text-white">
             Carregando métricas...
           </span>
         </div>
       ) : error && summary === null ? (
         <div className="flex flex-col items-center gap-4 py-24">
-          <p className="text-sm text-slate-500 dark:text-slate-400">{error}</p>
+          <p className="text-sm text-slate-500 dark:text-white">{error}</p>
           <button
             onClick={() =>
-              fetchSummary(isAdmin ? (selectedClientId ?? undefined) : undefined)
+              fetchSummary(
+                isAdmin ? (selectedClientId ?? undefined) : undefined,
+                selectedMonth ?? undefined,
+              )
             }
             className="flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500"
           >
@@ -270,9 +292,9 @@ export default function Home() {
       ) : !totals ? (
         <div className="flex flex-col items-center gap-3 py-24 text-center">
           <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100 dark:bg-slate-800/60">
-            <Inbox className="h-6 w-6 text-slate-400 dark:text-slate-500" strokeWidth={1.75} />
+            <Inbox className="h-6 w-6 text-slate-400 dark:text-white" strokeWidth={1.75} />
           </span>
-          <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
+          <p className="text-sm font-medium text-slate-600 dark:text-white">
             Nenhuma métrica disponível ainda
           </p>
         </div>
@@ -352,10 +374,10 @@ export default function Home() {
                           className="h-2.5 w-2.5 shrink-0 rounded-full"
                           style={{ backgroundColor: entry.color }}
                         />
-                        <span className="text-slate-600 dark:text-slate-300">
+                        <span className="text-slate-600 dark:text-white">
                           {entry.name}
                         </span>
-                        <span className="ml-auto font-semibold text-slate-900 dark:text-slate-100">
+                        <span className="ml-auto font-semibold text-slate-900 dark:text-white">
                           {entry.value}
                         </span>
                       </li>
@@ -382,6 +404,7 @@ export default function Home() {
                       dataKey="label"
                       tickLine={false}
                       axisLine={false}
+                      tickMargin={6}
                       tick={{ fontSize: 11, fill: '#94a3b8' }}
                     />
                     <YAxis
@@ -413,24 +436,31 @@ export default function Home() {
               {summary?.byProduct.length === 0 || emptyLabel(summary?.byProduct ?? []) ? (
                 <EmptyChart />
               ) : (
-                <ResponsiveContainer width="100%" height={220}>
+                <ResponsiveContainer
+                  width="100%"
+                  height={Math.max(280, (summary?.byProduct.length ?? 0) * 46)}
+                >
                   <BarChart
                     layout="vertical"
                     data={summary?.byProduct ?? []}
-                    margin={{ top: 0, right: 8, left: 8, bottom: 0 }}
+                    margin={{ top: 0, right: 8, left: 0, bottom: 0 }}
+                    barCategoryGap="35%"
                   >
                     <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="currentColor" className="text-slate-200 dark:text-slate-800" />
                     <XAxis type="number" allowDecimals={false} tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: '#94a3b8' }} />
                     <YAxis
                       type="category"
                       dataKey="label"
-                      width={96}
+                      width={150}
                       tickLine={false}
                       axisLine={false}
+                      interval={0}
+                      tickMargin={10}
+                      tickFormatter={(value: string) => truncateLabel(value)}
                       tick={{ fontSize: 11, fill: '#64748b' }}
                     />
                     <Tooltip />
-                    <Bar dataKey="count" fill="#6366f1" radius={[0, 8, 8, 0]} barSize={14} name="Leads" />
+                    <Bar dataKey="count" fill="#6366f1" radius={[0, 8, 8, 0]} barSize={16} name="Leads" />
                   </BarChart>
                 </ResponsiveContainer>
               )}
@@ -444,24 +474,31 @@ export default function Home() {
               {summary?.byCampaign.length === 0 || emptyLabel(summary?.byCampaign ?? []) ? (
                 <EmptyChart />
               ) : (
-                <ResponsiveContainer width="100%" height={220}>
+                <ResponsiveContainer
+                  width="100%"
+                  height={Math.max(280, (summary?.byCampaign.length ?? 0) * 46)}
+                >
                   <BarChart
                     layout="vertical"
                     data={summary?.byCampaign ?? []}
-                    margin={{ top: 0, right: 8, left: 8, bottom: 0 }}
+                    margin={{ top: 0, right: 8, left: 0, bottom: 0 }}
+                    barCategoryGap="35%"
                   >
                     <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="currentColor" className="text-slate-200 dark:text-slate-800" />
                     <XAxis type="number" allowDecimals={false} tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: '#94a3b8' }} />
                     <YAxis
                       type="category"
                       dataKey="label"
-                      width={96}
+                      width={150}
                       tickLine={false}
                       axisLine={false}
+                      interval={0}
+                      tickMargin={10}
+                      tickFormatter={(value: string) => truncateLabel(value)}
                       tick={{ fontSize: 11, fill: '#64748b' }}
                     />
                     <Tooltip />
-                    <Bar dataKey="count" fill="#a855f7" radius={[0, 8, 8, 0]} barSize={14} name="Leads" />
+                    <Bar dataKey="count" fill="#a855f7" radius={[0, 8, 8, 0]} barSize={16} name="Leads" />
                   </BarChart>
                 </ResponsiveContainer>
               )}
@@ -476,7 +513,7 @@ export default function Home() {
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[600px] text-sm">
                   <thead>
-                    <tr className="border-b border-slate-100 text-left text-xs uppercase tracking-wide text-slate-400 dark:border-slate-800 dark:text-slate-500">
+                    <tr className="border-b border-slate-100 text-left text-xs uppercase tracking-wide text-slate-400 dark:border-slate-800 dark:text-white">
                       <th className="pb-2.5 pr-4 font-semibold">Cliente</th>
                       <th className="pb-2.5 pr-4 font-semibold">Total</th>
                       <th className="pb-2.5 pr-4 font-semibold">Pendentes</th>
@@ -497,19 +534,19 @@ export default function Home() {
                               {initials(row.user?.name ?? '')}
                             </span>
                             <div className="min-w-0">
-                              <p className="truncate font-medium text-slate-800 dark:text-slate-200">
+                              <p className="truncate font-medium text-slate-800 dark:text-white">
                                 {row.user?.name ?? 'Cliente'}
                               </p>
-                              <p className="truncate text-xs text-slate-400 dark:text-slate-500">
+                              <p className="truncate text-xs text-slate-400 dark:text-white">
                                 {row.user?.email}
                               </p>
                             </div>
                           </div>
                         </td>
-                        <td className="py-3 pr-4 font-semibold text-slate-900 dark:text-slate-100">
+                        <td className="py-3 pr-4 font-semibold text-slate-900 dark:text-white">
                           {row.total}
                         </td>
-                        <td className="py-3 pr-4 text-slate-600 dark:text-slate-400">
+                        <td className="py-3 pr-4 text-slate-600 dark:text-white">
                           {row.pending}
                         </td>
                         <td className="py-3 pr-4 text-emerald-600 dark:text-emerald-400">
@@ -518,7 +555,7 @@ export default function Home() {
                         <td className="py-3 pr-4 text-rose-600 dark:text-rose-400">
                           {row.rejected}
                         </td>
-                        <td className="py-3 font-medium text-slate-700 dark:text-slate-300">
+                        <td className="py-3 font-medium text-slate-700 dark:text-white">
                           {formatPercent(row.conversionRate)}
                         </td>
                       </tr>

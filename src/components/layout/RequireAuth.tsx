@@ -10,7 +10,7 @@ export function RequireAuth() {
     return (
       <div className="flex min-h-screen items-center justify-center gap-3 bg-slate-100 dark:bg-slate-950">
         <Loader2 className="h-6 w-6 animate-spin text-indigo-500" />
-        <span className="text-sm text-slate-500 dark:text-slate-400">
+        <span className="text-sm text-slate-500 dark:text-white">
           Carregando...
         </span>
       </div>

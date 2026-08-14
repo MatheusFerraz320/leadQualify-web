@@ -15,7 +15,7 @@ import { useAuthStore } from '../stores/authStore'
 import { useUsersStore } from '../stores/usersStore'
 
 const inputClass =
-  'h-12 w-full rounded-xl border border-slate-200 bg-slate-50/60 pl-11 pr-4 text-base text-slate-900 placeholder:text-slate-400 transition outline-none focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/15 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-cyan-400 dark:focus:bg-slate-900'
+  'h-12 w-full rounded-xl border border-slate-200 bg-slate-50/60 pl-11 pr-4 text-base text-slate-900 placeholder:text-slate-400 transition outline-none focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/15 dark:border-slate-700 dark:bg-slate-900/60 dark:text-white dark:placeholder:text-white dark:focus:border-cyan-400 dark:focus:bg-slate-900'
 
 export default function MinhaConta() {
   const user = useAuthStore((state) => state.user)
@@ -70,10 +70,10 @@ export default function MinhaConta() {
           <ShieldCheck className="h-5 w-5 text-white" strokeWidth={2} />
         </span>
         <div>
-          <h1 className="font-display text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+          <h1 className="font-display text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">
             Minha conta
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400">
+          <p className="text-sm text-slate-500 dark:text-white">
             Atualize suas informações pessoais e de acesso
           </p>
         </div>
@@ -88,10 +88,10 @@ export default function MinhaConta() {
               {name.slice(0, 2).toUpperCase() || '?'}
             </span>
             <div className="min-w-0">
-              <p className="truncate text-sm font-semibold text-slate-900 dark:text-slate-100">
+              <p className="truncate text-sm font-semibold text-slate-900 dark:text-white">
                 {name}
               </p>
-              <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
+              <span className="text-xs font-medium text-slate-500 dark:text-white">
                 {roleLabel}
               </span>
             </div>
@@ -102,7 +102,7 @@ export default function MinhaConta() {
               <div>
                 <label
                   htmlFor="me-name"
-                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-white"
                 >
                   Nome
                 </label>
@@ -122,7 +122,7 @@ export default function MinhaConta() {
               <div>
                 <label
                   htmlFor="me-email"
-                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-white"
                 >
                   E-mail
                 </label>
@@ -141,10 +141,10 @@ export default function MinhaConta() {
             </div>
 
             <div className="border-t border-slate-100 pt-5 dark:border-slate-800">
-              <p className="mb-1 text-sm font-medium text-slate-700 dark:text-slate-300">
+              <p className="mb-1 text-sm font-medium text-slate-700 dark:text-white">
                 Alterar senha
               </p>
-              <p className="mb-4 text-xs text-slate-400 dark:text-slate-500">
+              <p className="mb-4 text-xs text-slate-400 dark:text-white">
                 Deixe em branco para manter a senha atual
               </p>
 
@@ -162,7 +162,7 @@ export default function MinhaConta() {
                     type="button"
                     onClick={() => setShowPassword((value) => !value)}
                     aria-label="Mostrar ou ocultar senha"
-                    className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
+                    className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600 dark:text-white dark:hover:text-white"
                   >
                     {showPassword ? (
                       <EyeOff className="h-4.5 w-4.5" />
@@ -186,7 +186,7 @@ export default function MinhaConta() {
                       type="button"
                       onClick={() => setShowConfirm((value) => !value)}
                       aria-label="Mostrar ou ocultar confirmação"
-                      className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
+                      className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600 dark:text-white dark:hover:text-white"
                     >
                       {showConfirm ? (
                         <EyeOff className="h-4.5 w-4.5" />

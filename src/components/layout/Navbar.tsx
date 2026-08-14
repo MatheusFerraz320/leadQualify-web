@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router'
 import {
-  Bell,
   LogOut,
   Moon,
   Settings,
@@ -99,20 +98,6 @@ export function Navbar() {
       </nav>
 
       <div className="absolute top-1/2 right-6 flex -translate-y-1/2 items-center gap-1.5">
-        <Link
-          to="/notificacoes"
-          title="Notificações"
-          aria-label="Notificações"
-          aria-current={isPathActive('/notificacoes') ? 'page' : undefined}
-          className={cn(
-            'flex h-10 w-10 items-center justify-center rounded-full transition active:scale-95',
-            isPathActive('/notificacoes')
-              ? 'bg-white/25 text-white ring-1 ring-white/40 dark:bg-white/10 dark:text-white dark:ring-b2-400/40'
-              : 'bg-white/10 text-white/90 ring-1 ring-white/20 hover:bg-white/20 hover:text-white dark:bg-white/5 dark:text-b2-200 dark:ring-b2-400/30 dark:hover:bg-white/10 dark:hover:text-white',
-          )}
-        >
-          <Bell className="h-5 w-5" strokeWidth={1.75} />
-        </Link>
 
         <button
           onClick={toggleTheme}
@@ -154,17 +139,17 @@ export function Navbar() {
           {menuOpen && (
             <div className="absolute top-full right-0 z-20 mt-2 w-56 overflow-hidden rounded-2xl border border-slate-200 bg-white p-1.5 shadow-xl shadow-slate-900/10 dark:border-slate-700 dark:bg-slate-800 dark:shadow-black/40">
               <div className="border-b border-slate-100 px-3 py-2.5 dark:border-slate-700">
-                <p className="truncate text-sm font-semibold text-slate-900 dark:text-slate-100">
+                <p className="truncate text-sm font-semibold text-slate-900 dark:text-white">
                   {user?.name || user?.email}
                 </p>
-                <p className="truncate text-xs text-slate-400 dark:text-slate-500">
+                <p className="truncate text-xs text-slate-400 dark:text-white">
                   {user?.email}
                 </p>
               </div>
               <Link
                 to="/minha-conta"
                 onClick={() => setMenuOpen(false)}
-                className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-700/60 dark:hover:text-white"
+                className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-50 hover:text-slate-900 dark:text-white dark:hover:bg-slate-700/60 dark:hover:text-white"
               >
                 <Settings className="h-4 w-4" strokeWidth={1.75} />
                 Configurações

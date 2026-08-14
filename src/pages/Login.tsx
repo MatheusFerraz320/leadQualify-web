@@ -52,17 +52,17 @@ export default function Login() {
             <h1 className="bg-gradient-to-r from-blue-600 to-cyan-300 bg-clip-text font-display text-4xl font-semibold tracking-tight text-transparent">
               ILM
             </h1>
-            <p className="mt-2 text-sm font-medium text-slate-500 dark:text-slate-400">
+            <p className="mt-2 text-sm font-medium text-slate-500 dark:text-white">
               Qualifique seus leads com inteligência
             </p>
           </div>
 
           <div className="rounded-[2rem] border border-slate-200/70 bg-white/80 p-8 shadow-xl 
           shadow-slate-200/60 backdrop-blur sm:p-12 dark:border-slate-800 dark:bg-white/[0.04] dark:shadow-black/40">
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100 text-center">
+            <h2 className="text-xl font-semibold text-slate-900 dark:text-white text-center">
               Bem-vindo de volta
             </h2>
-            <p className="mt-1.5 text-sm text-slate-500 dark:text-slate-400 text-center">
+            <p className="mt-1.5 text-sm text-slate-500 dark:text-white text-center">
               Acesse sua conta para continuar.
             </p>
 
@@ -70,12 +70,12 @@ export default function Login() {
               <div>
                 <label
                   htmlFor="email"
-                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+                  className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-white"
                 >
                   E-mail
                 </label>
                 <div className="relative">
-                  <Mail className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
+                  <Mail className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-slate-400 dark:text-white" />
                   <input
                     id="email"
                     type="email"
@@ -84,7 +84,7 @@ export default function Login() {
                     placeholder="voce@empresa.com"
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
-                    className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50/60 pl-10 pr-4 text-base text-slate-900 placeholder:text-slate-400 transition outline-none focus:border-indigo-400 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-indigo-500 dark:focus:bg-slate-900"
+                    className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50/60 pl-10 pr-4 text-base text-slate-900 placeholder:text-slate-400 transition outline-none focus:border-indigo-400 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-700 dark:bg-slate-900/60 dark:text-white dark:placeholder:text-white dark:focus:border-indigo-500 dark:focus:bg-slate-900"
                   />
                 </div>
               </div>
@@ -93,7 +93,7 @@ export default function Login() {
                 <div className="mb-1.5 flex items-center justify-between">
                   <label
                     htmlFor="password"
-                    className="block text-sm font-medium text-slate-700 dark:text-slate-300"
+                    className="block text-sm font-medium text-slate-700 dark:text-white"
                   >
                     Senha
                   </label>
@@ -105,7 +105,7 @@ export default function Login() {
                   </a>
                 </div>
                 <div className="relative">
-                  <Lock className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
+                  <Lock className="pointer-events-none absolute top-1/2 left-3.5 h-4.5 w-4.5 -translate-y-1/2 text-slate-400 dark:text-white" />
                   <input
                     id="password"
                     type={showPassword ? 'text' : 'password'}
@@ -114,7 +114,7 @@ export default function Login() {
                     placeholder="••••••••"
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
-                    className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50/60 pl-10 pr-11 text-base text-slate-900 placeholder:text-slate-400 transition outline-none focus:border-indigo-400 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-indigo-500 dark:focus:bg-slate-900"
+                    className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50/60 pl-10 pr-11 text-base text-slate-900 placeholder:text-slate-400 transition outline-none focus:border-indigo-400 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-700 dark:bg-slate-900/60 dark:text-white dark:placeholder:text-white dark:focus:border-indigo-500 dark:focus:bg-slate-900"
                   />
                   <button
                     type="button"
@@ -122,7 +122,7 @@ export default function Login() {
                     aria-label={
                       showPassword ? 'Ocultar senha' : 'Mostrar senha'
                     }
-                    className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
+                    className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-slate-400 transition hover:text-slate-600 dark:text-white dark:hover:text-white"
                   >
                     {showPassword ? (
                       <EyeOff className="h-4.5 w-4.5" />
@@ -149,7 +149,7 @@ export default function Login() {
             </form>
           </div>
 
-          <p className="mt-6 text-center text-sm text-slate-400 dark:text-slate-500">
+          <p className="mt-6 text-center text-sm text-slate-400 dark:text-white">
             Algum problema com seu acesso? entre em contato com a B2
           </p>
         </div>

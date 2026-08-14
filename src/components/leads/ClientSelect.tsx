@@ -43,7 +43,12 @@ export function ClientSelect({
         onClick={() => setOpen((value) => !value)}
         aria-expanded={open}
         aria-haspopup="listbox"
-        className="flex h-11 max-w-60 items-center gap-2 rounded-xl border border-slate-200 bg-white py-0 pr-3 pl-1.5 text-sm font-medium text-slate-700 shadow-sm transition hover:border-indigo-300 hover:text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:border-indigo-500/60 dark:hover:text-white"
+        className="flex h-11 max-w-60 items-center gap-2 rounded-xl 
+        border border-slate-200 bg-white py-0 pr-3 pl-1.5 
+        text-sm font-medium text-slate-700 shadow-sm 
+        transition hover:border-indigo-300 hover:text-slate-900 
+        dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 
+        dark:hover:border-indigo-500/60 dark:hover:text-white mx-13"
       >
         {selected ? (
           <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 text-xs font-semibold text-white">

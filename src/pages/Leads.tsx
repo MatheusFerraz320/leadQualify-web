@@ -1,30 +1,47 @@
-import { useEffect, useMemo, useState } from 'react'
-import { useSearchParams } from 'react-router'
+import { useEffect, useMemo } from 'react'
+import { Link } from 'react-router'
 import {
+  ArrowRight,
   CalendarDays,
-  ChevronDown,
+  CheckCircle2,
+  Hourglass,
   Inbox,
   Loader2,
   RefreshCw,
-  Search,
+  XCircle,
 } from 'lucide-react'
-import { cn, groupByMonth } from '../lib/utils'
+import { summarizeByMonth } from '../lib/utils'
 import { useAuthStore } from '../stores/authStore'
-import { useLeadsStore, type LeadStatus } from '../stores/leadsStore'
-import { LeadCard } from '../components/leads/LeadCard'
+import { useLeadsStore } from '../stores/leadsStore'
 import { ClientSelect } from '../components/leads/ClientSelect'
 
-const statusOptions: Array<{ value: LeadStatus | ''; label: string }> = [
-  { value: '', label: 'Todos' },
-  { value: 'PENDING', label: 'Pendentes' },
-  { value: 'APPROVED', label: 'Aprovados' },
-  { value: 'REJECTED', label: 'Reprovados' },
+const statusChips: Array<{
+  key: 'pending' | 'approved' | 'rejected'
+  label: string
+  icon: typeof Hourglass
+  classes: string
+}> = [
+  {
+    key: 'pending',
+    label: 'Pendentes',
+    icon: Hourglass,
+    classes: 'text-amber-600 dark:text-amber-400',
+  },
+  {
+    key: 'approved',
+    label: 'Aprovados',
+    icon: CheckCircle2,
+    classes: 'text-emerald-600 dark:text-emerald-400',
+  },
+  {
+    key: 'rejected',
+    label: 'Reprovados',
+    icon: XCircle,
+    classes: 'text-rose-600 dark:text-rose-400',
+  },
 ]
 
-const leadStatusValues: LeadStatus[] = ['PENDING', 'APPROVED', 'REJECTED']
-
 export default function Leads() {
-  const [searchParams] = useSearchParams()
   const user = useAuthStore((state) => state.user)
   const isAdmin = user?.role === 'ADMIN'
 
@@ -41,37 +58,6 @@ export default function Leads() {
     selectClient,
   } = useLeadsStore()
 
-  const [query, setQuery] = useState('')
-  const [status, setStatus] = useState<LeadStatus | ''>(
-    () =>
-      (leadStatusValues as string[]).includes(searchParams.get('status') ?? '')
-        ? (searchParams.get('status') as LeadStatus)
-        : '',
-  )
-  const [collapsedMonths, setCollapsedMonths] = useState<Set<string>>(
-    () => new Set(),
-  )
-
-  useEffect(() => {
-    const param = searchParams.get('status')
-    setStatus(
-      (leadStatusValues as string[]).includes(param ?? '')
-        ? (param as LeadStatus)
-        : '',
-    )
-  }, [searchParams])
-
-  const toggleMonth = (key: string) =>
-    setCollapsedMonths((previous) => {
-      const next = new Set(previous)
-      if (next.has(key)) {
-        next.delete(key)
-      } else {
-        next.add(key)
-      }
-      return next
-    })
-
   useEffect(() => {
     if (isAdmin && clients === null) {
       fetchClients()
@@ -82,168 +68,130 @@ export default function Leads() {
     fetchLeads(isAdmin ? (selectedClientId ?? undefined) : undefined)
   }, [isAdmin, selectedClientId, fetchLeads])
 
-  const filteredLeads = useMemo(() => {
-    if (!leads) return []
-    const term = query.trim().toLowerCase()
-    return leads.filter((lead) => {
-      if (status && lead.status !== status) return false
-      if (!term) return true
-      return (
-        lead.name.toLowerCase().includes(term) ||
-        (lead.email ?? '').toLowerCase().includes(term) ||
-        (lead.utmPalavraChave ?? '').toLowerCase().includes(term) ||
-        (lead.utmCampanha ?? '').toLowerCase().includes(term)
-      )
-    })
-  }, [leads, query, status])
-
-  const monthGroups = useMemo(
-    () => groupByMonth(filteredLeads),
-    [filteredLeads],
-  )
+  const monthSummaries = useMemo(() => summarizeByMonth(leads ?? []), [leads])
 
   return (
     <div className="mx-auto px-6 py-8">
-      <div className="mb-8 flex items-center gap-3">
+      <div className="mb-8 flex flex-wrap items-center gap-3">
         <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 shadow-lg shadow-indigo-500/25">
           <Inbox className="h-5 w-5 text-white" strokeWidth={2} />
         </span>
-        <div>
-          <h1 className="font-display text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">
+        <div className="mr-auto">
+          <h1 className="font-display text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
             Leads
           </h1>
           <p className="text-sm text-slate-500 dark:text-white">
             Acompanhe e qualifique os leads capturados
           </p>
         </div>
+
+        {isAdmin && (
+          <ClientSelect
+            clients={clients}
+            selectedClientId={selectedClientId}
+            loading={clientsLoading}
+            error={clientsError}
+            onSelect={selectClient}
+            onRetry={fetchClients}
+          />
+        )}
       </div>
 
       <section className="min-w-0">
-        <div className="mb-4 flex flex-wrap items-center gap-3">
-          {isAdmin && (
-            <ClientSelect
-              clients={clients}
-              selectedClientId={selectedClientId}
-              loading={clientsLoading}
-              error={clientsError}
-              onSelect={selectClient}
-              onRetry={fetchClients}
-            />
-          )}
-
-          <div className="relative w-full max-w-sm min-w-52 flex-1">
-            <Search className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-white" />
-            <input
-              type="search"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="nome e-mail campanha ou palara-chave"
-              className="h-11 w-full rounded-xl border border-slate-200 bg-white pl-10 pr-4 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-500/10 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:placeholder:text-white dark:focus:border-indigo-500"
-            />
+        {loading && leads === null ? (
+          <div className="flex items-center justify-center gap-3 py-24">
+            <Loader2 className="h-5 w-5 animate-spin text-indigo-500" />
+            <span className="text-sm text-slate-500 dark:text-slate-400">
+              Carregando leads...
+            </span>
           </div>
-
-          <div className="ml-auto flex items-center gap-1.5 rounded-xl bg-slate-100 p-1 dark:bg-slate-800/70">
-            {statusOptions.map((option) => (
-              <button
-                key={option.value}
-                onClick={() => setStatus(option.value)}
-                className={cn(
-                  'rounded-lg px-3 py-1.5 text-xs font-semibold transition',
-                  status === option.value
-                    ? 'bg-white text-slate-900 shadow-sm dark:bg-slate-700 dark:text-white'
-                    : 'text-slate-500 hover:text-slate-800 dark:text-white dark:hover:text-white',
-                )}
+        ) : error && leads === null ? (
+          <div className="flex flex-col items-center gap-4 py-24">
+            <p className="text-sm text-slate-500 dark:text-slate-400">{error}</p>
+            <button
+              onClick={() =>
+                fetchLeads(isAdmin ? (selectedClientId ?? undefined) : undefined)
+              }
+              className="flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500"
+            >
+              <RefreshCw className="h-4 w-4" />
+              Tentar novamente
+            </button>
+          </div>
+        ) : monthSummaries.length === 0 ? (
+          <div className="flex flex-col items-center gap-3 py-24 text-center">
+            <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100 dark:bg-slate-800/60">
+              <Inbox
+                className="h-6 w-6 text-slate-400 dark:text-slate-500"
+                strokeWidth={1.75}
+              />
+            </span>
+            <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
+              Nenhum lead capturado ainda
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+            {monthSummaries.map((summary) => (
+              <Link
+                key={summary.key}
+                to={`/leads/${summary.key}`}
+                className="group relative flex flex-col overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm transition hover:border-indigo-200 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:shadow-black/20 dark:hover:border-indigo-500/40 dark:hover:shadow-black/40"
               >
-                {option.label}
-              </button>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="font-display text-lg font-semibold tracking-tight text-slate-900 capitalize dark:text-slate-100">
+                      {summary.label}
+                    </p>
+                    <p className="text-xs text-slate-400 dark:text-slate-500">
+                      Leads capturados
+                    </p>
+                  </div>
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 transition group-hover:scale-105 dark:bg-indigo-500/10 dark:text-indigo-300">
+                    <CalendarDays className="h-5 w-5" strokeWidth={1.75} />
+                  </span>
+                </div>
+
+                <p className="mt-4 font-display text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+                  {summary.total}{' '}
+                  <span className="text-sm font-medium text-slate-400 dark:text-slate-500">
+                    {summary.total === 1 ? 'lead' : 'leads'}
+                  </span>
+                </p>
+
+                <div className="mt-4 grid grid-cols-3 gap-2">
+                  {statusChips.map((chip) => {
+                    const Icon = chip.icon
+                    return (
+                      <div
+                        key={chip.key}
+                        className="rounded-xl bg-slate-50 px-2 py-2 text-center dark:bg-slate-800/60"
+                      >
+                        <Icon className={`mx-auto h-4 w-4 ${chip.classes}`} strokeWidth={1.75} />
+                        <p
+                          className={`mt-1 font-display text-base font-semibold ${chip.classes}`}
+                        >
+                          {summary[chip.key]}
+                        </p>
+                        <p className="truncate text-[10px] text-slate-400 dark:text-slate-500">
+                          {chip.label}
+                        </p>
+                      </div>
+                    )
+                  })}
+                </div>
+
+                <span className="mt-4 flex items-center gap-1.5 text-sm font-semibold text-indigo-600 dark:text-indigo-400">
+                  Ver leads
+                  <ArrowRight
+                    className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                    strokeWidth={2}
+                  />
+                </span>
+              </Link>
             ))}
           </div>
-        </div>
-
-        <div className="min-w-0">
-          {loading && leads === null ? (
-            <div className="flex items-center justify-center gap-3 py-24">
-              <Loader2 className="h-5 w-5 animate-spin text-indigo-500" />
-              <span className="text-sm text-slate-500 dark:text-white">
-                Carregando leads...
-              </span>
-            </div>
-          ) : error && leads === null ? (
-            <div className="flex flex-col items-center gap-4 py-24">
-              <p className="text-sm text-slate-500 dark:text-white">{error}</p>
-              <button
-                onClick={() => fetchLeads(isAdmin ? (selectedClientId ?? undefined) : undefined)}
-                className="flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500"
-              >
-                <RefreshCw className="h-4 w-4" />
-                Tentar novamente
-              </button>
-            </div>
-          ) : filteredLeads.length === 0 ? (
-            <div className="flex flex-col items-center gap-3 py-24 text-center">
-              <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100 dark:bg-slate-800/60">
-                <Inbox className="h-6 w-6 text-slate-400 dark:text-white" strokeWidth={1.75} />
-              </span>
-              <p className="text-sm font-medium text-slate-600 dark:text-white">
-                {query || status
-                  ? 'Nenhum lead encontrado'
-                  : 'Nenhum lead capturado ainda'}
-              </p>
-            </div>
-          ) : (
-            <div className="space-y-8">
-              {monthGroups.map((group) => {
-                const collapsed = collapsedMonths.has(group.key)
-                return (
-                  <section key={group.key} className="min-w-0">
-                    <button
-                      onClick={() => toggleMonth(group.key)}
-                      aria-expanded={!collapsed}
-                      className="group mb-3 flex w-full items-center gap-2.5 rounded-xl px-1 py-1 text-left"
-                    >
-                      <CalendarDays
-                        className="h-4.5 w-4.5 shrink-0 text-indigo-500 dark:text-indigo-400"
-                        strokeWidth={1.75}
-                      />
-                      <h2 className="font-display text-lg font-semibold tracking-tight text-slate-900 capitalize dark:text-white">
-                        {group.label}
-                      </h2>
-                      <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-500 dark:bg-slate-800 dark:text-white">
-                        {group.items.length}{' '}
-                        {group.items.length === 1 ? 'lead' : 'leads'}
-                      </span>
-                      <span className="h-px min-w-4 flex-1 bg-slate-200 dark:bg-slate-800" />
-                      <ChevronDown
-                        className={cn(
-                          'h-5 w-5 shrink-0 text-slate-400 transition-transform duration-200 dark:text-white',
-                          collapsed ? '-rotate-90' : 'rotate-0',
-                        )}
-                        strokeWidth={1.75}
-                      />
-                    </button>
-
-                    <div
-                      className={cn(
-                        'grid transition-all duration-300 ease-in-out',
-                        collapsed
-                          ? 'grid-rows-[0fr] opacity-0'
-                          : 'grid-rows-[1fr] opacity-100',
-                      )}
-                    >
-                      <div className="min-h-0 overflow-hidden">
-                        <div className="grid grid-cols-1 gap-5 pt-1 pb-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-                          {group.items.map((lead) => (
-                            <LeadCard key={lead.id} lead={lead} />
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </section>
-                )
-              })}
-              </div>
-          )}
-        </div>
+        )}
       </section>
     </div>
   )

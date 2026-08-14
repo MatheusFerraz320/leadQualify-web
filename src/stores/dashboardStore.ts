@@ -19,6 +19,19 @@ export type MonthlyPoint = { month: string; count: number }
 
 export type LabelCount = { label: string; count: number }
 
+export type RateItem = {
+  label: string
+  approved: number
+  rejected: number
+  total: number
+  rate: number
+}
+
+export type RateBreakdown = {
+  topApproval: RateItem[]
+  topRejection: RateItem[]
+}
+
 export type UserRanking = {
   userId: string
   user: { id: string; name: string; email: string } | null
@@ -36,6 +49,8 @@ export type DashboardSummary = {
   byProduct: LabelCount[]
   byCampaign: LabelCount[]
   byUser: UserRanking[]
+  byCampaignRate: RateBreakdown
+  byAdGroupRate: RateBreakdown
 }
 
 type DashboardState = {

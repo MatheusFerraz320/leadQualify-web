@@ -6,6 +6,7 @@ import {
   BarChart,
   CartesianGrid,
   Cell,
+  LabelList,
   Pie,
   PieChart,
   ResponsiveContainer,
@@ -32,6 +33,8 @@ import {
   useDashboardStore,
   type LabelCount,
   type MonthlyPoint,
+  type RateBreakdown,
+  type RateItem,
 } from '../stores/dashboardStore'
 import { useLeadsStore, type LeadStatus } from '../stores/leadsStore'
 import { ClientSelect } from '../components/leads/ClientSelect'
@@ -176,6 +179,145 @@ function EmptyChart() {
       <Inbox className="h-6 w-6 text-slate-300 dark:text-white" strokeWidth={1.75} />
       <p className="text-xs text-slate-400 dark:text-white">Sem dados ainda</p>
     </div>
+  )
+}
+
+const emptyRateBreakdown: RateBreakdown = {
+  topApproval: [],
+  topRejection: [],
+}
+
+function RateHalf({
+  heading,
+  color,
+  items,
+  dataKey,
+  height,
+}: {
+  heading: string
+  color: string
+  items: RateItem[]
+  dataKey: 'approved' | 'rejected'
+  height: number
+}) {
+  if (items.length === 0) {
+    return (
+      <div
+        className="flex flex-col items-center justify-center gap-2 text-center"
+        style={{ minHeight: height }}
+      >
+        <Inbox className="h-5 w-5 text-slate-300 dark:text-white" strokeWidth={1.75} />
+        <p className="text-xs text-slate-400 dark:text-white">Sem dados ainda</p>
+      </div>
+    )
+  }
+
+  return (
+    <div>
+      <h3 className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-white">
+        <span
+          className="h-2.5 w-2.5 shrink-0 rounded-full"
+          style={{ backgroundColor: color }}
+        />
+        {heading}
+      </h3>
+      <ResponsiveContainer width="100%" height={height}>
+        <BarChart
+          layout="vertical"
+          data={items}
+          margin={{ top: 0, right: 44, left: 0, bottom: 0 }}
+          barCategoryGap="30%"
+        >
+          <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="currentColor" className="text-slate-200 dark:text-slate-800" />
+          <XAxis type="number" allowDecimals={false} tickLine={false} axisLine={false} tick={{ fontSize: 10, fill: '#94a3b8' }} />
+          <YAxis
+            type="category"
+            dataKey="label"
+            width={92}
+            tickLine={false}
+            axisLine={false}
+            interval={0}
+            tickMargin={6}
+            tickFormatter={(value: string) => truncateLabel(value, 14)}
+            tick={{ fontSize: 10, fill: '#64748b' }}
+          />
+          <Tooltip
+            content={({ active, payload }) => {
+              if (!active || !payload?.length) return null
+              const item = payload[0].payload as RateItem
+              return (
+                <div className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs shadow-lg dark:border-slate-700 dark:bg-slate-800">
+                  <p className="mb-1 font-semibold text-slate-900 dark:text-white">
+                    {item.label}
+                  </p>
+                  <p className="text-emerald-600 dark:text-emerald-400">
+                    Aprovados: {item.approved}
+                  </p>
+                  <p className="text-rose-600 dark:text-rose-400">
+                    Reprovados: {item.rejected}
+                  </p>
+                  <p className="mt-1 text-slate-600 dark:text-white">
+                    Taxa:{' '}
+                    <span className="font-semibold">{formatPercent(item.rate)}</span>
+                  </p>
+                </div>
+              )
+            }}
+          />
+          <Bar dataKey={dataKey} fill={color} radius={[0, 6, 6, 0]} barSize={14} maxBarSize={18}>
+            <LabelList
+              dataKey="rate"
+              position="right"
+              formatter={(value) => formatPercent(Number(value))}
+              fill={color}
+              fontSize={11}
+            />
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  )
+}
+
+function RateRankingPanel({
+  title,
+  subtitle,
+  breakdown,
+}: {
+  title: string
+  subtitle: string
+  breakdown: RateBreakdown
+}) {
+  const height = Math.max(
+    200,
+    Math.max(breakdown.topApproval.length, breakdown.topRejection.length) * 46,
+  )
+  const empty =
+    breakdown.topApproval.length === 0 && breakdown.topRejection.length === 0
+
+  return (
+    <Panel title={title} subtitle={subtitle} className="lg:col-span-1">
+      {empty ? (
+        <EmptyChart />
+      ) : (
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <RateHalf
+            heading="Maior aprovação"
+            color="#10b981"
+            items={breakdown.topApproval}
+            dataKey="approved"
+            height={height}
+          />
+          <RateHalf
+            heading="Maior reprovação"
+            color="#f43f5e"
+            items={breakdown.topRejection}
+            dataKey="rejected"
+            height={height}
+          />
+        </div>
+      )}
+    </Panel>
   )
 }
 
@@ -503,6 +645,18 @@ export default function Home() {
                 </ResponsiveContainer>
               )}
             </Panel>
+
+            <RateRankingPanel
+              title="Campanhas"
+              subtitle="Campanha com maior aprovação de leads e maior reprovação"
+              breakdown={summary?.byCampaignRate ?? emptyRateBreakdown}
+            />
+
+            <RateRankingPanel
+              title="Grupos de anúncio"
+              subtitle="Melhor e pior aprovação por grupo de anúncio"
+              breakdown={summary?.byAdGroupRate ?? emptyRateBreakdown}
+            />
           </div>
 
           {isAdmin && summary.byUser.length > 0 && (

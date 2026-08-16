@@ -124,7 +124,7 @@ export function LeadCard({ lead }: { lead: Lead }) {
           </span>
 
           <div className="relative">
-            {user.role === 'ADMIN' && (
+            {user?.role === 'ADMIN' && (
             <button
               onClick={() => setMenuOpen((open) => !open)}
               aria-label="Mais ações"

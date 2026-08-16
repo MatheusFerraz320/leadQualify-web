@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router'
-import { ArrowLeft, CalendarDays, Inbox, Loader2, RefreshCw } from 'lucide-react'
+import { ArrowLeft, CalendarDays, Inbox, RefreshCw } from 'lucide-react'
 import { useAuthStore } from '../stores/authStore'
 import { useLeadsStore, type LeadStatus } from '../stores/leadsStore'
 import { LeadCard } from '../components/leads/LeadCard'
 import { LeadsFilters } from '../components/leads/LeadsFilters'
+import { BrandedLoader } from '../components/layout/BrandedLoader'
 
 function formatMonthLabel(month: string) {
   const [year, numericMonth] = month.split('-').map(Number)
@@ -100,12 +101,7 @@ export default function LeadsMonth() {
         />
 
         {loading && leads === null ? (
-          <div className="flex items-center justify-center gap-3 py-24">
-            <Loader2 className="h-5 w-5 animate-spin text-indigo-500" />
-            <span className="text-sm text-slate-500 dark:text-slate-400">
-              Carregando leads...
-            </span>
-          </div>
+          <BrandedLoader label="Carregando leads..." />
         ) : error && leads === null ? (
           <div className="flex flex-col items-center gap-4 py-24">
             <p className="text-sm text-slate-500 dark:text-slate-400">{error}</p>

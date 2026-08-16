@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 import {
-  Loader2,
   Mail,
   Pencil,
   Search,
@@ -13,6 +12,7 @@ import {
 import { toast } from 'sonner'
 import { cn, formatDate, initials } from '../lib/utils'
 import { useUsersStore } from '../stores/usersStore'
+import { BrandedLoader } from '../components/layout/BrandedLoader'
 import { useAuthStore, type User } from '../stores/authStore'
 import { EditCollaboratorModal } from '../components/collaborator/EditCollaboratorModal'
 import { DeleteCollaboratorDialog } from '../components/collaborator/DeleteCollaboratorDialog'
@@ -107,12 +107,7 @@ export default function Collaborator() {
 
       <div className="overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
         {loading && users === null ? (
-          <div className="flex items-center justify-center gap-3 py-24">
-            <Loader2 className="h-5 w-5 animate-spin text-indigo-500" />
-            <span className="text-sm text-slate-500 dark:text-white">
-              Carregando colaboradores...
-            </span>
-          </div>
+          <BrandedLoader label="Carregando colaboradores..." />
         ) : error && users === null ? (
           <div className="flex flex-col items-center gap-4 py-24">
             <p className="text-sm text-slate-500 dark:text-white">{error}</p>

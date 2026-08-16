@@ -21,7 +21,6 @@ import {
   Hourglass,
   Inbox,
   LayoutDashboard,
-  Loader2,
   RefreshCw,
   Target,
   TrendingUp,
@@ -38,6 +37,7 @@ import {
 } from '../stores/dashboardStore'
 import { useLeadsStore, type LeadStatus } from '../stores/leadsStore'
 import { ClientSelect } from '../components/leads/ClientSelect'
+import { BrandedLoader } from '../components/layout/BrandedLoader'
 import { MonthSelect } from '../components/dashboard/MonthSelect'
 
 const statusMeta: Record<LeadStatus, { label: string; color: string; bg: string; icon: typeof CheckCircle2 }> = {
@@ -409,12 +409,7 @@ export default function Home() {
       </div>
 
       {loading && summary === null ? (
-        <div className="flex items-center justify-center gap-3 py-24">
-          <Loader2 className="h-5 w-5 animate-spin text-indigo-500" />
-          <span className="text-sm text-slate-500 dark:text-white">
-            Carregando métricas...
-          </span>
-        </div>
+        <BrandedLoader label="Carregando métricas..." />
       ) : error && summary === null ? (
         <div className="flex flex-col items-center gap-4 py-24">
           <p className="text-sm text-slate-500 dark:text-white">{error}</p>

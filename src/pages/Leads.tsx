@@ -6,7 +6,6 @@ import {
   CheckCircle2,
   Hourglass,
   Inbox,
-  Loader2,
   RefreshCw,
   XCircle,
 } from 'lucide-react'
@@ -14,6 +13,7 @@ import { summarizeByMonth } from '../lib/utils'
 import { useAuthStore } from '../stores/authStore'
 import { useLeadsStore } from '../stores/leadsStore'
 import { ClientSelect } from '../components/leads/ClientSelect'
+import { BrandedLoader } from '../components/layout/BrandedLoader'
 
 const statusChips: Array<{
   key: 'pending' | 'approved' | 'rejected'
@@ -99,12 +99,7 @@ export default function Leads() {
 
       <section className="min-w-0">
         {loading && leads === null ? (
-          <div className="flex items-center justify-center gap-3 py-24">
-            <Loader2 className="h-5 w-5 animate-spin text-indigo-500" />
-            <span className="text-sm text-slate-500 dark:text-slate-400">
-              Carregando leads...
-            </span>
-          </div>
+          <BrandedLoader label="Carregando leads..." />
         ) : error && leads === null ? (
           <div className="flex flex-col items-center gap-4 py-24">
             <p className="text-sm text-slate-500 dark:text-slate-400">{error}</p>

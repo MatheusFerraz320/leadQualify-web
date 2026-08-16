@@ -11,11 +11,21 @@ export async function api(
     headers.set('Content-Type', 'application/json')
   }
 
-  const response = await fetch(`${API_URL}${path}`, {
-    ...options,
-    headers,
-    credentials: 'include',
-  })
+  let response: Response
+  try {
+    response = await fetch(`${API_URL}${path}`, {
+      ...options,
+      headers,
+      credentials: 'include',
+    })
+  } catch (err) {
+    if (err instanceof TypeError) {
+      throw new Error(
+        'Não foi possível conectar ao servidor. Verifique sua conexão e tente novamente.',
+      )
+    }
+    throw err
+  }
 
   if (response.status === 401 && !path.startsWith('/auth/')) {
     useAuthStore.getState().handleUnauthorized()
@@ -27,6 +37,7 @@ export async function api(
 type ErrorBody = { message?: string | string[] }
 
 export async function getErrorMessage(response: Response): Promise<string> {
+  if (response.status >= 500) return 'Erro interno do servidor'
   try {
     const body = (await response.json()) as ErrorBody
     if (Array.isArray(body?.message)) return body.message[0] ?? 'Erro inesperado'
@@ -34,5 +45,5 @@ export async function getErrorMessage(response: Response): Promise<string> {
   } catch {
     // response sem corpo JSON
   }
-  return response.ok ? '' : `Erro inesperado (${response.status})`
+  return response.ok? '' : `Erro inesperado (${response.status})`
 }

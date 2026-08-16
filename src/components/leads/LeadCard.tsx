@@ -18,6 +18,7 @@ import { cn, formatDate, initials } from '../../lib/utils'
 import { useLeadsStore, type Lead, type LeadStatus } from '../../stores/leadsStore'
 import { EditLeadModal } from './EditLeadModal'
 import { DeleteLeadDialog } from './DeleteLeadDialog'
+import { useAuthStore } from '../../stores/authStore'
 
 const statusStyles: Record<LeadStatus, string> = {
   APPROVED: 'bg-emerald-50 text-emerald-700 ring-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:ring-emerald-500/30',
@@ -75,6 +76,8 @@ export function LeadCard({ lead }: { lead: Lead }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [editing, setEditing] = useState(false)
   const [deleting, setDeleting] = useState(false)
+    const user = useAuthStore((state) => state.user)
+  
 
   const utmFields = [
     { label: 'Campanha', value: lead.utmCampanha },
@@ -121,6 +124,7 @@ export function LeadCard({ lead }: { lead: Lead }) {
           </span>
 
           <div className="relative">
+            {user.role === 'ADMIN' && (
             <button
               onClick={() => setMenuOpen((open) => !open)}
               aria-label="Mais ações"
@@ -129,14 +133,18 @@ export function LeadCard({ lead }: { lead: Lead }) {
             >
               <MoreVertical className="h-4.5 w-4.5" strokeWidth={1.75} />
             </button>
+              )}
 
-            {menuOpen && (
+            {menuOpen && user?.role === 'ADMIN' && (
               <>
                 <div
                   className="fixed inset-0 z-10"
                   onClick={() => setMenuOpen(false)}
                 />
-                <div className="absolute top-full right-0 z-20 mt-1.5 w-40 overflow-hidden rounded-2xl border border-slate-200 bg-white p-1.5 shadow-xl shadow-slate-900/10 dark:border-slate-700 dark:bg-slate-800 dark:shadow-black/40">
+                <div className="absolute top-full right-0 z-20 mt-1.5 w-40 overflow-hidden rounded-2xl 
+                border border-slate-200 bg-white p-1.5 shadow-xl shadow-slate-900/10 dark:border-slate-700 dark:bg-slate-800 
+                dark:shadow-black/40">
+                  {user?.role === 'ADMIN' && (
                   <button
                     onClick={openEdit}
                     className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-50 hover:text-slate-900 dark:text-white dark:hover:bg-slate-700/60 dark:hover:text-white"
@@ -144,6 +152,7 @@ export function LeadCard({ lead }: { lead: Lead }) {
                     <Pencil className="h-4 w-4" strokeWidth={1.75} />
                     Editar
                   </button>
+                     )}
                   <button
                     onClick={openDelete}
                     className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-medium text-rose-600 transition hover:bg-rose-50 dark:text-rose-400 dark:hover:bg-rose-500/10"
